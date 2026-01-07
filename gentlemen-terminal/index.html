@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>GENTLEMEN — Livre de Règles</title>
+
+  <!-- Fonts (Orbitron + Oxanium) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Oxanium:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="rules">
+<!-- Floating Home Dock -->
+<div class="home-dock" id="homeDock">
+  <button class="home-tab" id="homeTab" type="button" aria-expanded="false" title="Ouvrir le dock">
+    <span class="home-tab-g">G</span>
+  </button>
+
+  <div class="home-panel" id="homePanel" aria-hidden="true">
+    <a class="home-action" href="/index.html" data-sfx="click">
+      <span class="home-action-title">TERMINAL PRINCIPAL</span>
+      <span class="home-action-sub">Retour à l’accueil</span>
+    </a>
+  </div>
+</div>
+
+  <div class="bg" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <div class="app" id="app">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="logoBox" aria-hidden="true">G</span>
+        <div class="brandText">
+          <div class="brandName">GENTLEMEN</div>
+          <div class="brandSub">TERMINAL · LIVRE DE RÈGLES · PROJET HÉRITAGE</div>
+        </div>
+      </div>
+
+      <div class="topbarRight">
+        <a class="btn ghost" href="catalogue.html" title="Ouvrir le Catalogue (création uniquement)">
+          <span class="btnIco" aria-hidden="true">⧉</span>
+          <span class="btnLabel">CATALOGUE</span>
+        </a>
+
+        <div class="audioBar" role="group" aria-label="Contrôles audio">
+          <button class="btn primary" id="btnUnlockAudio" type="button">
+            <span class="btnIco" aria-hidden="true">⟡</span>
+            <span class="btnLabel">INITIALISER AUDIO</span>
+          </button>
+
+          <button class="btn ghost" id="btnMute" type="button" aria-pressed="false">
+            <span class="btnIco" aria-hidden="true">⏺</span>
+            <span class="btnLabel">MUTE</span>
+          </button>
+
+          <label class="volWrap" title="Volume global (sauvé)">
+            <span class="volTxt">VOL</span>
+            <input id="vol" class="vol" type="range" min="0" max="100" value="42" />
+          </label>
+        </div>
+
+        <button class="btn ghost" id="btnReduceEffects" type="button" aria-pressed="false" title="Réduire les effets visuels">
+          <span class="btnIco" aria-hidden="true">◻</span>
+          <span class="btnLabel">EFFETS</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="rulesWrap">
+      <!-- LEFT / TOC -->
+      <aside class="panel">
+        <div class="panelHeader">
+          <div class="hudTitle">ACCÈS RAPIDE</div>
+          <div class="hudMeta">Sommaire interactif · Recherche instantanée</div>
+
+          <div class="searchBox" role="search">
+            <span class="searchIco" aria-hidden="true">⌕</span>
+            <input id="rulesSearch" type="search" autocomplete="off" placeholder="Rechercher dans le livre…" />
+            <button class="searchClear" id="rulesClear" type="button" aria-label="Effacer">×</button>
+          </div>
+        </div>
+
+        <div class="panelBody">
+          <div class="quickGrid">
+            <div class="qCard">
+              <div class="k">POOL PD (création)</div>
+              <div class="v"><b>12 PD</b></div>
+            </div>
+            <div class="qCard">
+              <div class="k">ÉNERGIE MAX</div>
+              <div class="v"><b>10%</b> du Spécial</div>
+            </div>
+            <div class="qCard">
+              <div class="k">CATALOGUE</div>
+              <div class="v"><b>création only</b></div>
+            </div>
+            <div class="qCard">
+              <div class="k">PASSIFS</div>
+              <div class="v">réduisent <b>Énergie max</b></div>
+            </div>
+          </div>
+
+          <div class="toc" id="rulesToc" aria-label="Sommaire"></div>
+
+          <div class="hr"></div>
+
+          <a class="btn ghost full" href="catalogue.html">
+            <span class="btnIco" aria-hidden="true">⧉</span>
+            <span class="btnLabel">ALLER AU CATALOGUE (CRÉATION)</span>
+          </a>
+
+          <div class="hr"></div>
+          <div class="mono tiny">Sections visibles : <span id="matchCount">—</span></div>
+        </div>
+      </aside>
+
+      <!-- RIGHT / CONTENT -->
+      <section class="content">
+        <div class="contentHeader">
+          <div class="hudTitle">SYSTÈME GENTLEMEN</div>
+          <div class="hudMeta mono">
+            Règles fondamentales — contemporain dystopique · brutal · lucide · zéro magie.
+          </div>
+        </div>
+
+        <div class="noteLine mono">
+          « Le monde n’accorde aucun pouvoir. Il teste seulement combien tu peux encaisser avant de céder. »
+        </div>
+
+        <div class="rulesContent" id="rulesContent">
+
+          <!-- INTRO -->
+          <article class="rSection" id="sec-0-intro" data-keywords="gentlemen regles fondamentales dystopie brutal lucide consequences">
+            <h3 class="rTitle">SYSTÈME GENTLEMEN</h3>
+            <div class="rText">
+              <b>Gentlemen</b> est un jeu de rôle contemporain, brutal et lucide.
+              Il met en scène des individus évoluant dans un monde décadent, saturé de violence,
+              de technologies invasives et de choix irréversibles.
+              <div class="hr"></div>
+              Ici, il n’y a pas de miracles.  
+              Seulement des corps, des décisions, et des conséquences.
+            </div>
+          </article>
+
+          <!-- I -->
+          <article class="rSection" id="sec-1-principes" data-keywords="principes fondamentaux pas de magie pas de pouvoir preparation corps esprit equipements consequences">
+            <h3 class="rTitle">I · Principes Fondamentaux</h3>
+            <div class="rText">
+              <ul class="rList">
+                <li>Aucun pouvoir surnaturel.</li>
+                <li>Aucune magie.</li>
+                <li>Aucune entité salvatrice.</li>
+              </ul>
+
+              <div class="hr"></div>
+
+              Tout ce qu’un personnage accomplit repose sur :
+              <ul class="rList">
+                <li>sa préparation,</li>
+                <li>son corps,</li>
+                <li>son esprit,</li>
+                <li>ses équipements,</li>
+                <li>et sa capacité à forcer la limite.</li>
+              </ul>
+
+              <div class="hr"></div>
+
+              Gentlemen est un jeu où :
+              <ul class="rList">
+                <li>la narration prime sur l’optimisation,</li>
+                <li>la puissance n’est jamais gratuite,</li>
+                <li>et chaque avantage laisse une trace.</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- II -->
+          <article class="rSection" id="sec-2-superstats" data-keywords="super statistiques physique special mental social chance axes survie">
+            <h3 class="rTitle">II · Super-Statistiques</h3>
+            <div class="rText">
+              Les Super-Statistiques représentent les axes de survie d’un individu dans un monde hostile.
+              Elles ne définissent pas ce que tu peux faire, mais <b>jusqu’où tu peux aller</b>.
+            </div>
+          </article>
+
+          <article class="rSection" id="sec-2a-physique" data-keywords="physique force agilite endurance resistance coordination melee degats mobilite">
+            <h3 class="rTitle">💪 Physique</h3>
+            <div class="rText">
+              Force, agilité, endurance, résistance, coordination, combat rapproché.
+              <div class="hr"></div>
+              Impacte :
+              <ul class="rList">
+                <li>dégâts physiques</li>
+                <li>mobilité</li>
+                <li>résistance aux blessures</li>
+                <li>vitesse d’exécution</li>
+              </ul>
+              <div class="hr"></div>
+              <i>Un Physique élevé ne rend pas invincible. Il permet de rester debout plus longtemps que les autres.</i>
+            </div>
+          </article>
+
+          <article class="rSection" id="sec-2b-special" data-keywords="special implants modifications tolerance neurologique compatibilite protocoles limites">
+            <h3 class="rTitle">✨ Spécial</h3>
+            <div class="rText">
+              Le Spécial mesure la capacité du corps à accepter l’inhumain.
+              <div class="hr"></div>
+              Il représente :
+              <ul class="rList">
+                <li>la tolérance aux implants et modifications,</li>
+                <li>la charge neurologique maximale supportable,</li>
+                <li>la compatibilité avec des protocoles extrêmes,</li>
+                <li>la faculté à dépasser les limites biologiques normales.</li>
+              </ul>
+              <div class="hr"></div>
+              <i>Le Spécial ne donne rien. Il autorise à payer le prix.</i>
+            </div>
+          </article>
+
+          <article class="rSection" id="sec-2c-mental" data-keywords="mental lucidite sang froid controle emotionnel analyse resistance psychologique douleur panique">
+            <h3 class="rTitle">🧠 Mental</h3>
+            <div class="rText">
+              Lucidité, sang-froid, contrôle émotionnel, analyse, résistance psychologique.
+              <div class="hr"></div>
+              Sert à :
+              <ul class="rList">
+                <li>ignorer la douleur</li>
+                <li>ne pas paniquer</li>
+                <li>planifier sous pression</li>
+                <li>garder le contrôle quand tout s’effondre</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="rSection" id="sec-2d-social" data-keywords="social reseaux reputation autorite intimidation credibilite contrats factions parole">
+            <h3 class="rTitle">👥 Social</h3>
+            <div class="rText">
+              Réseaux, réputation, autorité, intimidation, crédibilité.
+              <div class="hr"></div>
+              Influence :
+              <ul class="rList">
+                <li>accès aux contrats</li>
+                <li>réactions des factions</li>
+                <li>poids de la parole</li>
+                <li>capacité à imposer une décision</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="rSection" id="sec-2e-chance" data-keywords="chance cachee se deplace bonne mauvaise">
+            <h3 class="rTitle">🍀 Chance (cachée)</h3>
+            <div class="rText">
+              La chance n’est ni bonne ni mauvaise.  
+              Elle se déplace.
+            </div>
+          </article>
+
+          <!-- III -->
+          <article class="rSection" id="sec-3-ressources" data-keywords="ressources vie energie 10% special dette regeneration">
+            <h3 class="rTitle">III · Ressources</h3>
+            <div class="rText">
+              Gentlemen se joue avec deux ressources lisibles :
+              <ul class="rList">
+                <li>❤️ <b>Vie</b></li>
+                <li>⚡ <b>Énergie</b></li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="rSection" id="sec-3a-vie" data-keywords="vie blessures traumatismes fatigue hemorragies 0 vie forcer sequelles">
+            <h3 class="rTitle">❤️ Vie</h3>
+            <div class="rText">
+              La Vie représente l’état physique réel :
+              <ul class="rList">
+                <li>blessures</li>
+                <li>traumatismes</li>
+                <li>fatigue</li>
+                <li>hémorragies</li>
+              </ul>
+
+              <div class="hr"></div>
+
+              À 0 Vie :
+              <ul class="rList">
+                <li>le personnage ne meurt pas immédiatement,</li>
+                <li>mais ne peut plus agir normalement sans forcer.</li>
+              </ul>
+
+              <div class="hr"></div>
+
+              Forcer entraîne :
+              <ul class="rList">
+                <li>blessures durables,</li>
+                <li>séquelles,</li>
+                <li>pertes définitives.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="rSection" id="sec-3b-energie" data-keywords="energie 10% special adrenaline surconcentration exploits dette regen">
+            <h3 class="rTitle">⚡ Énergie</h3>
+            <div class="rText">
+              L’Énergie est la ressource centrale de Gentlemen.
+              <div class="hr"></div>
+              <div class="codeBox mono">Énergie maximale = 10 % du Spécial</div>
+              <div class="hr"></div>
+              Elle représente :
+              <ul class="rList">
+                <li>l’adrénaline,</li>
+                <li>la surconcentration,</li>
+                <li>la surperformance humaine,</li>
+                <li>le refus instinctif de céder.</li>
+              </ul>
+
+              <div class="hr"></div>
+
+              L’Énergie alimente :
+              <ul class="rList">
+                <li>actions exceptionnelles,</li>
+                <li>techniques avancées,</li>
+                <li>exploits physiques ou tactiques,</li>
+                <li>dépassements de limite.</li>
+              </ul>
+
+              <div class="hr"></div>
+
+              L’Énergie :
+              <ul class="rList">
+                <li>se régénère partiellement,</li>
+                <li>mais laisse toujours une dette.</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- IV -->
+          <article class="rSection" id="sec-4-competences" data-keywords="competences familles action etats renforcement passifs combos intera ii">
+            <h3 class="rTitle">IV · Compétences — Structure Officielle</h3>
+            <div class="rText">
+              Toutes les compétences appartiennent à une seule des familles suivantes.
+            </div>
+          </article>
+
+          <article class="rSection" id="sec-4a-action" data-keywords="competences action tir precision rafale neutralisation hacking gadget cout energie">
+            <h3 class="rTitle">1️⃣ Compétences d’Action</h3>
+            <div class="rText">
+              Actions déclenchées volontairement.
+              <div class="hr"></div>
+              Exemples :
+              <ul class="rList">
+                <li>tir de précision</li>
+                <li>rafale contrôlée</li>
+                <li>neutralisation rapide</li>
+                <li>hacking express</li>
+                <li>déploiement de gadget</li>
+              </ul>
+              <div class="hr"></div>
+              ➤ Coût : <b>Énergie</b>
+            </div>
+          </article>
+
+          <article class="rSection" id="sec-4b-renforcement" data-keywords="etats renforcement buff mode adrenaline protocole combat stimulation chimique">
+            <h3 class="rTitle">2️⃣ États de Renforcement</h3>
+            <div class="rText">
+              Modifient temporairement les performances.
+              <div class="hr"></div>
+              Exemples :
+              <ul class="rList">
+                <li>mode adrénaline</li>
+                <li>protocole combat</li>
+                <li>stimulation chimique</li>
+                <li>verrou émotionnel</li>
+                <li>posture tactique</li>
+              </ul>
+              <div class="hr"></div>
+              Règles :
+              <ul class="rList">
+                <li><b>1 État gratuit</b> par combat</li>
+                <li>toute activation supplémentaire coûte de l’<b>Énergie</b></li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="rSection" id="sec-4c-passifs" data-keywords="passifs implants mutations protocoles permanents reduit energie max liberte">
+            <h3 class="rTitle">3️⃣ Capacités Persistantes (Passifs)</h3>
+            <div class="rText">
+              Toujours actives tant qu’elles sont alimentées.  
+              Implants, mutations, protocoles permanents.
+              <div class="hr"></div>
+              ⚠️ Règle clé :
+              <div class="codeBox mono">Chaque passif réduit définitivement la jauge maximale d’Énergie.</div>
+              <div class="hr"></div>
+              Plus tu es modifié :
+              <ul class="rList">
+                <li>plus tu es efficace</li>
+                <li>moins tu es libre</li>
+              </ul>
+            </div>
+            <div class="badges">
+              <span class="badge">○ Passifs : limite conseillée 3</span>
+              <span class="badge">⚡ Énergie max ↓</span>
+            </div>
+          </article>
+
+          <article class="rSection" id="sec-4d-combos" data-keywords="combos techniques reactives conditionnelle gratuite cout double timing terrain">
+            <h3 class="rTitle">4️⃣ Techniques Réactives (Combos)</h3>
+            <div class="rText">
+              Compétences conditionnelles.
+              <div class="hr"></div>
+              <ul class="rList">
+                <li>Condition remplie → activation gratuite</li>
+                <li>Condition non remplie → devient une action, coût doublé</li>
+              </ul>
+              <div class="hr"></div>
+              Ces techniques récompensent :
+              <ul class="rList">
+                <li>la lecture du terrain</li>
+                <li>le timing</li>
+                <li>l’intelligence de jeu</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- V -->
+          <article class="rSection" id="sec-5-break" data-keywords="break forcer la limite action supplementaire performance extreme sequelles">
+            <h3 class="rTitle">V · BREAK — Forcer la Limite</h3>
+            <div class="rText">
+              Le BREAK permet de dépasser temporairement une Super-Statistique.
+              <div class="hr"></div>
+              Effets :
+              <ul class="rList">
+                <li>action supplémentaire</li>
+                <li>performance extrême</li>
+                <li>réussite arrachée</li>
+              </ul>
+              <div class="hr"></div>
+              Contrepartie :
+              <ul class="rList">
+                <li>inhibition du potentiel</li>
+                <li>blessure interne possible</li>
+                <li>fatigue lourde</li>
+                <li>séquelles narratives</li>
+              </ul>
+              <div class="hr"></div>
+              <i>Le BREAK n’est pas héroïque. C’est un aveu que ton corps ne tiendra pas longtemps.</i>
+            </div>
+          </article>
+
+          <!-- VI -->
+          <article class="rSection" id="sec-6-voies" data-keywords="voies volonte comprehension instinct fractures lecture situations">
+            <h3 class="rTitle">VI · Voies</h3>
+            <div class="rText">
+              Les Voies définissent comment un personnage encaisse le monde.
+              Elles ne donnent aucun pouvoir direct. Elles modifient la lecture des situations.
+              <div class="hr"></div>
+              Exemples d’interprétation :
+              <ul class="rList">
+                <li>Volonté → tenir malgré l’effondrement</li>
+                <li>Compréhension → voir les failles</li>
+                <li>Instinct → survivre sans réfléchir</li>
+                <li>Fractures → cicatrices mentales, effacement, déshumanisation</li>
+              </ul>
+              <div class="hr"></div>
+              <i>Une Voie n’aide pas à gagner. Elle explique pourquoi tu continues.</i>
+            </div>
+          </article>
+
+          <!-- VII -->
+          <article class="rSection" id="sec-7-equipement" data-keywords="equipements modifications hybridation points de destin pression narrative point de non retour">
+            <h3 class="rTitle">VII · Équipements, Modifications et Hybridation</h3>
+            <div class="rText">
+              Toute modification permanente :
+              <ul class="rList">
+                <li>coûte des <b>Points de Destin</b>,</li>
+                <li>augmente la pression narrative,</li>
+                <li>rapproche d’un point de non-retour.</li>
+              </ul>
+              <div class="hr"></div>
+              Chaque trait ajouté :
+              <ul class="rList">
+                <li>renforce le personnage,</li>
+                <li>mais complique sa survie à long terme.</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- VIII -->
+          <article class="rSection" id="sec-8-philosophie" data-keywords="philosophie tenue operationnel pas de salut pas solution parfaite">
+            <h3 class="rTitle">VIII · Philosophie de Gentlemen</h3>
+            <div class="rText">
+              Gentlemen n’est pas un jeu de puissance.  
+              C’est un jeu de tenue.
+              <div class="hr"></div>
+              <ul class="rList">
+                <li>Pas d’ascension propre</li>
+                <li>Pas de salut</li>
+                <li>Pas de solution parfaite</li>
+              </ul>
+              <div class="hr"></div>
+              <b>Tu n’es pas fort. Tu es encore opérationnel.</b>
+            </div>
+          </article>
+
+          <!-- CATALOGUE RULES (ajout) -->
+          <article class="rSection" id="sec-9-catalogue" data-keywords="catalogue creation fiche uniquement points de destin pd pool 12 verrouille">
+            <h3 class="rTitle">ANNEXE · Catalogue (création de fiche uniquement)</h3>
+            <div class="rText">
+              Le <b>Catalogue</b> est la forge officielle de GENTLEMEN.
+              Il sert à construire l’agent <b>une fois</b>, au moment de la création.
+              <div class="hr"></div>
+              <b>Règle absolue :</b> après la création, <b>aucun achat</b> (implants, traits, gadgets, upgrades) n’est disponible “à la carte”.
+              En campagne, l’évolution se fait par <b>conséquences</b> (dettes, accès, risques, réputation), pas par optimisation.
+              <div class="hr"></div>
+
+              <div class="kvRow">
+                <div class="kv">
+                  <div class="k">POOL DE DÉPART</div>
+                  <div class="v"><b>12 PD</b> (Points de Destin)</div>
+                </div>
+                <div class="kv">
+                  <div class="k">DÉPENSE</div>
+                  <div class="v">stats · traits · implants · équipements</div>
+                </div>
+                <div class="kv">
+                  <div class="k">PASSIFS</div>
+                  <div class="v">réduisent l’<b>Énergie max</b></div>
+                </div>
+                <div class="kv">
+                  <div class="k">VERROUILLAGE</div>
+                  <div class="v">création only (par défaut)</div>
+                </div>
+              </div>
+
+              <div class="hr"></div>
+
+              ➤ Accès : <a href="catalogue.html"><b>catalogue.html</b></a>
+            </div>
+
+            <div class="badges">
+              <span class="badge">🧾 12 PD</span>
+              <span class="badge">⧉ Création only</span>
+              <span class="badge">⚡ Passifs = énergie ↓</span>
+            </div>
+          </article>
+
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="mono tiny">
+        PREFS: LOCALSTORAGE · <span id="fxState">FX: ON</span> · <span id="muteState">MUTE: OFF</span>
+      </div>
+      <div class="mono tiny">BUILD: RULES v2.0 — MICHEL CUT</div>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

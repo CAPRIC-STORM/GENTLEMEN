@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>GENTLEMEN — Lore : Projet Héritage</title>
+
+  <link rel="stylesheet" href="assets/css/lore.css" />
+</head>
+
+<body class="fx-on">
+  <!-- Floating Home Dock -->
+<div class="home-dock" id="homeDock">
+  <button class="home-tab" id="homeTab" type="button" aria-expanded="false" title="Ouvrir le dock">
+    <span class="home-tab-g">G</span>
+  </button>
+
+  <div class="home-panel" id="homePanel" aria-hidden="true">
+    <a class="home-action" href="/index.html" data-sfx="click">
+      <span class="home-action-title">TERMINAL PRINCIPAL</span>
+      <span class="home-action-sub">Retour à l’accueil</span>
+    </a>
+  </div>
+</div>
+
+  <!-- 🎞️ Background video -->
+  <video class="bgvid" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <source src="assets/video/bg-loop.webm" type="video/webm">
+    <source src="assets/video/bg-loop.mp4" type="video/mp4">
+  </video>
+
+  <!-- 🖼️ Fallback image -->
+  <div class="bgimg" aria-hidden="true"></div>
+
+  <div class="noise" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="sigil" aria-hidden="true">◼</span>
+      <div class="brand-text">
+        <div class="title">GENTLEMEN</div>
+        <div class="subtitle">DOSSIER NOIR / LUMIA ISLAND</div>
+      </div>
+    </div>
+
+    <!-- ✅ Nav minimale : Lore only -->
+    <nav class="nav">
+      <span class="navchip active">LORE</span>
+    </nav>
+
+    <div class="controls">
+      <button class="btn" id="toggleFx" type="button" title="Réduire les effets (sauvé)">FX</button>
+      <button class="btn" id="toggleDim" type="button" title="Assombrir le fond (sauvé)">DIM</button>
+      <button class="btn" id="toggleAudioMenu" type="button" title="Audio (global)">AUDIO</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel">
+      <div class="panel-brackets" aria-hidden="true">
+        <span class="br tl"></span><span class="br tr"></span>
+        <span class="br bl"></span><span class="br br"></span>
+      </div>
+
+      <div class="panel-head">
+        <div class="panel-head-left">
+          <div class="tag">FICHIER / CLASSIFIÉ</div>
+          <h1 class="h1">PROJET HÉRITAGE <span class="cursor" aria-hidden="true">▌</span></h1>
+          <p class="meta">
+            Statut : <span class="meta-badge">Sous contrôle</span>
+            • Risque : <span class="meta-badge danger">Fissures</span>
+            • Lecture : <span class="meta-badge">Autorisée</span>
+          </p>
+        </div>
+
+        <div class="panel-head-right">
+          <label class="search">
+            <span class="search-label">FIND</span>
+            <input id="findInput" type="search" placeholder="mot-clé (ex: Héritage, Gentleman…)" autocomplete="off" />
+          </label>
+
+          <div class="search-actions">
+            <button class="btn" id="findPrev" type="button">◀</button>
+            <button class="btn" id="findNext" type="button">▶</button>
+            <button class="btn" id="findClear" type="button">CLEAR</button>
+          </div>
+
+          <div class="search-count" id="findCount" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <!-- ✅ COLLE TON LORE ICI -->
+        <article class="lore" id="loreText">
+          <p class="placeholder">
+            <p><strong>GENTLEMEN</strong></p>
+                <p><strong>Chronique d’un monde qui a choisi de continuer</strong></p>
+
+                <p>Le monde n’est pas mort.<br>Il a été maintenu en vie.</p>
+
+                <p>Il y a longtemps que plus personne ne parle d’âge sombre ou d’apocalypse. Ces mots impliqueraient une rupture, un choc, une responsabilité. Or ce monde n’a pas chuté. Il a glissé, doucement, méthodiquement, avec des rapports, des comités et des échéanciers.</p>
+
+                <p>Les villes n’ont pas brûlé : elles se sont dégradées.<br>
+                    Les peuples ne se sont pas révoltés : ils ont signé.<br>
+                    Les idéaux ne se sont pas effondrés : ils ont été externalisés.</p>
+
+                <p>La faim est devenue un problème de distribution.<br>
+                    La guerre, un désaccord contractuel.<br>
+                    La mort, une statistique acceptable.</p>
+
+                <p>Ce monde ne s’est pas effondré par excès de violence, mais par excès de gestion.</p>
+
+                <p>On a appris à appeler la corruption “optimisation”.<br>
+                    La surveillance “prévention”.<br>
+                    L’abandon “réallocation des ressources”.</p>
+
+                <p>Et quand les États ont compris qu’ils n’étaient plus capables d’assumer leurs propres mensonges, ils ont fait ce que toute structure moribonde fait en dernier recours :<br>
+                    ils ont délégué la morale.</p>
+
+                <p>C’est ainsi qu’une nouvelle élite a émergé. Pas des rois, pas des dictateurs. Des gestionnaires du réel. Des individus suffisamment jeunes pour croire encore qu’ils contrôlaient quelque chose, et suffisamment lucides pour savoir que c’était faux. Ils ne promettaient pas un avenir meilleur. Ils garantissaient un futur fonctionnel.</p>
+
+                <p>Le monde n’avait plus besoin d’espoir.<br>
+                    Il avait besoin de continuité.</p>
+
+                <p>Mais la continuité a un coût.</p>
+
+                <p>Les conflits ne disparaissaient pas. Ils changeaient de forme. Des guerres éclataient partout, morcelées, permanentes, sans déclaration officielle. Trop petites pour justifier une mobilisation. Trop nombreuses pour être ignorées. Trop sales pour être montrées.</p>
+
+                <p>Les armées traditionnelles étaient trop lentes.<br>
+                    Les mercenaires trop instables.<br>
+                    Les machines trop stupides.</p>
+
+                <p>Le monde avait besoin de quelque chose d’autre.<br>
+                    Quelque chose de plus discret.<br>
+                    Quelque chose capable de résoudre des situations impossibles sans créer de scandale.</p>
+
+                <p>C’est dans ce contexte que l’idée du <strong>Projet Héritage</strong> a été formulée.</p>
+
+                <p>Pas annoncée.<br>
+                    Formulée.</p>
+
+                <p>Le terme “super-soldat” n’a jamais été utilisé. Trop spectaculaire. Trop honnête. On parlait plutôt de pérennisation humaine, de succession fonctionnelle, d’adaptation à long terme. Le principe était simple : si le monde est devenu invivable pour l’humain standard, alors ce n’est pas le monde qu’il faut changer, mais l’humain.</p>
+
+                <p>Le <strong>Projet Héritage</strong> n’avait rien de grandiose.<br>
+                    Il était froid. Pragmatique. Administrativement parfait.</p>
+
+                <p>On ne cherchait pas à créer des héros.<br>
+                    On cherchait à créer des individus capables de supporter l’état du monde sans le remettre en question.</p>
+
+                <p>Les premiers sujets étaient choisis avec soin. Pas pour leur courage, mais pour leur absence d’ancrage. Des gens déjà détachés. Déjà brisés. Déjà classés comme excédentaires par le système. On ne leur volait pas leur avenir. On recyclait ce qui n’en avait plus.</p>
+
+                <p>Le processus était progressif. Toujours présenté comme réversible. Toujours documenté avec des mots rassurants. Renforcer. Stabiliser. Ajuster. On ne parlait jamais de mutilation, jamais de perte, jamais de ce qui ne reviendrait pas.</p>
+
+                <p>Et pourtant, quelque chose disparaissait à chaque étape.</p>
+
+                <p>Pas l’humanité entière.<br>
+                    Juste ce qu’il fallait pour rester efficace.</p>
+
+                <p>C’est ainsi qu’est apparu le concept de <strong>Gentleman</strong>.</p>
+
+                <p>Un <strong>Gentleman</strong> n’est pas un soldat.<br>
+                    Un <strong>Gentleman</strong> n’est pas un assassin.<br>
+                    C’est un individu capable de commettre des actes moralement indéfendables sans ressentir le besoin de les justifier.</p>
+
+                <p>Un <strong>Gentleman</strong> tue parce que c’est requis.<br>
+                    Il négocie parce que c’est rentable.<br>
+                    Il se retire parce que c’est ordonné.</p>
+
+                <p>Et surtout, il continue.</p>
+
+                <p>Le succès du <strong>Projet Héritage</strong> a été immédiat, et donc fatal.</p>
+
+                <p>Chaque groupe de pouvoir voulait sa version du <strong>Gentleman</strong>. Certains exigeaient une loyauté absolue. D’autres préféraient une indépendance contrôlée. Certains voulaient des exécutants. D’autres des médiateurs armés. On a commencé à ajuster les protocoles. À modifier les paramètres. À introduire des variantes.</p>
+
+                <p>Le <strong>Projet Héritage</strong> est devenu multiple.<br>
+                    Et donc instable.</p>
+
+                <p>Les <strong>Gentlemen</strong> ont commencé à recevoir des ordres contradictoires. Des missions annulées après exécution. Des cibles justifiées par des récits incompatibles. Certains ont été effacés proprement. D’autres recyclés dans de nouvelles fonctions. Quelques-uns ont survécu assez longtemps pour comprendre que le problème n’était pas l’horreur de leurs missions.</p>
+
+                <p>C’était leur absence de sens.</p>
+
+                <p>Le monde qu’ils protégegeaient ne cherchait pas à être sauvé.<br>
+                    Il cherchait seulement à retarder sa propre fin.</p>
+
+                <p>Et le véritable héritage qu’on leur léguait n’était ni la paix, ni l’ordre, ni même le pouvoir.</p>
+
+                <p>C’était la responsabilité de maintenir un système qu’ils n’avaient jamais choisi, pour un avenir qui ne promettait rien.</p>
+
+                <p>Aujourd’hui, le monde tient encore debout.<br>
+                    Les conflits continuent.<br>
+                    Les rapports sont validés.<br>
+                    Les décisions tombent.</p>
+
+                <p>Le <strong>Projet Héritage</strong> existe toujours.<br>
+                    Officiellement sous contrôle.<br>
+                    Officieusement en train de se fissurer.</p>
+
+                <p>Et les <strong>Gentlemen</strong> marchent dans les interstices d’un monde trop fatigué pour s’effondrer, mais trop corrompu pour guérir.</p>
+
+                <p>Un monde qui ne demande plus :<br>
+                    “Que devons-nous faire ?”</p>
+
+                <p>Mais seulement :<br>
+                    “Combien de temps encore pouvons-nous continuer comme ça ?”</p>
+    </p>
+        </article>
+      </div>
+
+      <footer class="panel-foot">
+        <div class="foot-left">
+          <span class="dot"></span>
+          <span id="statusLine">offline-ready • prefs localStorage • audio locked until click</span>
+        </div>
+        <div class="foot-right">
+          <button class="btn" id="scrollTop" type="button">TOP</button>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <!-- 🎧 Audio element -->
+  <audio id="bgAudio" loop preload="none">
+    <source src="assets/audio/bg-lore.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- 🎛 Audio menu (global prefs) -->
+  <div class="audio-menu" id="audioMenu" aria-hidden="true">
+    <div class="audio-head">
+      <div class="audio-title">AUDIO CONTROL</div>
+      <button class="btn btn-mini" id="closeAudioMenu" type="button">X</button>
+    </div>
+
+    <div class="audio-row">
+      <button class="btn" id="audioInit" type="button">INITIALISER</button>
+      <button class="btn hidden" id="audioPlayPause" type="button">PAUSE</button>
+      <button class="btn hidden" id="audioMute" type="button">MUTE</button>
+    </div>
+
+    <div class="audio-row">
+      <label class="audio-label" for="audioVolume">VOLUME</label>
+      <input class="audio-volume hidden" id="audioVolume" type="range" min="0" max="1" step="0.01">
+      <span class="audio-volval hidden" id="audioVolVal">0.40</span>
+    </div>
+
+    <div class="audio-row audio-note">
+      <span>• Préférences audio <strong>globales</strong> (volume/mute).<br>• La musique se coupe en quittant la page.</span>
+    </div>
+  </div>
+
+  <script src="assets/js/lore.js"></script>
+</body>
+</html>

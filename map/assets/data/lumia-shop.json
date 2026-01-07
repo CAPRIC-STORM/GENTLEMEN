@@ -1,0 +1,288 @@
+{
+  "meta": {
+    "title": "Boutique // Lumia Island",
+    "currency": {
+      "name": "Lumen (LMN)",
+      "symbol": "LMN",
+      "desc": "Crédit numérique indexé sur l’énergie et l’accès réseau. Émis par les Comptoirs de la Grande Table, accepté dans tous les districts.",
+      "street": "Scrip",
+      "street_desc": "Billets/jetons de rue pour petites transactions. Convertissable au Ledger Hall (commission).",
+      "notes": [
+        "Les prix sont des plages : ils peuvent varier selon la boutique.",
+        "Les achats 'FAVOR' se règlent narrativement (service, dette, échange)."
+      ]
+    }
+  },
+  "shops": [
+    {
+      "id": "vant_ledgerhall",
+      "name": "Ledger Hall",
+      "district": "Vantacore",
+      "kind": "Banque & Comptes",
+      "tagline": "Comptes, coffres, conversions. Ici l’argent ne dort jamais.",
+      "desc": "Comptoirs. Conversions. Coffres. Ici on blanchit… officiellement.",
+      "sections": [
+        {
+          "title": "Services financiers",
+          "items": [
+            {
+              "name": "Compte Lumen Standard",
+              "price": 200,
+              "unit": "LMN",
+              "note": "Ouverture + identifiant chiffré."
+            },
+            {
+              "name": "Compte 'Ghost' (sans historique visible)",
+              "price": 1200,
+              "unit": "LMN",
+              "note": "Niveau de traçabilité réduit. Risque légal."
+            },
+            {
+              "name": "Coffre sécurisé (mensuel)",
+              "price": 350,
+              "unit": "LMN/mo",
+              "note": "Accès sur créneau. Dépôt scellé."
+            },
+            {
+              "name": "Conversion Scrip → Lumen",
+              "price": 5,
+              "unit": "%",
+              "note": "Commission sur montant converti."
+            }
+          ]
+        },
+        {
+          "title": "Garanties & faveurs",
+          "items": [
+            {
+              "name": "Lettre de crédit 'Baron Tier'",
+              "price": 2500,
+              "unit": "LMN",
+              "note": "Utile pour gros achats (véhicules, biens)."
+            },
+            {
+              "name": "Assurance extraction (1 incident)",
+              "price": 1800,
+              "unit": "LMN",
+              "note": "Clause d’urgence. Détails au Contract Bureau."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vant_exchange",
+      "name": "Black Exchange",
+      "district": "Vantacore",
+      "kind": "Marché noir premium",
+      "tagline": "Tout se négocie. Même ce qui n’existe pas officiellement.",
+      "desc": "Changeur & marché noir. Un sourire, un scan, et la ville se réorganise.",
+      "sections": [
+        {
+          "title": "Biens & consommables",
+          "items": [
+            {
+              "name": "Kit brouillage basique (jetable)",
+              "price": 420,
+              "unit": "LMN",
+              "note": "10–15 min de silence radio local."
+            },
+            {
+              "name": "Pass 'Checkpoints' (1 district)",
+              "price": 650,
+              "unit": "LMN",
+              "note": "Un passage sans fouille, une fois."
+            },
+            {
+              "name": "Mallette de documents vierges",
+              "price": 900,
+              "unit": "LMN",
+              "note": "Base pour faux papiers."
+            }
+          ]
+        },
+        {
+          "title": "Informations",
+          "items": [
+            {
+              "name": "Dossier rumeur (ciblé)",
+              "price": 300,
+              "unit": "LMN",
+              "note": "1 piste exploitable. Qualité variable."
+            },
+            {
+              "name": "Carte des angles morts (zone)",
+              "price": 800,
+              "unit": "LMN",
+              "note": "Réseau caméras / patrouilles — daté du jour."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rust_hardline",
+      "name": "HARDLINE Armory",
+      "district": "Rustbelt",
+      "kind": "Armurerie de terrain",
+      "tagline": "Armes, mods, pièces. Conseils directs, reçus flous.",
+      "desc": "Armes, mods, pièces. On te conseille une poignée… ou une confession.",
+      "sections": [
+        {
+          "title": "Armes RP (guidelines)",
+          "items": [
+            {
+              "name": "Pistolet compact (civil)",
+              "price": 1100,
+              "unit": "LMN",
+              "note": "Concealable. Pas de série."
+            },
+            {
+              "name": "Pistolet lourd (service)",
+              "price": 1800,
+              "unit": "LMN",
+              "note": "Recul fort. Discret si holster."
+            },
+            {
+              "name": "Fusil à pompe (close)",
+              "price": 2400,
+              "unit": "LMN",
+              "note": "Bruyant. Très dissuasif."
+            },
+            {
+              "name": "Carabine (précision)",
+              "price": 3200,
+              "unit": "LMN",
+              "note": "Accessoires non inclus."
+            }
+          ]
+        },
+        {
+          "title": "Mods & entretien",
+          "items": [
+            {
+              "name": "Mod silencieux (calibre standard)",
+              "price": 900,
+              "unit": "LMN",
+              "note": "S’use. Remplacement conseillé."
+            },
+            {
+              "name": "Kit nettoyage + pièces",
+              "price": 160,
+              "unit": "LMN",
+              "note": "Indispensable si pluie / poussière."
+            },
+            {
+              "name": "Munition pack (x50)",
+              "price": 140,
+              "unit": "LMN",
+              "note": "Type au choix selon stock."
+            },
+            {
+              "name": "Gravure d’anonymat",
+              "price": 600,
+              "unit": "LMN",
+              "note": "Marquage retiré. Garantie annulée."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rust_workshoprow",
+      "name": "Workshop Row",
+      "district": "Rustbelt",
+      "kind": "Ateliers & véhicules",
+      "tagline": "Réparation, custom, montage. 'On fait rouler l’impossible.'",
+      "desc": "Réparations rapides. Fabrication. Factures floues, travail net.",
+      "sections": [
+        {
+          "title": "Véhicules (RP)",
+          "items": [
+            {
+              "name": "Moto urbaine (d’occasion)",
+              "price": 6800,
+              "unit": "LMN",
+              "note": "Rapide. Bruit modéré."
+            },
+            {
+              "name": "Berline blindée légère",
+              "price": 18500,
+              "unit": "LMN",
+              "note": "Look corporate. Protection discrète."
+            },
+            {
+              "name": "Van utilitaire (cargo)",
+              "price": 13200,
+              "unit": "LMN",
+              "note": "Idéal pour extraction / planque mobile."
+            },
+            {
+              "name": "Drone-courrier (semi-auto)",
+              "price": 5400,
+              "unit": "LMN",
+              "note": "Livraisons rapides. Batterie incluse."
+            }
+          ]
+        },
+        {
+          "title": "Services",
+          "items": [
+            {
+              "name": "Réparation express (mineure)",
+              "price": 220,
+              "unit": "LMN",
+              "note": "1–2h."
+            },
+            {
+              "name": "Révision complète",
+              "price": 900,
+              "unit": "LMN",
+              "note": "24h. Pièces non incluses."
+            },
+            {
+              "name": "Peinture 'Neutral' (anti-reconnaissance)",
+              "price": 750,
+              "unit": "LMN",
+              "note": "Change l’empreinte visuelle."
+            },
+            {
+              "name": "Compartiment caché (véhicule)",
+              "price": 1200,
+              "unit": "LMN",
+              "note": "Volume variable. Risque douane."
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "grid_gildedhall",
+      "name": "Gilded Hall",
+      "district": "Manhattan Grid",
+      "kind": "Immobilier & accès",
+      "tagline": "Tapis épais. Les clés s’échangent en silence.",
+      "desc": "Salle de rencontre. Tapis épais. Les secrets ne résonnent pas — ils s’impriment.",
+      "sections": [
+        {
+          "title": "Appartements (RP)",
+          "items": [
+            { "name": "Studio — Manhattan Grid (mensuel)", "price": 2200, "unit": "LMN/mo", "note": "Proche Metro Hub." },
+            { "name": "Loft — Shin Arcade (mensuel)", "price": 2600, "unit": "LMN/mo", "note": "Bruit inclus. Vue néon." },
+            { "name": "Appartement — Nouvelle-Paris (mensuel)", "price": 3100, "unit": "LMN/mo", "note": "Adresse 'respectable'." },
+            { "name": "Penthouse — Skyline Ward (mensuel)", "price": 5200, "unit": "LMN/mo", "note": "Accès SkyDock, sécurité." }
+          ]
+        },
+        {
+          "title": "Achat (RP)",
+          "items": [
+            { "name": "Micro-appartement (achat)", "price": 48000, "unit": "LMN", "note": "Quartiers variables. Paperwork requis." },
+            { "name": "Appartement standard (achat)", "price": 110000, "unit": "LMN", "note": "Contrat + taxes + 'frais'." },
+            { "name": "Penthouse (achat)", "price": 290000, "unit": "LMN", "note": "Nécessite lettre de crédit." }
+          ]
+        }
+      ]
+    }
+  ]
+}

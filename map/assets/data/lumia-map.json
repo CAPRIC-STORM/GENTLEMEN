@@ -1,0 +1,319 @@
+{
+  "meta": { "city": "Lumia Island", "version": "4.0", "notes": "Routes searchable + better POI descriptions + connections." },
+
+  "districts": [
+    { "id": "d1", "name": "Vantacore", "function": "Comptes, dettes, arbitrages. Le cœur administratif du crime.", "label": { "x": 600, "y": 405 } },
+    { "id": "d2", "name": "Shin Arcade", "function": "Néons, rumeurs, fixers. Ici, tout s’échange.", "label": { "x": 1035, "y": 395 } },
+    { "id": "d3", "name": "Manhattan Grid", "function": "Façade légale, tours, contrats. Le masque propre.", "label": { "x": 840, "y": 510 } },
+    { "id": "d4", "name": "Nouvelle-Paris", "function": "Archives, salons, souterrains. Mémoire et secrets.", "label": { "x": 540, "y": 320 } },
+    { "id": "d5", "name": "Rustbelt", "function": "Ateliers, pièces, fabrication. Le métal parle.", "label": { "x": 610, "y": 720 } },
+    { "id": "d6", "name": "BioMire", "function": "Clinique, biotech, augmentations. La chair se négocie.", "label": { "x": 900, "y": 700 } },
+    { "id": "d7", "name": "Skyline Ward", "function": "Rooftops, drones, transit. Les yeux de la ville.", "label": { "x": 1010, "y": 270 } },
+    { "id": "d8", "name": "Harborline", "function": "Docks, transit, conteneurs. Les cargaisons sans origine.", "label": { "x": 380, "y": 565 } },
+    { "id": "d9", "name": "Signal Basilica", "function": "Relais, médias, brouillage. Contrôle du récit.", "label": { "x": 770, "y": 265 } },
+    { "id": "d10", "name": "Nocturne Ring", "function": "Arènes, règlements, paris. L’honneur se paie.", "label": { "x": 1120, "y": 635 } }
+  ],
+
+  "districtShapes": [
+    { "id": "d9",  "path": "M640,215 C725,190 820,200 900,265 C855,315 765,340 675,320 C630,290 620,255 640,215 Z" },
+    { "id": "d7",  "path": "M845,170 C960,160 1080,225 1125,305 C1075,355 980,370 885,340 C835,295 825,235 845,170 Z" },
+    { "id": "d2",  "path": "M930,310 C1010,290 1100,335 1125,415 C1085,465 1000,480 920,455 C900,415 900,350 930,310 Z" },
+    { "id": "d3",  "path": "M690,345 C820,330 960,385 1010,490 C930,555 800,565 700,535 C655,485 645,400 690,345 Z" },
+    { "id": "d10", "path": "M1050,470 C1140,485 1210,565 1220,660 C1165,745 1075,785 985,750 C970,660 985,535 1050,470 Z" },
+    { "id": "d6",  "path": "M770,565 C885,555 1005,620 1035,720 C965,790 850,805 760,770 C720,720 715,630 770,565 Z" },
+    { "id": "d5",  "path": "M520,585 C625,545 735,555 770,615 C745,705 640,780 535,775 C465,725 465,645 520,585 Z" },
+    { "id": "d8",  "path": "M300,430 C390,365 520,355 590,395 C570,495 475,565 380,560 C315,525 270,485 300,430 Z" },
+    { "id": "d4",  "path": "M400,235 C500,195 635,200 690,250 C675,335 585,390 500,380 C420,335 360,285 400,235 Z" },
+    { "id": "d1",  "path": "M540,380 C610,335 675,345 700,395 C675,460 620,505 550,505 C505,460 505,415 540,380 Z" }
+  ],
+
+  "routes": [
+    {
+      "id": "axis_cross",
+      "kind": "road",
+      "name": "LA CROIX NOIRE",
+      "desc": "Axes structurants. Contrôles mobiles. Un itinéraire « simple » finit toujours par coûter quelque chose.",
+      "label": { "x": 650, "y": 465 },
+      "segments": [
+        { "points": [[640,160],[640,260],[640,390],[640,560],[640,790]] },
+        { "points": [[320,520],[470,500],[640,480],[840,465],[1160,455]] }
+      ]
+    },
+    {
+      "id": "rail_ring",
+      "kind": "rail",
+      "name": "RINGLINE FREIGHT",
+      "desc": "Boucle de fret périphérique. Transit discret. Les wagons parlent plus que des hommes — et la ville écoute.",
+      "label": { "x": 860, "y": 830 },
+      "points": [[275,620],[255,485],[290,360],[390,275],[540,235],[700,225],[860,250],[1020,315],[1140,445],[1165,595],[1120,735],[995,820],[830,860],[650,875],[470,845],[340,770],[275,620]]
+    }
+  ],
+
+  "locations": [
+    {
+      "id":"safehouse_central","district":"d3","name":"Safehouse Central","type":"hub","x":740,"y":470,
+      "desc":"Planque neutre. Briefings, stockage discret, extraction rapide. À deux minutes du Metro Hub.",
+      "links":["grid_metrohub","grid_contracts"]
+    },
+
+    {
+      "id":"vant_ledgerhall","district":"d1","name":"Ledger Hall","type":"finance","x":620,"y":410,
+      "desc":"Salle des comptes. Clauses, dettes, arbitrages. Les signatures ici valent plus que des balles.",
+      "links":["vant_vault19","grid_writsteel"]
+    },
+    {
+      "id":"vant_vault19","district":"d1","name":"Vault 19","type":"secure","x":670,"y":445,
+      "desc":"Coffres privés. Accès strict. Les clés ne sont jamais uniques — elles sont « partagées » par nécessité.",
+      "links":["vant_ledgerhall","vant_exchange"]
+    },
+    {
+      "id":"vant_broker","district":"d1","name":"Broker’s Corner","type":"contact","x":585,"y":455,
+      "desc":"Intermédiaires. Une phrase = une porte… ou une dette. Les fixers y changent de visage.",
+      "links":["shin_fixerbooth","grid_contracts"]
+    },
+    {
+      "id":"vant_cleanroom","district":"d1","name":"Clean Room","type":"service","x":600,"y":385,
+      "desc":"Effacement, remise à neuf, traces minimisées. On y « nettoie » des identités comme des armes.",
+      "links":["vant_exchange","paris_catacombs"]
+    },
+    {
+      "id":"vant_exchange","district":"d1","name":"Black Exchange","type":"market","x":655,"y":485,
+      "desc":"Marché d’accès. Badges, identités, invitations temporaires. Les prix montent quand le silence tombe.",
+      "links":["vant_vault19","signal_pressvault"]
+    },
+
+    {
+      "id":"shin_nightstrip","district":"d2","name":"Nightstrip","type":"district_core","x":1030,"y":360,
+      "desc":"Avenue néon. Foule, deals, regards qui coûtent cher. Les caméras sourient… puis enregistrent.",
+      "links":["shin_kitsune","shin_backroom13"]
+    },
+    {
+      "id":"shin_vrpit","district":"d2","name":"VR Pit","type":"training","x":980,"y":395,
+      "desc":"Simulations. Entraînement, tests, fuite. Les erreurs se paient en données… ou en sang.",
+      "links":["ring_nocturnearena","sky_rooftopspine"]
+    },
+    {
+      "id":"shin_kitsune","district":"d2","name":"Kitsune Lounge","type":"social","x":1085,"y":410,
+      "desc":"Salon privé. Négociations feutrées. Règle tacite : pas de noms, pas de preuves.",
+      "links":["grid_gildedhall","paris_salonverre"]
+    },
+    {
+      "id":"shin_backroom13","district":"d2","name":"Backroom 13","type":"black_market","x":1095,"y":355,
+      "desc":"Pièce sans enseigne. Objets rares. Contacts d’un soir. Les vitrines n’ont jamais de reflets.",
+      "links":["rust_greymarket","vant_exchange"]
+    },
+    {
+      "id":"shin_fixerbooth","district":"d2","name":"Fixer Booth","type":"contact","x":1005,"y":350,
+      "desc":"Booth sans nom. Une mission naît d’une phrase. La sortie est toujours derrière toi.",
+      "links":["vant_broker","grid_contracts"]
+    },
+
+    {
+      "id":"grid_contracts","district":"d3","name":"Contract Bureau","type":"contracts","x":840,"y":450,
+      "desc":"Dépôt de contrats. Clauses, primes, délais. Les dossiers se ferment, jamais les histoires.",
+      "links":["grid_writsteel","vant_broker","ring_housebook"]
+    },
+    {
+      "id":"grid_writsteel","district":"d3","name":"Writ & Steel","type":"legal","x":880,"y":505,
+      "desc":"Cabinet juridique. Couverture parfaite. Vérités incomplètes, signatures impeccables.",
+      "links":["vant_ledgerhall","grid_contracts"]
+    },
+    {
+      "id":"grid_obsidian","district":"d3","name":"Obsidian Tower","type":"corporate","x":940,"y":530,
+      "desc":"Siège vitrine. Accès badge. Les angles morts se louent à l’heure.",
+      "links":["signal_broadcast","sky_controlneedle"]
+    },
+    {
+      "id":"grid_metrohub","district":"d3","name":"Metro Hub","type":"transit","x":760,"y":545,
+      "desc":"Nœud de transport. Disparaître y est facile. Réapparaître dépend du prix.",
+      "links":["safehouse_central","harbor_docks"]
+    },
+    {
+      "id":"grid_gildedhall","district":"d3","name":"Gilded Hall","type":"meeting","x":815,"y":520,
+      "desc":"Salle de rencontre. Tapis épais. Les secrets ne résonnent pas — ils s’impriment.",
+      "links":["shin_kitsune","paris_salonverre"]
+    },
+
+    {
+      "id":"paris_noirmuseum","district":"d4","name":"Musée Noir","type":"archive","x":520,"y":290,
+      "desc":"Collections & archives. Certaines salles ne sont pas officielles — elles sont nécessaires.",
+      "links":["paris_sepia","signal_pressvault"]
+    },
+    {
+      "id":"paris_sepia","district":"d4","name":"Archive Sépia","type":"archive","x":570,"y":340,
+      "desc":"Papier, encre, preuves. Le passé a des clés, et parfois des prix.",
+      "links":["paris_noirmuseum","vant_ledgerhall"]
+    },
+    {
+      "id":"paris_salonverre","district":"d4","name":"Salon de Verre","type":"social","x":610,"y":300,
+      "desc":"Rencontres privées. Invitations. On y parle bas, mais on y décide haut.",
+      "links":["grid_gildedhall","shin_kitsune"]
+    },
+    {
+      "id":"paris_catacombs","district":"d4","name":"Galeries Souterraines","type":"underground","x":520,"y":360,
+      "desc":"Passages sous la ville. Sorties multiples. Les murs y ont de la mémoire.",
+      "links":["harbor_underpier","vant_cleanroom"]
+    },
+    {
+      "id":"paris_continental","district":"d4","name":"Continental Annex","type":"safe","x":660,"y":320,
+      "desc":"Hôtel neutre. Règles strictes. Les conflits restent dehors… en principe.",
+      "links":["grid_gildedhall","vant_vault19"]
+    },
+
+    {
+      "id":"rust_hardline","district":"d5","name":"HARDLINE Armory","type":"weapon_shop","x":580,"y":700,
+      "desc":"Armes, mods, pièces. On te conseille une poignée… ou une confession.",
+      "links":["rust_workshoprow","ring_nocturnearena"]
+    },
+    {
+      "id":"rust_workshoprow","district":"d5","name":"Workshop Row","type":"workshop","x":650,"y":720,
+      "desc":"Réparations rapides. Fabrication. Factures floues, travail net.",
+      "links":["rust_scrapgate","sky_dronebay"]
+    },
+    {
+      "id":"rust_scrapgate","district":"d5","name":"Scrapyard Gate","type":"industry","x":540,"y":740,
+      "desc":"Ferraille & carcasses. Les numéros disparaissent, les pièces restent.",
+      "links":["harbor_warehousek","rust_workshoprow"]
+    },
+    {
+      "id":"rust_substation6","district":"d5","name":"Substation 6","type":"infrastructure","x":700,"y":675,
+      "desc":"Sous-station. Coupures stratégiques. Une ville peut devenir silencieuse en 10 secondes.",
+      "links":["signal_datacathedral","sky_controlneedle"]
+    },
+    {
+      "id":"rust_greymarket","district":"d5","name":"Marché Gris","type":"black_market","x":740,"y":660,
+      "desc":"Matériel, infos, accès. Tout se négocie — même la patience.",
+      "links":["shin_backroom13","harbor_docks"]
+    },
+
+    {
+      "id":"bio_complex7","district":"d6","name":"BioMire — Complexe 7","type":"laboratory","x":875,"y":650,
+      "desc":"Laboratoires & protocoles. Les badges changent de couleur, les souvenirs aussi.",
+      "links":["bio_quarantine","signal_datacathedral"]
+    },
+    {
+      "id":"bio_hushclinic","district":"d6","name":"Clinique Hush","type":"medical","x":830,"y":690,
+      "desc":"Soins discrets. Paiement avant anesthésie. Un patient sur trois n’a pas d’identité.",
+      "links":["paris_continental","vant_cleanroom"]
+    },
+    {
+      "id":"bio_implantbay","district":"d6","name":"Implant Bay","type":"augmentation","x":940,"y":710,
+      "desc":"Augmentations. Calibrage. Garantie limitée. Les cicatrices, elles, sont illimitées.",
+      "links":["sky_skydock03","rust_workshoprow"]
+    },
+    {
+      "id":"bio_quarantine","district":"d6","name":"Quarantine Wing","type":"secure","x":980,"y":665,
+      "desc":"Zone verrouillée. Accès stérile. Portes à sens unique, questions à sens interdit.",
+      "links":["bio_complex7","signal_jammerloft"]
+    },
+    {
+      "id":"bio_coldstore","district":"d6","name":"Cold Storage","type":"storage","x":905,"y":760,
+      "desc":"Échantillons. Certaines caisses n’ont pas d’étiquette… et certaines respirent encore.",
+      "links":["harbor_warehousek","vant_vault19"]
+    },
+
+    {
+      "id":"sky_skydock03","district":"d7","name":"SkyDock 03","type":"air_transport","x":990,"y":235,
+      "desc":"Plateforme aérienne. Drones, taxis, accès sécurisés. Les départs sont faciles, les autorisations non.",
+      "links":["bio_implantbay","sky_controlneedle"]
+    },
+    {
+      "id":"sky_rooftopspine","district":"d7","name":"Rooftop Spine","type":"infiltration","x":920,"y":260,
+      "desc":"Ligne de toits. Accès rapides. Chutes longues. Les ombres y font carrière.",
+      "links":["shin_vrpit","grid_obsidian"]
+    },
+    {
+      "id":"sky_controlneedle","district":"d7","name":"Control Needle","type":"surveillance","x":1065,"y":270,
+      "desc":"Tour de contrôle. Radars, autorisations. Une lumière rouge peut arrêter un convoi entier.",
+      "links":["grid_obsidian","rust_substation6"]
+    },
+    {
+      "id":"sky_dronebay","district":"d7","name":"Drone Bay","type":"infrastructure","x":1040,"y":320,
+      "desc":"Hangar drones. Maintenance. Batteries. On y change des yeux… et des souvenirs.",
+      "links":["rust_workshoprow","signal_spire"]
+    },
+    {
+      "id":"sky_freightlift","district":"d7","name":"Freight Elevator","type":"transit","x":900,"y":320,
+      "desc":"Ascenseur de fret. Verticalité. Bruit contrôlé. Des caisses montent, des gens descendent.",
+      "links":["harbor_customs","grid_metrohub"]
+    },
+
+    {
+      "id":"harbor_docks","district":"d8","name":"Harborline Docks","type":"port","x":380,"y":520,
+      "desc":"Docks, grues, conteneurs. Listes de chargement flexibles. Le sel couvre les traces.",
+      "links":["grid_metrohub","rust_greymarket"]
+    },
+    {
+      "id":"harbor_customs","district":"d8","name":"Customs Office","type":"legal","x":430,"y":490,
+      "desc":"Douanes. Tampons. Portes qui s’ouvrent à l’encre… ou à la peur.",
+      "links":["sky_freightlift","harbor_warehousek"]
+    },
+    {
+      "id":"harbor_warehousek","district":"d8","name":"Warehouse K","type":"storage","x":340,"y":565,
+      "desc":"Entrepôt. Zones froides et sèches. Caisses sans origine, registres sans fin.",
+      "links":["harbor_customs","bio_coldstore","rust_scrapgate"]
+    },
+    {
+      "id":"harbor_tugstation","district":"d8","name":"Tug Station","type":"infrastructure","x":415,"y":575,
+      "desc":"Remorqueurs. Départs rapides. Arrivées discrètes. Le moteur couvre les aveux.",
+      "links":["harbor_underpier","rail_ring"]
+    },
+    {
+      "id":"harbor_underpier","district":"d8","name":"Underpier","type":"underground","x":360,"y":610,
+      "desc":"Sous les docks. Rencontres brèves. Voix basses. Les vagues effacent les serments.",
+      "links":["paris_catacombs","harbor_tugstation"]
+    },
+
+    {
+      "id":"signal_datacathedral","district":"d9","name":"Data-Cathédrale","type":"data_center","x":740,"y":255,
+      "desc":"Relais, stockage, diffusion. Les secrets ont une température… et une sauvegarde.",
+      "links":["bio_complex7","signal_jammerloft"]
+    },
+    {
+      "id":"signal_broadcast","district":"d9","name":"Broadcast Core","type":"media","x":820,"y":275,
+      "desc":"Couper un flux change une ville. Ou l’enrôle. Ici, la vérité est un curseur.",
+      "links":["grid_obsidian","signal_pressvault"]
+    },
+    {
+      "id":"signal_jammerloft","district":"d9","name":"Jammer Loft","type":"tech","x":780,"y":305,
+      "desc":"Brouillage. Silences. Fenêtres de tir numériques. Un appel peut ne jamais exister.",
+      "links":["bio_quarantine","signal_datacathedral"]
+    },
+    {
+      "id":"signal_pressvault","district":"d9","name":"Press Vault","type":"archive","x":705,"y":300,
+      "desc":"Images, preuves, montages. Le vrai est malléable, le faux est rentable.",
+      "links":["paris_noirmuseum","vant_exchange"]
+    },
+    {
+      "id":"signal_spire","district":"d9","name":"Signal Spire","type":"landmark","x":790,"y":235,
+      "desc":"Antenne. Vue large. Le vent porte des conversations — et parfois des ordres.",
+      "links":["sky_dronebay","signal_broadcast"]
+    },
+
+    {
+      "id":"ring_nocturnearena","district":"d10","name":"Nocturne Arena","type":"combat_zone","x":1125,"y":585,
+      "desc":"Duels, paris, règlements. Ici, tout a un prix… surtout le respect.",
+      "links":["ring_housebook","rust_hardline"]
+    },
+    {
+      "id":"ring_housebook","district":"d10","name":"House Book","type":"contracts","x":1160,"y":630,
+      "desc":"Registre. Noms. Dettes. Sanctions. Une ligne peut ruiner une vie.",
+      "links":["grid_contracts","ring_nocturnearena"]
+    },
+    {
+      "id":"ring_cage","district":"d10","name":"The Cage","type":"combat_zone","x":1195,"y":590,
+      "desc":"Zone de test. On prouve. On ne discute pas. Les caméras n’ont pas d’émotion.",
+      "links":["ring_backstage","shin_vrpit"]
+    },
+    {
+      "id":"ring_backstage","district":"d10","name":"Backstage Corridor","type":"secure","x":1105,"y":635,
+      "desc":"Couloirs. Vestiaires. Discussions sans témoins. Les sourires y sont dangereux.",
+      "links":["ring_housebook","ring_exittunnel"]
+    },
+    {
+      "id":"ring_exittunnel","district":"d10","name":"Exit Tunnel","type":"underground","x":1130,"y":705,
+      "desc":"Sortie rapide. Jamais gratuite. Certains tunnels mènent à une seule question.",
+      "links":["paris_catacombs","harbor_underpier"]
+    }
+  ]
+}

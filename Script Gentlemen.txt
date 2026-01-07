@@ -1,0 +1,303 @@
+# GM NOTE — ROADMAP GENTLEMEN
+
+## Exploitation des districts & lieux autour du Projet Héritage
+
+---
+
+## STRUCTURE GLOBALE DE CAMPAGNE (VISION)
+
+ Arc 1 — Le Monde Fonctionne
+  Les PJ sont des exécutants. Missions propres. Peu de questions.
+ Arc 2 — Le Projet Héritage
+  Indices, incohérences, variantes du programme.
+ Arc 3 — Guerre Invisible des Barons
+  Conflits indirects, manipulations, choix moraux.
+ Arc 4 — Effondrement Contrôlé
+  Le système se fissure, les PJ deviennent facteurs de rupture.
+ Arc 5 — Héritage Réel
+  Décision finale : perpétuer, détourner ou briser l’Héritage.
+
+Les districts servent de leviers narratifs, pas de simples décors.
+
+---
+
+## D1 — VANTACORE
+
+Fonction narrative : le contrôle par la dette et l’identité
+
+### Rôle dans l’histoire
+
+ Centre de verrouillage administratif du Projet Héritage
+ Tout ce qui touche à :
+
+   identité des PJ
+   contrats
+   conséquences légales
+   “ce qui arrive si vous refusez”
+
+### Lieux clés & usage
+
+ Ledger Hall
+  → Révélations sur contrats truqués, clauses cachées
+  → Arc 2–3 : découverte que les PJ sont juridiquement “possédés”
+ Vault 19
+  → Secrets : clés génétiques, identités alternatives, sauvegardes de consciences
+  → Arc 4 : enjeu majeur (détruire / voler / révéler)
+ Black Exchange
+  → Accès à des identités temporaires, missions off-book
+  → Arc 3 : double-jeu des Barons
+ Clean Room
+  → Effacement post-mission, réparation narrative
+  → Arc 1–2 : normalisation / Arc 4 : soupçons
+
+---
+
+## D2 — SHIN ARCADE
+
+Fonction narrative : la rumeur, le mensonge et l’illusion de liberté
+
+### Rôle dans l’histoire
+
+ Là où le Projet Héritage devient mythe
+ Fixers, rumeurs, versions contradictoires
+
+### Lieux clés
+
+ Fixer Booth
+  → Missions “qui n’existent pas”
+  → Arc 1 : missions simples / Arc 3 : manipulations
+ VR Pit
+  → Tests, entraînements, simulations de missions réelles
+  → Arc 2 : indices que les PJ ont déjà “vécu” certaines scènes
+ Backroom 13
+  → Accès à versions alternatives du Projet
+  → Arc 3 : Gentlemen divergents
+ Kitsune Lounge
+  → Négociations entre factions
+  → Arc 3–4 : trahisons feutrées
+
+---
+
+## D3 — MANHATTAN GRID
+
+Fonction narrative : le masque légal
+
+### Rôle
+
+ Tout ce qui rend l’horreur acceptable
+ Là où le crime devient procédure
+
+### Lieux clés
+
+ Contract Bureau
+  → Déclencheur de missions
+  → Arc 1–2 : confiance / Arc 3 : incohérences
+ Writ & Steel
+  → Réécriture rétroactive de la vérité
+  → Arc 3 : preuve que “tout est légal”
+ Safehouse Central
+  → Base PJ, sentiment de neutralité
+  → Arc 4 : plus si safe que ça
+ Obsidian Tower
+  → Commanditaires réels, vrais bénéficiaires
+  → Arc 3–4 : cibles finales possibles
+
+---
+
+## D4 — NOUVELLE-PARIS
+
+Fonction narrative : la mémoire et la culpabilité
+
+### Rôle
+
+ Là où la vérité existe encore, mais cachée
+
+### Lieux clés
+
+ Archive Sépia
+  → Dossiers originaux du Projet Héritage
+  → Arc 2 : premières fissures
+ Musée Noir
+  → Prototypes ratés, anciennes versions de Gentlemen
+  → Arc 3 : horreur morale
+ Galeries Souterraines
+  → Fuite, passage, connexions interdites
+  → Arc 3–4 : déplacements clandestins
+ Continental Annex
+  → Neutralité relative
+  → Arc 2 : règles / Arc 4 : rupture de règles
+
+---
+
+## D5 — RUSTBELT
+
+Fonction narrative : la matérialité brutale
+
+### Rôle
+
+ Là où le Projet Héritage devient physique
+ Armes, implants, coupures
+
+### Lieux clés
+
+ HARDLINE Armory
+  → Évolution de l’équipement
+  → Arc 1–5 : escalade
+ Workshop Row
+  → Modifications sur le terrain
+  → Arc 2 : bricolage interdit
+ Substation 6
+  → Sabotages stratégiques
+  → Arc 3 : guerre indirecte
+ Marché Gris
+  → Infos et matos non traçables
+  → Arc 3–4 : indépendance PJ
+
+---
+
+## D6 — BIOMIRE
+
+Fonction narrative : le cœur du Projet Héritage
+
+### Rôle
+
+ Origine, vérité biologique, monstruosité froide
+
+### Lieux clés
+
+ Complexe 7
+  → Origine des PJ / dossiers incomplets
+  → Arc 2 : révélation
+ Implant Bay
+  → Améliorations / choix mécaniques
+  → Arc 2–5 : tentation
+ Quarantine Wing
+  → Gentlemen instables
+  → Arc 3 : miroir sombre
+ Cold Storage
+  → Corps, données, consciences
+  → Arc 4 : choix irréversibles
+
+---
+
+## D7 — SKYLINE WARD
+
+Fonction narrative : surveillance et contrôle
+
+### Rôle
+
+ Vision globale, autorisations, blocages
+
+### Lieux clés
+
+ Control Needle
+  → Verrouillage de la ville
+  → Arc 3–5 : enjeu stratégique
+ Drone Bay
+  → Surveillance omniprésente
+  → Arc 1 : décor / Arc 4 : parano
+ Rooftop Spine
+  → Infiltrations
+  → Arc 2–5 : gameplay vertical
+ SkyDock 03
+  → Extractions
+  → Arc 4 : point de non-retour
+
+---
+
+## D8 — HARBORLINE
+
+Fonction narrative : le transit du sale
+
+### Rôle
+
+ Entrées/sorties, disparitions
+
+### Lieux clés
+
+ Warehouse K
+  → Stockage Héritage
+  → Arc 2–3
+ Underpier
+  → Contacts clandestins
+  → Arc 3 : bas-fonds
+ Customs Office
+  → Frontière légale
+  → Arc 1–2 : corruption visible
+
+---
+
+## D9 — SIGNAL BASILICA
+
+Fonction narrative : la vérité malléable
+
+### Rôle
+
+ Contrôle du récit
+
+### Lieux clés
+
+ Data-Cathédrale
+  → Données complètes du Projet
+  → Arc 4 : clé finale
+ Broadcast Core
+  → Manipulation de masse
+  → Arc 3–5 : changer le monde
+ Press Vault
+  → Preuves / montages
+  → Arc 4 : révélation ou mensonge
+
+---
+
+## D10 — NOCTURNE RING
+
+Fonction narrative : la violence ritualisée
+
+### Rôle
+
+ Régler ce que la politique ne peut plus contenir
+
+### Lieux clés
+
+ Nocturne Arena
+  → Tests, duels, éliminations
+  → Arc 1–3
+ House Book
+  → Dettes de sang
+  → Arc 3–5 : condamnations
+ The Cage
+  → Gentlemen expérimentaux
+  → Arc 2 : avertissement
+ Exit Tunnel
+  → Fuites définitives
+  → Arc 4–5 : conséquences
+
+---
+
+## SYNTHÈSE GM
+
+ Les lieux = leviers, pas décors
+ Chaque district correspond à une facette morale du monde
+ Le Projet Héritage est :
+
+   né à BioMire
+   verrouillé à Vantacore
+   légitimé au Grid
+   dissimulé à Signal
+   testé au Ring
+   déplacé par Harborline
+   surveillé par Skyline
+   mémorisé à Nouvelle-Paris
+   armé à Rustbelt
+   mythifié à Shin Arcade
+
+---
+
+Si tu veux ensuite :
+
+ Arc par arc détaillé
+ Factions internes aux Barons
+ Déclinaisons de Gentlemen (variants)
+ Fin multiples possibles
+
+👉 dis-moi où tu veux pousser la lame.

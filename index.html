@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GENTLEMEN — Terminal</title>
+
+  <!-- Fonts (tu peux les remplacer plus tard par des fichiers dans assets/fonts si tu veux 100% offline) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Oxanium:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="bg">
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="noise" aria-hidden="true"></div>
+  </div>
+
+  <!-- TOPBAR -->
+  <header class="topbar" role="banner">
+    <div class="brand">
+      <span class="brandMark" aria-hidden="true">G</span>
+      <div class="brandText">
+        <div class="brandTitle">GENTLEMEN</div>
+        <div class="brandSub">TERMINAL D’ACCÈS • CLASSIFIÉ</div>
+      </div>
+    </div>
+
+    <nav class="topbarActions" aria-label="Contrôles">
+      <button class="btn ghost" id="btnMusic" type="button" aria-pressed="false" title="Activer / Couper la musique">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="musicLabel">MUSIQUE: VERROUILLÉE</span>
+      </button>
+
+      <button class="btn ghost" id="btnEffects" type="button" aria-pressed="false" title="Réduire les effets">
+        EFFETS: <span id="effectsLabel">ON</span>
+      </button>
+
+      <div class="volWrap" title="Volume (après initialisation)">
+        <label class="volLabel" for="vol">VOL</label>
+        <input id="vol" type="range" min="0" max="100" value="65" />
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="shell" role="main">
+    <section class="hero card">
+      <div class="heroLeft">
+        <div class="gLogo" aria-hidden="true">
+          <div class="gFrame">
+            <div class="gInner">G</div>
+          </div>
+          <div class="gTag">GENTLEMEN</div>
+        </div>
+      </div>
+
+      <div class="heroRight">
+        <div class="hudLine">
+          <span class="pill">ACCÈS</span>
+          <span class="pill">DOSSIERS</span>
+          <span class="pill">INFRASTRUCTURE</span>
+        </div>
+
+        <h1 class="title">BIENVENUE, AGENTS.</h1>
+        <p class="lead">
+          Ce terminal est votre point d’entrée. Ici, vous consultez l’univers, les données sensibles,
+          et les contrats disponibles. Rien ne s’exécute sans votre validation.
+        </p>
+
+        <div class="divider"></div>
+
+        <div class="grid">
+          <a class="tile" href="lore/lore.html" data-sfx="click">
+            <div class="tileTop">
+              <span class="tileKicker">MODULE</span>
+              <span class="tileBadge">OUVERT</span>
+            </div>
+            <div class="tileTitle">UNIVERS</div>
+            <div class="tileDesc">Chronique officielle, contexte, termes et lignes rouges.</div>
+          </a>
+
+          <a class="tile" href="gentlemen-terminal/catalogue.html" data-sfx="click">
+            <div class="tileTop">
+              <span class="tileKicker">MODULE</span>
+              <span class="tileBadge">OUVERT</span>
+            </div>
+            <div class="tileTitle">CATALOGUE</div>
+            <div class="tileDesc">Fiches, dossiers, ressources et accès rapides.</div>
+          </a>
+
+          <a class="tile" href="map/index.html" data-sfx="click">
+            <div class="tileTop">
+              <span class="tileKicker">MODULE</span>
+              <span class="tileBadge">OUVERT</span>
+            </div>
+            <div class="tileTitle">CARTE</div>
+            <div class="tileDesc">Vue globale, districts, repères et points d’intérêt.</div>
+          </a>
+
+          <a class="tile" href="map/shop/index.html" data-sfx="click">
+            <div class="tileTop">
+              <span class="tileKicker">MODULE</span>
+              <span class="tileBadge">OUVERT</span>
+            </div>
+            <div class="tileTitle">BOUTIQUES</div>
+            <div class="tileDesc">Économie RP, achats, upgrades et services.</div>
+          </a>
+        </div>
+
+        <div class="footerHint">
+          <span class="kbd">ENTRÉE</span> Initialiser le terminal •
+          <span class="kbd">M</span> Musique •
+          <span class="kbd">E</span> Effets
+        </div>
+      </div>
+    </section>
+
+    <section class="statusRow">
+      <div class="status cardMini">
+        <div class="statusLabel">STATUT</div>
+        <div class="statusValue" id="statusValue">EN ATTENTE D’INITIALISATION</div>
+      </div>
+      <div class="status cardMini">
+        <div class="statusLabel">PROFIL</div>
+        <div class="statusValue">AGENT • SESSION LOCALE</div>
+      </div>
+      <div class="status cardMini">
+        <div class="statusLabel">SÉCURITÉ</div>
+        <div class="statusValue">PROTOCOLE: SILENCIEUX</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- INIT OVERLAY (no autoplay, user must act) -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Initialisation du terminal">
+    <div class="overlayCard">
+      <div class="overlayTitle">INITIALISATION DU TERMINAL</div>
+      <div class="overlaySub">
+        Aucune lecture audio automatique. Validez l’accès.
+      </div>
+
+      <div class="overlayPrompt" id="overlayPrompt">
+        Appuyez sur <span class="kbd big">ENTRÉE</span>
+      </div>
+
+      <div class="overlayActions hidden" id="overlayActions">
+        <button class="btn" id="btnInitWithMusic" type="button" data-sfx="confirm">
+          INITIALISER + MUSIQUE
+        </button>
+        <button class="btn ghost" id="btnInitNoMusic" type="button" data-sfx="click">
+          INITIALISER SANS MUSIQUE
+        </button>
+      </div>
+
+      <div class="overlayMeta">
+        <span class="metaItem">UI SFX: <span id="sfxState">OFF</span></span>
+        <span class="metaItem">BGM: <span id="bgmState">OFF</span></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

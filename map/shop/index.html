@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Boutique // Lumia Island</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Oxanium:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./shop.css" />
+</head>
+
+<body>
+  <!-- Floating Home Dock -->
+<div class="home-dock" id="homeDock">
+  <button class="home-tab" id="homeTab" type="button" aria-expanded="false" title="Ouvrir le dock">
+    <span class="home-tab-g">G</span>
+  </button>
+
+  <div class="home-panel" id="homePanel" aria-hidden="true">
+    <a class="home-action" href="/index.html" data-sfx="click">
+      <span class="home-action-title">TERMINAL PRINCIPAL</span>
+      <span class="home-action-sub">Retour à l’accueil</span>
+    </a>
+  </div>
+</div>
+
+  <!-- AUDIO UNLOCK (pas d’autoplay) -->
+  <div id="boot" class="boot" aria-modal="true" role="dialog">
+    <div class="bootCard">
+      <div class="bootTop">
+        <div class="logoG" aria-hidden="true">G</div>
+        <div class="bootTitle">
+          <div class="kicker">GRANDE TABLE // ÉCONOMIE</div>
+          <h1>OUVERTURE DE LA BOUTIQUE</h1>
+          <p>
+            Accès lecture/achat RP. Aucun son ne sera joué sans action utilisateur.
+          </p>
+        </div>
+      </div>
+
+      <div class="bootActions">
+        <button id="btnInit" class="btn primary" type="button">INITIALISER</button>
+        <button id="btnNoFx" class="btn" type="button">RÉDUIRE LES EFFETS</button>
+      </div>
+
+      <div class="bootFoot muted">
+        Recherche • Accordéons • Liste d’achats (local) • Export
+      </div>
+    </div>
+  </div>
+
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logoG small" aria-hidden="true">G</div>
+        <div>
+          <div class="brandTitle">BOUTIQUE — LUMIA ISLAND</div>
+          <div class="brandSub muted">Registre marchand — Accès Grande Table</div>
+        </div>
+      </div>
+
+      <div class="topbarRight">
+        <a class="btn" href="../index.html" title="Retour à la carte">↩ CARTE</a>
+
+        <button id="btnSound" class="btn" type="button" aria-pressed="true" title="UI Sound">🔊</button>
+        <div class="volWrap" title="Volume UI">
+          <input id="vol" type="range" min="0" max="1" step="0.01" />
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <!-- LEFT -->
+      <section class="left">
+        <div class="panel">
+          <div class="panelHead">
+            <div class="panelTitle">PROTOCOLE DE PAIEMENT</div>
+            <div class="panelSub muted">Synthèse monétaire • Conversions • Conditions d’accès</div>
+          </div>
+
+          <div class="panelBody" id="currencyBox">
+            <!-- rempli par JS -->
+            <div class="muted">Chargement…</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panelHead">
+            <div class="panelTitle">CATALOGUE</div>
+            <div class="panelSub muted">Clique une boutique pour dérouler. Recherche = boutiques + items.</div>
+
+            <div class="searchRow">
+              <input id="search" class="input" type="search"
+                placeholder="Requête : logement / transport / identités / implants / passes…"
+                autocomplete="off" />
+            </div>
+          </div>
+
+          <div class="panelBody" id="shopList">
+            <div class="muted">Chargement…</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT -->
+      <aside class="right">
+        <div class="panel sticky">
+          <div class="panelHead">
+            <div class="panelTitle">BON D’ACQUISITION</div>
+            <div class="panelSub muted">Sélection courante • Registre local chiffré</div>
+
+            <div class="cartActions">
+              <button id="btnExport" class="btn" type="button">EXPORT</button>
+              <button id="btnClear" class="btn" type="button">RESET</button>
+            </div>
+          </div>
+
+          <div class="panelBody">
+            <div id="cartList" class="cartList muted">Vide.</div>
+
+            <div class="divider"></div>
+
+            <div class="totalRow">
+              <div class="muted">TOTAL (LMN)</div>
+              <div id="cartTotal" class="totalValue">0</div>
+            </div>
+
+            <div class="miniHint muted">
+              Tips : clique un item → ajoute à la liste.  
+              Supprime un item depuis la liste à droite.
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer muted">
+      Lumia Island // Boutique RP — offline-ready — GitHub Pages compatible
+    </footer>
+  </div>
+
+  <script src="./shop.js"></script>
+</body>
+</html>

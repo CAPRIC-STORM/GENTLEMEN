@@ -1,0 +1,426 @@
+:root{
+  --line: rgba(255,255,255,0.10);
+  --text: rgba(255,255,255,0.86);
+  --muted: rgba(255,255,255,0.52);
+  --muted2: rgba(255,255,255,0.36);
+
+  /* Surbrillance sobre */
+  --sel-stroke: rgba(255,255,255,0.38);
+  --sel-fill: rgba(255,255,255,0.04);
+  --sel-text: rgba(255,255,255,0.86);
+
+  --shadow: 0 12px 40px rgba(0,0,0,0.55);
+  --radius: 18px;
+}
+
+html{
+  background-image:
+    linear-gradient(rgba(0,0,0,0.88), rgba(0,0,0,0.88)),
+    url("./assets/images/lumia-island-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100%;
+}
+
+body{
+  margin:0;
+  height:100%;
+  color: var(--text);
+  background: transparent;
+  font-family: "Oxanium", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+*{ box-sizing: border-box; }
+.muted{ color: var(--muted); }
+.muted2{ color: var(--muted2); }
+
+/* Boot */
+.boot{
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(10px);
+  z-index: 50;
+}
+.bootCard{
+  width: min(760px, 92vw);
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 6px);
+  background: rgba(0,0,0,0.55);
+  box-shadow: var(--shadow);
+  padding: 18px 18px 14px;
+}
+.bootTop{ display:flex; gap:14px; align-items: center; }
+.kicker{
+  font-family: "Orbitron", sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.bootTitle h1{
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 22px;
+}
+.bootTitle p{
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.35;
+  font-size: 13px;
+}
+.bootActions{
+  margin-top: 14px;
+  display:flex;
+  gap:10px;
+  flex-wrap: wrap;
+}
+.bootFoot{ margin-top: 10px; font-size: 12px; }
+
+/* G Logo */
+.logoG{
+  width: 54px;
+  height: 54px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.22);
+  display:grid;
+  place-items:center;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+  background: rgba(255,255,255,0.04);
+  filter: drop-shadow(0 10px 26px rgba(0,0,0,0.45));
+}
+.logoG.small{
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+/* App layout */
+.app{
+  min-height: 100vh;
+  display:flex;
+  flex-direction: column;
+  padding: 14px;
+  gap: 12px;
+}
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(0,0,0,0.40);
+  box-shadow: var(--shadow);
+}
+.brand{ display:flex; align-items:center; gap: 12px; }
+.brandTitle{
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 2px;
+  font-size: 14px;
+}
+.brandSub{ font-size: 12px; margin-top: 2px; }
+
+.topbarRight{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn{
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 1px;
+  font-size: 12px;
+  transition: 150ms ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn:hover{
+  border-color: rgba(255,255,255,0.20);
+  background: rgba(255,255,255,0.06);
+  transform: translateY(-1px);
+}
+.btn:active{ transform: translateY(0px); }
+.btn.primary{
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.22);
+}
+
+.volWrap{
+  display:flex;
+  align-items:center;
+  padding: 6px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(0,0,0,0.25);
+}
+.volWrap input[type="range"]{ width: 120px; }
+
+.layout{
+  flex: 1 1 auto;
+  min-height: 0;
+  display:grid;
+  grid-template-columns: 1.65fr 1fr;
+  gap: 12px;
+}
+
+/* Inputs */
+.input{
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(0,0,0,0.35);
+  color: var(--text);
+  outline: none;
+  font-family: "Oxanium", sans-serif;
+}
+.input::placeholder{ color: rgba(255,255,255,0.35); }
+
+/* Map pane */
+.mapPane{
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(0,0,0,0.30);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  min-height: 0;
+}
+.mapViewport{ position: relative; width: 100%; height: 100%; }
+.mapSvg{
+  width: 100%;
+  height: 100%;
+  display:block;
+  user-select: none;
+  touch-action: none;
+}
+
+/* HUD */
+.mapHud{
+  position:absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 5;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.45);
+  padding: 10px 10px 8px;
+  min-width: 270px;
+}
+.hudLine{ display:flex; justify-content: space-between; gap: 10px; font-size: 12px; margin-bottom: 4px; }
+.hudLabel{ color: var(--muted); }
+.hudValue{
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 1px;
+  color: var(--text);
+}
+.hudHint{ margin-top: 6px; font-size: 11px; }
+
+/* Side */
+.sidePane{
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(0,0,0,0.42);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  min-height: 0;
+  display:flex;
+  flex-direction: column;
+}
+.panelHead{
+  padding: 12px 12px 10px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(0,0,0,0.25);
+}
+.panelTitle{
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 2px;
+  font-size: 13px;
+}
+.panelSub{ font-size: 12px; margin-top: 4px; }
+.searchRow{ margin-top: 10px; }
+
+.panelBody{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+}
+.sectionTitle{
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 2px;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.resultList{
+  border: 1px dashed rgba(255,255,255,0.14);
+  border-radius: 14px;
+  padding: 10px;
+  min-height: 44px;
+}
+
+.folderList{ display:flex; flex-direction: column; gap: 8px; }
+.folder{
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  overflow: hidden;
+}
+.folderHead{
+  padding: 10px 10px;
+  display:flex;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+}
+.folderName{
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 1px;
+  font-size: 12px;
+}
+.folderFn{ font-size: 11px; color: var(--muted); margin-top: 4px; }
+.folderMeta{ text-align: right; font-size: 11px; color: var(--muted2); }
+
+.folderBody{
+  border-top: 1px solid var(--line);
+  padding: 8px 10px 10px;
+  display:none;
+}
+.folder.open .folderBody{ display:block; }
+
+.poiItem{
+  display:flex;
+  align-items:flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 150ms ease;
+}
+.poiItem:hover{ background: rgba(255,255,255,0.05); }
+.poiName{ font-size: 12px; color: var(--text); }
+.poiType{ font-size: 11px; color: var(--muted); }
+.poiTiny{ font-size: 11px; color: var(--muted2); }
+
+.divider{ height: 1px; background: var(--line); margin: 14px 0; }
+
+.card{
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  padding: 10px 10px;
+}
+.cardTitle{
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 1px;
+  font-size: 13px;
+}
+.cardBody{ margin-top: 8px; font-size: 12px; line-height: 1.45; }
+.footer{ padding: 8px 2px 4px; font-size: 12px; }
+
+/* SVG base */
+.island{ fill: rgba(255,255,255,0.03); }
+.islandEdge{ fill: none; stroke: rgba(255,255,255,0.14); stroke-width: 2; }
+
+/* Labels (hidden unless selected / global-view district only) */
+.mapLabel{
+  font-family: "Oxanium", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  fill: rgba(255,255,255,0.58);
+  opacity: 0;
+  user-select: none;
+  pointer-events: none;
+
+  paint-order: stroke fill;
+  stroke: rgba(0,0,0,0.65);
+  stroke-width: 2px;
+
+  transition: opacity 140ms ease;
+}
+
+/* Districts */
+.districtShape{
+  fill: rgba(255,255,255,0.02);
+  stroke: rgba(255,255,255,0.08);
+  stroke-width: 1.5;
+  cursor: pointer;
+}
+.districtGroup.selected .districtShape{
+  fill: var(--sel-fill);
+  stroke: var(--sel-stroke);
+}
+.districtGroup.selected .districtLabel{
+  opacity: 1;
+  fill: var(--sel-text);
+}
+
+/* Routes */
+.routeGroup path{
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: 160ms ease;
+}
+.routeGroup.road .casing{ stroke: rgba(255,255,255,0.05); stroke-width: 10; }
+.routeGroup.road .main{ stroke: rgba(255,255,255,0.14); stroke-width: 2.4; }
+.routeGroup.rail .casing{ stroke: rgba(255,255,255,0.04); stroke-width: 12; }
+.routeGroup.rail .main{ stroke: rgba(255,255,255,0.12); stroke-width: 2.1; stroke-dasharray: 18 12; }
+
+.routeGroup.selected .main{ stroke: rgba(255,255,255,0.38); stroke-dasharray: 0; }
+.routeGroup.selected .casing{ stroke: rgba(255,255,255,0.10); }
+.routeGroup.selected .routeLabel{ opacity: 1; fill: var(--sel-text); }
+
+/* POIs */
+.poiDot{ fill: rgba(255,255,255,0.72); opacity: 0.62; }
+.poiHit{ fill: transparent; cursor: pointer; }
+
+.poiGroup.selected .poiDot{ opacity: 1; }
+.poiGroup.selected .poiLabel{ opacity: 1; fill: var(--sel-text); }
+
+/* reduce effects */
+body.reduce-effects *{ transition: none !important; }
+
+/* ✅ Global view : ONLY district labels */
+body.global-view .districtLabel{
+  opacity: 1;
+}
+body.global-view .districtShape{
+  stroke: rgba(255,255,255,0.14);
+}
+
+/* Route hitbox (invisible but clickable) */
+.routeHit{
+  stroke: transparent;
+  fill: none;
+  cursor: pointer;
+}
+
+@media (max-width: 1100px){
+  .layout{ grid-template-columns: 1fr; }
+  .mapPane{ height: 62vh; }
+}

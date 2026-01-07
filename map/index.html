@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>G // Lumia Island</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Oxanium:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./map.css" />
+</head>
+
+<body>
+  <!-- BOOT / AUDIO UNLOCK -->
+  <div id="boot" class="boot" aria-modal="true" role="dialog">
+    <div class="bootCard">
+      <div class="bootTop">
+        <div class="logoG" aria-hidden="true">G</div>
+        <div class="bootTitle">
+          <div class="kicker">GRANDE TABLE // TERMINAL D’ACCÈS</div>
+          <h1>INITIALISATION REQUISE</h1>
+          <p>
+            Accès lecture à la cartographie de <b>Lumia Island</b>.  
+            Aucun son ne sera joué sans action utilisateur.
+          </p>
+        </div>
+      </div>
+
+      <div class="bootActions">
+        <button id="btnInit" class="btn primary" type="button">INITIALISER</button>
+        <button id="btnNoFx" class="btn" type="button">RÉDUIRE LES EFFETS</button>
+      </div>
+
+      <div class="bootFoot muted">
+        Molette = zoom • Drag = déplacer • Click = sélection • ESC = clear
+      </div>
+    </div>
+  </div>
+
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logoG small" aria-hidden="true">G</div>
+        <div>
+          <div class="brandTitle">LUMIA ISLAND</div>
+          <div class="brandSub muted">Cartographie — Dossiers / Routes / Points</div>
+        </div>
+      </div>
+
+      <div class="topbarRight">
+        <a class="btn" href="./shop/index.html" title="Boutique Lumia Island (placeholder)">BOUTIQUE</a>
+
+        <button id="btnGlobal" class="btn" type="button" aria-pressed="false"
+          title="Vue globale : affiche uniquement les districts">VUE GLOBALE</button>
+
+        <button id="btnCenter" class="btn" type="button">CENTRER</button>
+
+        <button id="btnSound" class="btn" type="button" aria-pressed="true" title="UI Sound">🔊</button>
+
+        <div class="volWrap" title="Volume UI">
+          <input id="vol" type="range" min="0" max="1" step="0.01" />
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="mapPane">
+        <div class="mapHud">
+          <div class="hudLine">
+            <span class="hudLabel">Zoom</span>
+            <span id="hudZoom" class="hudValue">100%</span>
+          </div>
+          <div class="hudLine">
+            <span class="hudLabel">Focus</span>
+            <span id="hudFocus" class="hudValue muted">Aucun</span>
+          </div>
+          <div class="hudHint muted">Sélection via panneau — ESC = clear</div>
+        </div>
+
+        <div id="mapViewport" class="mapViewport">
+          <svg id="mapSvg" viewBox="0 0 1400 900" class="mapSvg" role="img" aria-label="Carte Lumia Island">
+            <defs>
+              <radialGradient id="vig" cx="50%" cy="45%" r="70%">
+                <stop offset="0%" stop-color="rgba(0,0,0,0)" />
+                <stop offset="100%" stop-color="rgba(0,0,0,0.55)" />
+              </radialGradient>
+            </defs>
+
+            <g id="world">
+              <!-- island silhouette -->
+              <path id="island" class="island"
+                d="M255,585 C215,480 240,340 335,280 C420,225 560,185 685,175
+                   C830,162 995,175 1100,255 C1200,330 1265,440 1275,560
+                   C1288,710 1195,820 1040,860 C895,897 735,920 575,895
+                   C430,872 295,800 255,585 Z"
+              />
+              <path class="islandEdge"
+                d="M255,585 C215,480 240,340 335,280 C420,225 560,185 685,175
+                   C830,162 995,175 1100,255 C1200,330 1265,440 1275,560
+                   C1288,710 1195,820 1040,860 C895,897 735,920 575,895
+                   C430,872 295,800 255,585 Z"
+              />
+
+              <!-- Layers -->
+              <g id="districtLayer"></g>
+              <g id="routeLayer"></g>
+              <g id="poiLayer"></g>
+
+              <rect x="0" y="0" width="1400" height="900" fill="url(#vig)" />
+            </g>
+          </svg>
+        </div>
+      </section>
+
+      <aside class="sidePane">
+        <div class="panelHead">
+          <div class="panelTitle">DOSSIERS DE TERRITOIRE</div>
+          <div class="panelSub muted">Clique un élément pour verrouiller la surbrillance.</div>
+
+          <div class="searchRow">
+            <input id="search" class="input" type="search"
+              placeholder="Recherche (lieux + routes) : armory / clinic / Croix Noire…"
+              autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="panelBody" id="panelBody">
+          <div class="sectionTitle">RÉSULTATS</div>
+          <div id="resultList" class="resultList muted">Tape pour filtrer les lieux / routes.</div>
+
+          <div class="divider"></div>
+
+          <div class="sectionTitle">QUARTIERS</div>
+          <div id="districtList" class="folderList"></div>
+
+          <div class="divider"></div>
+
+          <div class="sectionTitle">FICHE</div>
+          <div id="card" class="card">
+            <div class="cardTitle">Accès lecture</div>
+            <div class="cardBody muted">Sélectionne un lieu/route/quartier via la colonne de droite.</div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer muted">
+      G // Grande Table — Lumia Island (static, offline-ready, GitHub Pages compatible)
+    </footer>
+  </div>
+
+  <script src="./map.js"></script>
+</body>
+</html>

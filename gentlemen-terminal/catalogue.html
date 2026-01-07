@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>GENTLEMEN — Catalogue PD</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Oxanium:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="catalogue.css" />
+</head>
+
+<body data-page="catalogue">
+  <!-- Floating Home Dock -->
+<div class="home-dock" id="homeDock">
+  <button class="home-tab" id="homeTab" type="button" aria-expanded="false" title="Ouvrir le dock">
+    <span class="home-tab-g">G</span>
+  </button>
+
+  <div class="home-panel" id="homePanel" aria-hidden="true">
+    <a class="home-action" href="/index.html" data-sfx="click">
+      <span class="home-action-title">TERMINAL PRINCIPAL</span>
+      <span class="home-action-sub">Retour à l’accueil</span>
+    </a>
+  </div>
+</div>
+
+  <div class="bg" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <div class="app" id="app">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="logoBox" aria-hidden="true">G</span>
+        <div class="brandText">
+          <div class="brandName">CATALOGUE PD</div>
+          <div class="brandSub">FORGE DE CRÉATION · CRÉATION ONLY · PROJET HÉRITAGE</div>
+        </div>
+      </div>
+
+      <div class="topbarRight">
+        <a class="btn ghost" href="index.html" title="Retour au Livre de règles">
+          <span class="btnIco" aria-hidden="true">⟵</span>
+          <span class="btnLabel">RÈGLES</span>
+        </a>
+
+        <div class="audioBar" role="group" aria-label="Contrôles audio">
+          <button class="btn primary" id="btnUnlockAudio" type="button">
+            <span class="btnIco" aria-hidden="true">⟡</span>
+            <span class="btnLabel">INITIALISER AUDIO</span>
+          </button>
+
+          <button class="btn ghost" id="btnMute" type="button" aria-pressed="false">
+            <span class="btnIco" aria-hidden="true">⏺</span>
+            <span class="btnLabel">MUTE</span>
+          </button>
+
+          <label class="volWrap" title="Volume global (sauvé)">
+            <span class="volTxt">VOL</span>
+            <input id="vol" class="vol" type="range" min="0" max="100" value="42" />
+          </label>
+        </div>
+
+        <button class="btn ghost" id="btnReduceEffects" type="button" aria-pressed="false" title="Réduire les effets visuels">
+          <span class="btnIco" aria-hidden="true">◻</span>
+          <span class="btnLabel">EFFETS</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <!-- LEFT -->
+      <aside class="panel">
+        <div class="panelHeader">
+          <div class="hudTitle">PROTOCOLE DE CRÉATION</div>
+          <div class="hudMeta mono">Lis, choisis, verrouille. Après création : aucun achat.</div>
+        </div>
+
+        <div class="panelBody">
+          <div class="ruleCard">
+            <div class="rcTitle">Règles rapides</div>
+            <ul class="rcList">
+              <li><b>Pool :</b> 12 PD (création)</li>
+              <li><b>Catalogue :</b> création only</li>
+              <li><b>Énergie max :</b> 10% du Spécial</li>
+              <li><b>Passifs :</b> réduisent Énergie max</li>
+              <li><b>Contraintes :</b> donnent des PD</li>
+              <li><b>Stats :</b> ↟ +5 cumulable, coût par palier</li>
+            </ul>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="ruleCard">
+            <div class="rcTitle">Base Stats (création)</div>
+            <div class="tiny mono" style="color:rgba(245,245,245,.60); line-height:1.55;">
+              Base recommandée : <b>50</b>. Tu peux ajuster ici avant achats.
+            </div>
+
+            <div class="baseGrid">
+              <label class="baseField">
+                <span class="t mono">💪 PHYS</span>
+                <input id="bPhys" type="number" min="0" max="100" step="5" value="50" />
+              </label>
+              <label class="baseField">
+                <span class="t mono">🎯 TECH</span>
+                <input id="bTech" type="number" min="0" max="100" step="5" value="50" />
+              </label>
+              <label class="baseField">
+                <span class="t mono">🧠 MENT</span>
+                <input id="bMent" type="number" min="0" max="100" step="5" value="50" />
+              </label>
+              <label class="baseField">
+                <span class="t mono">👥 SOC</span>
+                <input id="bSoc" type="number" min="0" max="100" step="5" value="50" />
+              </label>
+            </div>
+
+            <div class="hr"></div>
+
+            <div class="mono code tiny">
+              ↟ +5 si stat ≤ 65 : <b>1 PD</b><br>
+              ↟ +5 si stat 66–80 : <b>2 PD</b><br>
+              &gt; 80 : <b>bloqué</b> (Modif/Hybridation)
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="budget">
+            <div class="bLine">
+              <span class="k mono">BUDGET PD</span>
+              <span class="v mono"><b id="pdTotal">12</b></span>
+            </div>
+
+            <div class="bLine">
+              <span class="k mono">SÉLECTION</span>
+              <span class="v mono"><b id="pdUsed">0</b></span>
+            </div>
+
+            <div class="bLine">
+              <span class="k mono">RESTE</span>
+              <span class="v mono"><b id="pdLeft">12</b></span>
+            </div>
+
+            <div class="hint mono tiny" id="budgetHint">
+              Ajoute des entrées à ta fiche. Les contraintes augmentent le budget.
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="searchBox" role="search">
+            <span class="searchIco" aria-hidden="true">⌕</span>
+            <input id="q" type="search" autocomplete="off" placeholder="Rechercher (ex: ‘Vantacore’, ‘silencieux’, ‘implant’)…" />
+            <button class="searchClear" id="clearQ" type="button" aria-label="Effacer">×</button>
+          </div>
+
+          <div class="filters">
+            <label class="f">
+              <span class="t mono">TYPE</span>
+              <select id="type">
+                <option value="">Tous</option>
+                <option value="Action">⚔ Action</option>
+                <option value="Renforcement">⬚ Renforcement</option>
+                <option value="Passif">○ Passif</option>
+                <option value="Combo">◆ Combo</option>
+                <option value="Équipement">⧉ Équipement</option>
+                <option value="Modification">⟁ Modification</option>
+                <option value="Hybridation">⟠ Hybridation</option>
+                <option value="Contrainte">⚠ Contrainte (gain PD)</option>
+                <option value="Stats">↟ Stats</option>
+              </select>
+            </label>
+
+            <label class="f">
+              <span class="t mono">DISTRICT</span>
+              <select id="district">
+                <option value="">Tous</option>
+                <option value="Vantacore">Vantacore</option>
+                <option value="Shin Arcade">Shin Arcade</option>
+                <option value="Manhattan Grid">Manhattan Grid</option>
+                <option value="Nouvelle-Paris">Nouvelle-Paris</option>
+                <option value="Rustbelt">Rustbelt</option>
+                <option value="BioMire">BioMire</option>
+                <option value="Skyline Ward">Skyline Ward</option>
+                <option value="Harborline">Harborline</option>
+                <option value="Signal Basilica">Signal Basilica</option>
+                <option value="Nocturne Ring">Nocturne Ring</option>
+              </select>
+            </label>
+
+            <label class="f">
+              <span class="t mono">COÛT</span>
+              <select id="cost">
+                <option value="">Tous</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5+</option>
+                <option value="gain">Gain PD</option>
+              </select>
+            </label>
+
+            <div class="fRow">
+              <button class="btn ghost full" id="resetFilters" type="button">
+                <span class="btnIco" aria-hidden="true">⟲</span>
+                <span class="btnLabel">RESET FILTRES</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <button class="btn primary full" id="export" type="button">
+            <span class="btnIco" aria-hidden="true">⧈</span>
+            <span class="btnLabel">EXPORT SÉLECTION</span>
+          </button>
+
+          <div class="tiny mono exportHint">
+            L’export copie une “fiche d’achats” (à coller dans ta feuille PJ).
+          </div>
+        </div>
+      </aside>
+
+      <!-- RIGHT -->
+      <section class="content">
+        <div class="contentHeader">
+          <div class="hudTitle">CATALOGUE PD</div>
+          <div class="hudMeta mono">
+            Choisis ce que ton agent est <b>avant</b> la première mission. Après création : verrouillage.
+          </div>
+        </div>
+
+        <div class="intro">
+          <div class="introBox">
+            <div class="introTitle">Comment ça marche</div>
+            <ol class="introList">
+              <li><b>Budget :</b> tu commences à <b>12 PD</b>.</li>
+              <li><b>Tu sélectionnes</b> des entrées (équipement, actions, passifs, modifications…).</li>
+              <li><b>Les contraintes</b> te donnent des PD supplémentaires (mais te mettent des chaînes).</li>
+              <li><b>Passifs</b> = efficacité permanente, mais <b>réduisent l’Énergie max</b>.</li>
+              <li><b>Stats</b> ↟ +5 : cumulable, coût par palier.</li>
+              <li><b>Verrouillage :</b> une fois la fiche validée, <b>plus d’achats</b> en campagne.</li>
+            </ol>
+          </div>
+          <div class="introBox">
+            <div class="introTitle">Stats ↟ (cumulable)</div>
+            <div class="introText">
+              Les cartes ↟ fonctionnent en <b>quantités</b> (x1, x2, x3…).
+              Le prix se calcule automatiquement selon la stat <b>au moment de l’achat</b>.
+              <div class="hr"></div>
+              <div class="mono code tiny">
+                Exemple : base 50 → 55 (1 PD), 60 (1 PD), 65 (1 PD), 70 (2 PD), 75 (2 PD), 80 (2 PD).<br>
+                Tentative 85 → bloqué.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tableWrap">
+          <div class="tableHeader mono">
+            <span id="count">—</span> entrées · stats = xN · double-clique pour détails
+          </div>
+
+          <div class="grid" id="grid"></div>
+        </div>
+
+        <div class="drawer" id="drawer" aria-hidden="true">
+          <div class="drawerPanel" role="dialog" aria-modal="true" aria-label="Détails entrée">
+            <div class="drawerTop">
+              <div>
+                <div class="drawerTitle" id="dTitle">—</div>
+                <div class="drawerMeta mono" id="dMeta">—</div>
+              </div>
+              <button class="btn ghost" id="closeDrawer" type="button">
+                <span class="btnIco" aria-hidden="true">×</span>
+                <span class="btnLabel">FERMER</span>
+              </button>
+            </div>
+
+            <div class="drawerBody">
+              <div class="pillRow" id="dPills"></div>
+
+              <div class="dBlock" id="dQtyBlock" style="display:none;">
+                <div class="dLabel mono">QUANTITÉ (Stats ↟)</div>
+                <div class="qtyRow">
+                  <button class="qtyBtn" id="qtyMinus" type="button" aria-label="Moins">−</button>
+                  <div class="qtyVal mono"><span id="qtyVal">0</span> ×</div>
+                  <button class="qtyBtn" id="qtyPlus" type="button" aria-label="Plus">+</button>
+                </div>
+                <div class="tiny mono" style="color:rgba(245,245,245,.60); margin-top:10px;">
+                  Le coût se calcule par palier. &gt; 80 : bloqué.
+                </div>
+              </div>
+
+              <div class="dBlock">
+                <div class="dLabel mono">DESCRIPTION</div>
+                <div class="dText" id="dDesc">—</div>
+              </div>
+
+              <div class="dGrid">
+                <div class="dBlock">
+                  <div class="dLabel mono">EFFET</div>
+                  <div class="dText mono" id="dEffect">—</div>
+                </div>
+                <div class="dBlock">
+                  <div class="dLabel mono">PRÉREQUIS</div>
+                  <div class="dText mono" id="dReq">—</div>
+                </div>
+              </div>
+
+              <div class="dBlock">
+                <div class="dLabel mono">NOTES</div>
+                <div class="dText" id="dNotes">—</div>
+              </div>
+
+              <div class="hr"></div>
+
+              <button class="btn primary full" id="toggleSelect" type="button">
+                <span class="btnIco" aria-hidden="true">✓</span>
+                <span class="btnLabel">AJOUTER / RETIRER</span>
+              </button>
+
+              <div class="tiny mono exportHint">
+                Astuce : 1 identité/accès + 1 gadget signature + 1 faille (contrainte).
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="mono tiny">
+        PREFS: LOCALSTORAGE · <span id="fxState">FX: ON</span> · <span id="muteState">MUTE: OFF</span>
+      </div>
+      <div class="mono tiny">BUILD: CATALOGUE v1.1 — CREATION ONLY</div>
+    </footer>
+  </div>
+
+  <script src="catalogue.js"></script>
+</body>
+</html>
