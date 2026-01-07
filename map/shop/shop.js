@@ -388,34 +388,3 @@ async function init(){
 }
 
 init().catch(err => console.error(err));
-
-// Floating Home Dock toggle
-(() => {
-  const dock = document.getElementById("homeDock");
-  const tab = document.getElementById("homeTab");
-  const panel = document.getElementById("homePanel");
-  if (!dock || !tab || !panel) return;
-
-  function setOpen(open){
-    dock.classList.toggle("open", open);
-    tab.setAttribute("aria-expanded", String(open));
-    panel.setAttribute("aria-hidden", String(!open));
-  }
-
-  tab.addEventListener("click", () => {
-    const open = !dock.classList.contains("open");
-    setOpen(open);
-  });
-
-  // Close if click outside
-  document.addEventListener("click", (e) => {
-    if (!dock.classList.contains("open")) return;
-    if (dock.contains(e.target)) return;
-    setOpen(false);
-  });
-
-  // Close with Escape
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setOpen(false);
-  });
-})();
