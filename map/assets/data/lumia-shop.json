@@ -1,15 +1,17 @@
 {
   "meta": {
-    "title": "Boutique // Lumia Island",
+    "city": "Lumia Island",
+    "version": "4.0",
+    "notes": "Routes searchable + better POI descriptions + connections.",
     "currency": {
-      "name": "Lumen (LMN)",
+      "name": "Lumen",
       "symbol": "LMN",
-      "desc": "Crédit numérique indexé sur l’énergie et l’accès réseau. Émis par les Comptoirs de la Grande Table, accepté dans tous les districts.",
+      "desc": "Un crédit de circulation lié à l'accès réseau et aux licences de la Grande Table. Tout se paye en LMN… mais tout ne se paye pas qu'en LMN.",
       "street": "Scrip",
-      "street_desc": "Billets/jetons de rue pour petites transactions. Convertissable au Ledger Hall (commission).",
+      "street_desc": "Jetons de rue et coupons de transit. Acceptés pour du quotidien, méprisés pour le prestige.",
       "notes": [
-        "Les prix sont des plages : ils peuvent varier selon la boutique.",
-        "Les achats 'FAVOR' se règlent narrativement (service, dette, échange)."
+        "La ville applique des commissions variables sur les transactions (contrôles mobiles, frais de passage, 'validation').",
+        "Certains services exigent une 'FAVEUR' : une dette enregistrée, un service à rendre, un silence à garder."
       ]
     }
   },
@@ -18,54 +20,113 @@
       "id": "vant_ledgerhall",
       "name": "Ledger Hall",
       "district": "Vantacore",
-      "kind": "Banque & Comptes",
-      "tagline": "Comptes, coffres, conversions. Ici l’argent ne dort jamais.",
-      "desc": "Comptoirs. Conversions. Coffres. Ici on blanchit… officiellement.",
+      "kind": "finance",
+      "tagline": "Comptes, conversions, arbitrages. Ici, l'argent a une voix.",
+      "desc": "Comptoirs de comptes, clauses et conversions. Ledger Hall ne vend pas des crédits : il vend la continuité.",
       "sections": [
         {
-          "title": "Services financiers",
+          "title": "Comptes & Identités financières",
           "items": [
-            {
-              "name": "Compte Lumen Standard",
-              "price": 200,
-              "unit": "LMN",
-              "note": "Ouverture + identifiant chiffré."
-            },
-            {
-              "name": "Compte 'Ghost' (sans historique visible)",
-              "price": 1200,
-              "unit": "LMN",
-              "note": "Niveau de traçabilité réduit. Risque légal."
-            },
-            {
-              "name": "Coffre sécurisé (mensuel)",
-              "price": 350,
-              "unit": "LMN/mo",
-              "note": "Accès sur créneau. Dépôt scellé."
-            },
-            {
-              "name": "Conversion Scrip → Lumen",
-              "price": 5,
-              "unit": "%",
-              "note": "Commission sur montant converti."
-            }
+            { "name": "Ouverture de compte LMN (Standard)", "price": 200, "unit": "LMN", "note": "Profil chiffré • accès mobile." },
+            { "name": "Ouverture de compte LMN (Corporate Cover)", "price": 900, "unit": "LMN", "note": "Couverture légale minimale • trace maîtrisée." },
+            { "name": "Compte 'Ghost' (historique masqué)", "price": 1200, "unit": "LMN", "note": "Traçabilité réduite • risque accru en audit." },
+            { "name": "Sous-compte 'Runner' (dépenses terrain)", "price": 350, "unit": "LMN", "note": "Plafond flexible • alertes silencieuses." }
           ]
         },
         {
-          "title": "Garanties & faveurs",
+          "title": "Conversions & Taxes invisibles",
           "items": [
-            {
-              "name": "Lettre de crédit 'Baron Tier'",
-              "price": 2500,
-              "unit": "LMN",
-              "note": "Utile pour gros achats (véhicules, biens)."
-            },
-            {
-              "name": "Assurance extraction (1 incident)",
-              "price": 1800,
-              "unit": "LMN",
-              "note": "Clause d’urgence. Détails au Contract Bureau."
-            }
+            { "name": "Conversion Scrip → Lumen", "price": 5, "unit": "%", "note": "Commission variable selon le district." },
+            { "name": "Conversion Lumen → Scrip", "price": 8, "unit": "%", "note": "Plus cher. Toujours." },
+            { "name": "Validation de transaction (contrôle mobile)", "price": 120, "unit": "LMN", "note": "Évite un gel immédiat si checkpoint." },
+            { "name": "Cachette de flux (lot)", "price": 650, "unit": "LMN", "note": "Répartit un paiement en fragments." }
+          ]
+        },
+        {
+          "title": "Arbitrage & garanties",
+          "items": [
+            { "name": "Arbitrage 'Table' (litige mineur)", "price": 400, "unit": "LMN", "note": "Décision sous 24h (théorique)." },
+            { "name": "Arbitrage 'Table' (litige majeur)", "price": 1800, "unit": "LMN", "note": "Audience fermée • clause de silence." },
+            { "name": "Lettre de crédit (Baron Tier)", "price": 2500, "unit": "LMN", "note": "Obligatoire pour certains achats premium." },
+            { "name": "Assurance extraction (1 incident)", "price": 1800, "unit": "LMN", "note": "Clause de déclenchement sur mot-clé." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vant_vault19",
+      "name": "Vault 19",
+      "district": "Vantacore",
+      "kind": "secure",
+      "tagline": "Coffres privés. Accès strict. Silence contractuel.",
+      "desc": "Des portes qui ne s'ouvrent qu'avec la bonne combinaison… et la bonne existence administrative.",
+      "sections": [
+        {
+          "title": "Coffres & dépôts",
+          "items": [
+            { "name": "Coffre sécurisé (mensuel)", "price": 350, "unit": "LMN/mo", "note": "Créneau réservé • dépôt scellé." },
+            { "name": "Coffre 'Deep' (mensuel)", "price": 900, "unit": "LMN/mo", "note": "Accès rare • surveillance renforcée." },
+            { "name": "Dépôt anonyme (48h)", "price": 180, "unit": "LMN", "note": "Retrait par code à usage unique." }
+          ]
+        },
+        {
+          "title": "Procédures",
+          "items": [
+            { "name": "Transfert de coffre (inter-district)", "price": 420, "unit": "LMN", "note": "Risque : contrôles sur la Croix Noire." },
+            { "name": "Scellé 'Table' (signature)", "price": 600, "unit": "LMN", "note": "Autorité implicite. Ne se discute pas." },
+            { "name": "Purge d'accès (si compromission)", "price": 300, "unit": "LMN", "note": "Réinitialise les autorisations." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vant_broker",
+      "name": "Broker’s Corner",
+      "district": "Vantacore",
+      "kind": "contact",
+      "tagline": "Intermédiaires, fixers, arbitrages discrets.",
+      "desc": "Là où les noms circulent sans être prononcés. Un coin de rue qui vaut une ville.",
+      "sections": [
+        {
+          "title": "Intermédiation",
+          "items": [
+            { "name": "Mise en relation (standard)", "price": 250, "unit": "LMN", "note": "Contact fiable, mais distant." },
+            { "name": "Mise en relation (premium)", "price": 700, "unit": "LMN", "note": "Accès plus rapide • dossier plus propre." },
+            { "name": "Négociation sous couvert", "price": 1200, "unit": "LMN", "note": "Broker mène, vous signez." }
+          ]
+        },
+        {
+          "title": "Renseignements",
+          "items": [
+            { "name": "Dossier 'Routine' (cible)", "price": 500, "unit": "LMN", "note": "Horaires, trajets, habitudes." },
+            { "name": "Dossier 'Angles morts' (zone)", "price": 800, "unit": "LMN", "note": "Caméras / patrouilles (daté du jour)." },
+            { "name": "Nom de code + identité d'usage", "price": 950, "unit": "LMN", "note": "Utilisable en soirée & accès salons." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vant_cleanroom",
+      "name": "Clean Room",
+      "district": "Vantacore",
+      "kind": "service",
+      "tagline": "Effacement. Traces. Réécriture.",
+      "desc": "Une salle blanche où le passé devient variable. Le simple coûte. Le compliqué laisse une dette.",
+      "sections": [
+        {
+          "title": "Nettoyage numérique",
+          "items": [
+            { "name": "Purge d'identité réseau (light)", "price": 650, "unit": "LMN", "note": "Réduit les signaux faibles." },
+            { "name": "Purge d'identité réseau (deep)", "price": 1800, "unit": "LMN", "note": "Nécessite fenêtre de 2h sans traque." },
+            { "name": "Fausse piste (1 incident)", "price": 900, "unit": "LMN", "note": "Dévie la suspicion vers un leurre." }
+          ]
+        },
+        {
+          "title": "Nettoyage physique",
+          "items": [
+            { "name": "Kit neutralisation (scène)", "price": 420, "unit": "LMN", "note": "Produit + gants + sacs scellés." },
+            { "name": "Intervention discrète (sur site)", "price": 1500, "unit": "LMN", "note": "Zone urbaine uniquement." },
+            { "name": "Silence contractuel", "price": 1, "unit": "FAVOR", "note": "Une dette enregistrée. Non négociable." }
           ]
         }
       ]
@@ -74,116 +135,477 @@
       "id": "vant_exchange",
       "name": "Black Exchange",
       "district": "Vantacore",
-      "kind": "Marché noir premium",
-      "tagline": "Tout se négocie. Même ce qui n’existe pas officiellement.",
-      "desc": "Changeur & marché noir. Un sourire, un scan, et la ville se réorganise.",
+      "kind": "market",
+      "tagline": "Badges, invitations, accès temporaires.",
+      "desc": "Ici, l'accès est une marchandise. Les portes s'ouvrent… et se referment derrière vous.",
       "sections": [
         {
-          "title": "Biens & consommables",
+          "title": "Accès & Passes",
           "items": [
-            {
-              "name": "Kit brouillage basique (jetable)",
-              "price": 420,
-              "unit": "LMN",
-              "note": "10–15 min de silence radio local."
-            },
-            {
-              "name": "Pass 'Checkpoints' (1 district)",
-              "price": 650,
-              "unit": "LMN",
-              "note": "Un passage sans fouille, une fois."
-            },
-            {
-              "name": "Mallette de documents vierges",
-              "price": 900,
-              "unit": "LMN",
-              "note": "Base pour faux papiers."
-            }
+            { "name": "Badge invité (soirée)", "price": 280, "unit": "LMN", "note": "Valable 6h • 1 district." },
+            { "name": "Pass Checkpoints (1 passage)", "price": 650, "unit": "LMN", "note": "Un passage sans fouille, une fois." },
+            { "name": "Pass Metro Hub (24h)", "price": 120, "unit": "LMN", "note": "Trajets illimités • contrôle aléatoire." },
+            { "name": "Invitation 'Salon' (Nouvelle-Paris)", "price": 900, "unit": "LMN", "note": "Admission conditionnelle • code vestiaire." }
           ]
         },
         {
-          "title": "Informations",
+          "title": "Identités d'usage",
           "items": [
-            {
-              "name": "Dossier rumeur (ciblé)",
-              "price": 300,
-              "unit": "LMN",
-              "note": "1 piste exploitable. Qualité variable."
-            },
-            {
-              "name": "Carte des angles morts (zone)",
-              "price": 800,
-              "unit": "LMN",
-              "note": "Réseau caméras / patrouilles — daté du jour."
-            }
+            { "name": "Dossier documents vierges (lot)", "price": 900, "unit": "LMN", "note": "Base pour couverture." },
+            { "name": "Carte d'accès niveau A (interne)", "price": 1400, "unit": "LMN", "note": "Risque : Obsidian Tower." },
+            { "name": "Plaque d'immatriculation (swap)", "price": 320, "unit": "LMN", "note": "Un jeu. Sans historique." }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "shin_nightstrip",
+      "name": "Nightstrip",
+      "district": "Shin Arcade",
+      "kind": "district_core",
+      "tagline": "Artère néon. Deals rapides. Sourires dangereux.",
+      "desc": "Le trottoir qui vend la ville, au détail. Ici les rumeurs sont une monnaie secondaire.",
+      "sections": [
+        {
+          "title": "Services rapides",
+          "items": [
+            { "name": "Plan de soirée (routes sûres)", "price": 160, "unit": "LMN", "note": "Évite 2 checkpoints (estimation)." },
+            { "name": "Guide de fixer (liste du jour)", "price": 220, "unit": "LMN", "note": "Contacts qui répondent." },
+            { "name": "Cartouche 'neon-mask' (cosmétique)", "price": 90, "unit": "LMN", "note": "Look + brouillage léger visage." }
+          ]
+        },
+        {
+          "title": "Objets de circulation",
+          "items": [
+            { "name": "Carte 'Arcade Credits' (x100)", "price": 140, "unit": "LMN", "note": "Utilisable VR Pit & lounges." },
+            { "name": "Ticket Ringline Freight (fret passager)", "price": 300, "unit": "LMN", "note": "Place de service, pas de nom." }
           ]
         }
       ]
     },
     {
+      "id": "shin_vrpit",
+      "name": "VR Pit",
+      "district": "Shin Arcade",
+      "kind": "training",
+      "tagline": "Simulations. Tests. Reflexes calibrés.",
+      "desc": "Simulations de terrain : infiltration, duel, extraction. Personne ne demande pourquoi vous entraînez votre fuite.",
+      "sections": [
+        {
+          "title": "Sessions",
+          "items": [
+            { "name": "Session VR (30 min)", "price": 120, "unit": "LMN", "note": "Choix : infil / combat / poursuite." },
+            { "name": "Session VR (2h) + analyse", "price": 480, "unit": "LMN", "note": "Rapport de performance." },
+            { "name": "Sim 'Cross Black' (axes)", "price": 260, "unit": "LMN", "note": "Gestion checkpoints mobiles." }
+          ]
+        },
+        {
+          "title": "Modules",
+          "items": [
+            { "name": "Module 'Discrétion' (pack)", "price": 200, "unit": "LMN", "note": "Itinéraires, timing, bruit." },
+            { "name": "Module 'Survie urbaine'", "price": 220, "unit": "LMN", "note": "Couvertures, angles, issues." },
+            { "name": "Module 'Contre-surveillance'", "price": 280, "unit": "LMN", "note": "Ruptures de traque." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shin_kitsune",
+      "name": "Kitsune Lounge",
+      "district": "Shin Arcade",
+      "kind": "social",
+      "tagline": "Négociations feutrées. Verres opaques.",
+      "desc": "Lounge d'accords tacites. On y parle bas. On y écoute fort.",
+      "sections": [
+        {
+          "title": "Accès & tables",
+          "items": [
+            { "name": "Réservation table (1h)", "price": 180, "unit": "LMN", "note": "Quatre places. Confidentialité relative." },
+            { "name": "Salon privé (1h)", "price": 650, "unit": "LMN", "note": "Anti-écoute léger inclus." },
+            { "name": "Hôte 'Kitsune' (médiation)", "price": 1, "unit": "FAVOR", "note": "La dette vous suit." }
+          ]
+        },
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Boisson 'Silence' (signature)", "price": 90, "unit": "LMN", "note": "Laisse la tête claire, le regard froid." },
+            { "name": "Boisson 'Neon Veil'", "price": 120, "unit": "LMN", "note": "Masque léger sur capteurs." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shin_backroom13",
+      "name": "Backroom 13",
+      "district": "Shin Arcade",
+      "kind": "black_market",
+      "tagline": "Objets rares. Contacts rares. Prix rares.",
+      "desc": "Une porte sans enseigne. Derrière : ce que tu n'aurais pas dû chercher.",
+      "sections": [
+        {
+          "title": "Rare & sensible",
+          "items": [
+            { "name": "Micro-cam (grain) x3", "price": 480, "unit": "LMN", "note": "Caméras jetables • 24h." },
+            { "name": "Kit crochetage (urbain)", "price": 320, "unit": "LMN", "note": "Serrures standard & électroniques basiques." },
+            { "name": "Câble 'ghostlink' (data)", "price": 260, "unit": "LMN", "note": "Connexion courte, signature floue." }
+          ]
+        },
+        {
+          "title": "Accès",
+          "items": [
+            { "name": "Invitation 'Continental Annex' (1 nuit)", "price": 1, "unit": "FAVOR", "note": "Entrée sous règle. Sortie sous règle." },
+            { "name": "Pass 'Rooftop Spine' (chemin)", "price": 650, "unit": "LMN", "note": "Itinéraire discret + fenêtres drones." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shin_fixerbooth",
+      "name": "Fixer Booth",
+      "district": "Shin Arcade",
+      "kind": "contact",
+      "tagline": "Missions à la demande. Délais courts.",
+      "desc": "Des cabines où l'on paye pour une opportunité… ou une erreur.",
+      "sections": [
+        {
+          "title": "Dépôt de requête",
+          "items": [
+            { "name": "Dépôt mission (standard)", "price": 200, "unit": "LMN", "note": "Brief minimal • réponse 24h." },
+            { "name": "Dépôt mission (urgent)", "price": 650, "unit": "LMN", "note": "Réponse rapide • coût social." },
+            { "name": "Contre-offre (négociation)", "price": 300, "unit": "LMN", "note": "Fixer restructure le deal." }
+          ]
+        },
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Mise en relation 'Runner'", "price": 450, "unit": "LMN", "note": "Main d'œuvre discrète." },
+            { "name": "Mise en relation 'Clean'", "price": 900, "unit": "LMN", "note": "Opérateurs plus silencieux." }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "grid_safehouse",
+      "name": "Safehouse Central",
+      "district": "Manhattan Grid",
+      "kind": "hub",
+      "tagline": "Planque neutre. Stockage. Extraction.",
+      "desc": "Le point neutre où l'on respire sans être vu. Ici, on ne pose pas de questions : on pose des sacs.",
+      "sections": [
+        {
+          "title": "Accès & hébergement",
+          "items": [
+            { "name": "Accès Safehouse (24h)", "price": 300, "unit": "LMN", "note": "Casier + repos. Pas de bruit." },
+            { "name": "Accès Safehouse (72h)", "price": 750, "unit": "LMN", "note": "Inclut fenêtre d'extraction." },
+            { "name": "Chambre scellée (1 nuit)", "price": 600, "unit": "LMN", "note": "Anti-écoute renforcé." }
+          ]
+        },
+        {
+          "title": "Stockage",
+          "items": [
+            { "name": "Casier (petit)", "price": 90, "unit": "LMN/mo", "note": "Accès code." },
+            { "name": "Casier (moyen)", "price": 160, "unit": "LMN/mo", "note": "Accès code + double verrou." },
+            { "name": "Stockage scellé (48h)", "price": 240, "unit": "LMN", "note": "Retrait sur créneau." }
+          ]
+        },
+        {
+          "title": "Extraction",
+          "items": [
+            { "name": "Extraction 'Low Noise' (urbain)", "price": 900, "unit": "LMN", "note": "Fenêtre 20 min." },
+            { "name": "Extraction 'Hard' (si chasse)", "price": 1, "unit": "FAVOR", "note": "Dette + silence." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grid_contracts",
+      "name": "Contract Bureau",
+      "district": "Manhattan Grid",
+      "kind": "contracts",
+      "tagline": "Dépôt de contrats. Clauses. Récompenses.",
+      "desc": "La façade propre de la ville sale. Les contrats ici ont une odeur de papier neuf et de sang ancien.",
+      "sections": [
+        {
+          "title": "Dépôts",
+          "items": [
+            { "name": "Dépôt contrat (standard)", "price": 250, "unit": "LMN", "note": "Enregistrement + ID de dossier." },
+            { "name": "Dépôt contrat (classifié)", "price": 650, "unit": "LMN", "note": "Accès restreint + scellé." },
+            { "name": "Dépôt contrat (urgence)", "price": 900, "unit": "LMN", "note": "Traitement accéléré." }
+          ]
+        },
+        {
+          "title": "Clauses",
+          "items": [
+            { "name": "Clause de silence", "price": 320, "unit": "LMN", "note": "Applicable au dossier." },
+            { "name": "Clause de non-interférence", "price": 480, "unit": "LMN", "note": "Protège la zone d'action." },
+            { "name": "Clause d'arbitrage Table", "price": 700, "unit": "LMN", "note": "En cas de litige." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grid_writsteel",
+      "name": "Writ & Steel",
+      "district": "Manhattan Grid",
+      "kind": "legal",
+      "tagline": "Couverture juridique. Permis. Tampons.",
+      "desc": "Des avocats sans émotions. Des signatures sans morale. Tout est légal tant que c'est correctement écrit.",
+      "sections": [
+        {
+          "title": "Couvertures",
+          "items": [
+            { "name": "Couverture 'Consultant' (30 jours)", "price": 1100, "unit": "LMN", "note": "Badge + justificatifs." },
+            { "name": "Couverture 'Technicien' (30 jours)", "price": 900, "unit": "LMN", "note": "Accès zones infra." },
+            { "name": "Couverture 'Livraison' (7 jours)", "price": 420, "unit": "LMN", "note": "Docks & entrepôts." }
+          ]
+        },
+        {
+          "title": "Documents",
+          "items": [
+            { "name": "Permis port (civil)", "price": 1300, "unit": "LMN", "note": "Valable si contrôle standard." },
+            { "name": "Permis port (service)", "price": 2200, "unit": "LMN", "note": "Niveau supérieur • audit possible." },
+            { "name": "Déclaration de propriété (véhicule)", "price": 650, "unit": "LMN", "note": "Paperwork complet." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grid_obsidian",
+      "name": "Obsidian Tower",
+      "district": "Manhattan Grid",
+      "kind": "corporate",
+      "tagline": "Siège vitrine. Accès badge. Sourires propres.",
+      "desc": "Le masque propre de la ville. Ici les ascenseurs ont des décisions, et les badges ont des humeurs.",
+      "sections": [
+        {
+          "title": "Accès Corporate",
+          "items": [
+            { "name": "Badge visiteur (2h)", "price": 180, "unit": "LMN", "note": "Accompagné seulement." },
+            { "name": "Badge prestataire (1 jour)", "price": 520, "unit": "LMN", "note": "Zones limitées • contrôles." },
+            { "name": "Badge interne (clonage)", "price": 1, "unit": "FAVOR", "note": "À ne pas demander deux fois." }
+          ]
+        },
+        {
+          "title": "Services discrets",
+          "items": [
+            { "name": "Salle de réunion (1h)", "price": 650, "unit": "LMN", "note": "Confort + silence." },
+            { "name": "Accès ascenseur 'haut'", "price": 900, "unit": "LMN", "note": "Fenêtre 10 min." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grid_metrohub",
+      "name": "Metro Hub",
+      "district": "Manhattan Grid",
+      "kind": "transit",
+      "tagline": "Nœud transport. Disparition. Reconnexion.",
+      "desc": "Le métro de Lumia n'est pas qu'un transport : c'est une méthode.",
+      "sections": [
+        {
+          "title": "Passes",
+          "items": [
+            { "name": "Pass Metro (24h)", "price": 120, "unit": "LMN", "note": "Trajets illimités." },
+            { "name": "Pass Metro (7 jours)", "price": 600, "unit": "LMN", "note": "Moins de contrôles." },
+            { "name": "Pass 'No-Name' (24h)", "price": 260, "unit": "LMN", "note": "Identité masquée (léger)." }
+          ]
+        },
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Itinéraire 'Invisible' (1 trajet)", "price": 350, "unit": "LMN", "note": "Correspondances optimisées." },
+            { "name": "Échange de tickets (swap)", "price": 90, "unit": "LMN", "note": "Change empreinte." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grid_gildedhall",
+      "name": "Gilded Hall",
+      "district": "Manhattan Grid",
+      "kind": "meeting",
+      "tagline": "Tapis épais. Les clés s'échangent en silence.",
+      "desc": "Salle de rencontre premium. Les secrets ne résonnent pas — ils s'impriment.",
+      "sections": [
+        {
+          "title": "Locations (mensuel)",
+          "items": [
+            { "name": "Studio — Manhattan Grid", "price": 2200, "unit": "LMN/mo", "note": "Proche Metro Hub." },
+            { "name": "Loft — Shin Arcade", "price": 2600, "unit": "LMN/mo", "note": "Vue néon. Bruit inclus." },
+            { "name": "Appartement — Nouvelle-Paris", "price": 3100, "unit": "LMN/mo", "note": "Adresse respectable." },
+            { "name": "Penthouse — Skyline Ward", "price": 5200, "unit": "LMN/mo", "note": "Sécurité & accès drones." }
+          ]
+        },
+        {
+          "title": "Achat (bien)",
+          "items": [
+            { "name": "Micro-appartement (achat)", "price": 48000, "unit": "LMN", "note": "Quartier variable • dossier requis." },
+            { "name": "Appartement standard (achat)", "price": 110000, "unit": "LMN", "note": "Contrat + frais." },
+            { "name": "Penthouse (achat)", "price": 290000, "unit": "LMN", "note": "Lettre de crédit exigée." }
+          ]
+        },
+        {
+          "title": "Accès & clés",
+          "items": [
+            { "name": "Changement de serrure (urgence)", "price": 420, "unit": "LMN", "note": "Fenêtre 2h." },
+            { "name": "Clé 'neutre' (duplication)", "price": 180, "unit": "LMN", "note": "Trace minimale." }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "paris_museenoir",
+      "name": "Musée Noir",
+      "district": "Nouvelle-Paris",
+      "kind": "archive",
+      "tagline": "Archives, artefacts, dossiers anciens.",
+      "desc": "La mémoire empaquetée dans des vitrines. Ici, la vérité est un objet à louer.",
+      "sections": [
+        {
+          "title": "Accès",
+          "items": [
+            { "name": "Ticket visite (couverture)", "price": 60, "unit": "LMN", "note": "Plausible, discret." },
+            { "name": "Accès réserve (1h)", "price": 450, "unit": "LMN", "note": "Accompagné. Interdit de filmer." },
+            { "name": "Accès réserve (privé)", "price": 1, "unit": "FAVOR", "note": "Ne pas insister." }
+          ]
+        },
+        {
+          "title": "Copies",
+          "items": [
+            { "name": "Scan d'archive (1 dossier)", "price": 220, "unit": "LMN", "note": "Qualité variable." },
+            { "name": "Extraction d'index (nom)", "price": 300, "unit": "LMN", "note": "Ouvre des pistes." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paris_archivesepia",
+      "name": "Archive Sépia",
+      "district": "Nouvelle-Paris",
+      "kind": "archive",
+      "tagline": "Dossiers. Photos. Noms effacés.",
+      "desc": "Des salles de papier où les vies se rangent comme des preuves.",
+      "sections": [
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Recherche (cible)", "price": 380, "unit": "LMN", "note": "1 piste solide." },
+            { "name": "Recherche (réseau)", "price": 900, "unit": "LMN", "note": "Plusieurs noms, plusieurs angles." },
+            { "name": "Accès nocturne (fenêtre)", "price": 1, "unit": "FAVOR", "note": "Dette & silence." }
+          ]
+        },
+        {
+          "title": "Dossiers",
+          "items": [
+            { "name": "Dossier 'Ancien contrat' (copie)", "price": 520, "unit": "LMN", "note": "Clause utile pour chantage." },
+            { "name": "Dossier 'Plan souterrain' (zone)", "price": 650, "unit": "LMN", "note": "Connexions à Galeries Souterraines." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paris_salonverre",
+      "name": "Salon de Verre",
+      "district": "Nouvelle-Paris",
+      "kind": "social",
+      "tagline": "Salons feutrés. Invitations strictes.",
+      "desc": "Un endroit où l'on regarde plus qu'on ne parle. Les accords se font par reflets.",
+      "sections": [
+        {
+          "title": "Accès",
+          "items": [
+            { "name": "Invitation (standard)", "price": 600, "unit": "LMN", "note": "Contrôle à l'entrée." },
+            { "name": "Invitation (prestige)", "price": 1400, "unit": "LMN", "note": "Vous appartenez au décor." }
+          ]
+        },
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Médiation de salon", "price": 900, "unit": "LMN", "note": "Un deal propre." },
+            { "name": "Médiation 'ombre'", "price": 1, "unit": "FAVOR", "note": "Un deal… et un lien." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paris_catacombs",
+      "name": "Galeries Souterraines",
+      "district": "Nouvelle-Paris",
+      "kind": "underground",
+      "tagline": "Passages. Échos. Issues.",
+      "desc": "Un réseau qui ne figure pas sur les cartes. Les pas y sont des signatures.",
+      "sections": [
+        {
+          "title": "Passages",
+          "items": [
+            { "name": "Itinéraire souterrain (1 zone)", "price": 420, "unit": "LMN", "note": "Sortie au choix, risque variable." },
+            { "name": "Itinéraire souterrain (multi)", "price": 900, "unit": "LMN", "note": "Connexion Underpier / Exit Tunnel." }
+          ]
+        },
+        {
+          "title": "Guides",
+          "items": [
+            { "name": "Guide silencieux (30 min)", "price": 350, "unit": "LMN", "note": "Ne parle pas. N'écoute pas." },
+            { "name": "Guide 'clé'", "price": 1, "unit": "FAVOR", "note": "Ouvre des portes qu'on oublie." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paris_continental",
+      "name": "Continental Annex",
+      "district": "Nouvelle-Paris",
+      "kind": "safe",
+      "tagline": "Hôtel neutre. Règles. Paix temporaire.",
+      "desc": "Ici, la ville baisse la voix. Les règles sont simples. Les conséquences ne le sont pas.",
+      "sections": [
+        {
+          "title": "Séjours",
+          "items": [
+            { "name": "Chambre (1 nuit)", "price": 900, "unit": "LMN", "note": "Neutralité sur place." },
+            { "name": "Suite (1 nuit)", "price": 1800, "unit": "LMN", "note": "Silence renforcé." },
+            { "name": "Accès 'Annex Rule' (validation)", "price": 1, "unit": "FAVOR", "note": "Vous entrez… avec une dette." }
+          ]
+        },
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Concierge (mise en relation)", "price": 650, "unit": "LMN", "note": "Contact neutre." },
+            { "name": "Coffre de chambre (48h)", "price": 240, "unit": "LMN", "note": "Scellé." }
+          ]
+        }
+      ]
+    },
+
+    {
       "id": "rust_hardline",
       "name": "HARDLINE Armory",
       "district": "Rustbelt",
-      "kind": "Armurerie de terrain",
-      "tagline": "Armes, mods, pièces. Conseils directs, reçus flous.",
-      "desc": "Armes, mods, pièces. On te conseille une poignée… ou une confession.",
+      "kind": "weapon_shop",
+      "tagline": "Armes, mods, pièces. Conseils directs.",
+      "desc": "Armes & mods de terrain. On ne vend pas la violence : on vend la précision.",
       "sections": [
         {
-          "title": "Armes RP (guidelines)",
+          "title": "Armes (RP)",
           "items": [
-            {
-              "name": "Pistolet compact (civil)",
-              "price": 1100,
-              "unit": "LMN",
-              "note": "Concealable. Pas de série."
-            },
-            {
-              "name": "Pistolet lourd (service)",
-              "price": 1800,
-              "unit": "LMN",
-              "note": "Recul fort. Discret si holster."
-            },
-            {
-              "name": "Fusil à pompe (close)",
-              "price": 2400,
-              "unit": "LMN",
-              "note": "Bruyant. Très dissuasif."
-            },
-            {
-              "name": "Carabine (précision)",
-              "price": 3200,
-              "unit": "LMN",
-              "note": "Accessoires non inclus."
-            }
+            { "name": "Pistolet compact (civil)", "price": 1100, "unit": "LMN", "note": "Concealable • discret." },
+            { "name": "Pistolet lourd (service)", "price": 1800, "unit": "LMN", "note": "Recul fort • fiable." },
+            { "name": "Fusil à pompe (close)", "price": 2400, "unit": "LMN", "note": "Bruyant • dissuasif." },
+            { "name": "Carabine (précision)", "price": 3200, "unit": "LMN", "note": "Accessoires non inclus." }
           ]
         },
         {
           "title": "Mods & entretien",
           "items": [
-            {
-              "name": "Mod silencieux (calibre standard)",
-              "price": 900,
-              "unit": "LMN",
-              "note": "S’use. Remplacement conseillé."
-            },
-            {
-              "name": "Kit nettoyage + pièces",
-              "price": 160,
-              "unit": "LMN",
-              "note": "Indispensable si pluie / poussière."
-            },
-            {
-              "name": "Munition pack (x50)",
-              "price": 140,
-              "unit": "LMN",
-              "note": "Type au choix selon stock."
-            },
-            {
-              "name": "Gravure d’anonymat",
-              "price": 600,
-              "unit": "LMN",
-              "note": "Marquage retiré. Garantie annulée."
-            }
+            { "name": "Mod silencieux (calibre standard)", "price": 900, "unit": "LMN", "note": "S'use. Remplacement conseillé." },
+            { "name": "Compensateur (stabilité)", "price": 520, "unit": "LMN", "note": "Réduit le drift." },
+            { "name": "Lampe tactique (rail)", "price": 260, "unit": "LMN", "note": "Aveugle proprement." },
+            { "name": "Kit nettoyage + pièces", "price": 160, "unit": "LMN", "note": "Indispensable." },
+            { "name": "Munitions pack (x50)", "price": 140, "unit": "LMN", "note": "Type selon stock." },
+            { "name": "Gravure d'anonymat", "price": 600, "unit": "LMN", "note": "Marquages retirés." }
           ]
         }
       ]
@@ -192,94 +614,650 @@
       "id": "rust_workshoprow",
       "name": "Workshop Row",
       "district": "Rustbelt",
-      "kind": "Ateliers & véhicules",
-      "tagline": "Réparation, custom, montage. 'On fait rouler l’impossible.'",
-      "desc": "Réparations rapides. Fabrication. Factures floues, travail net.",
+      "kind": "workshop",
+      "tagline": "Réparation, custom, montage.",
+      "desc": "Ateliers et mains pleines de cambouis. Ici, tout peut être transformé… surtout vous.",
       "sections": [
         {
           "title": "Véhicules (RP)",
           "items": [
-            {
-              "name": "Moto urbaine (d’occasion)",
-              "price": 6800,
-              "unit": "LMN",
-              "note": "Rapide. Bruit modéré."
-            },
-            {
-              "name": "Berline blindée légère",
-              "price": 18500,
-              "unit": "LMN",
-              "note": "Look corporate. Protection discrète."
-            },
-            {
-              "name": "Van utilitaire (cargo)",
-              "price": 13200,
-              "unit": "LMN",
-              "note": "Idéal pour extraction / planque mobile."
-            },
-            {
-              "name": "Drone-courrier (semi-auto)",
-              "price": 5400,
-              "unit": "LMN",
-              "note": "Livraisons rapides. Batterie incluse."
-            }
+            { "name": "Moto urbaine (occasion)", "price": 6800, "unit": "LMN", "note": "Rapide • bruit modéré." },
+            { "name": "Berline blindée légère", "price": 18500, "unit": "LMN", "note": "Look corporate • protection." },
+            { "name": "Van utilitaire (cargo)", "price": 13200, "unit": "LMN", "note": "Planque mobile." },
+            { "name": "Drone-courrier (semi-auto)", "price": 5400, "unit": "LMN", "note": "Livraisons rapides." }
           ]
         },
         {
           "title": "Services",
           "items": [
-            {
-              "name": "Réparation express (mineure)",
-              "price": 220,
-              "unit": "LMN",
-              "note": "1–2h."
-            },
-            {
-              "name": "Révision complète",
-              "price": 900,
-              "unit": "LMN",
-              "note": "24h. Pièces non incluses."
-            },
-            {
-              "name": "Peinture 'Neutral' (anti-reconnaissance)",
-              "price": 750,
-              "unit": "LMN",
-              "note": "Change l’empreinte visuelle."
-            },
-            {
-              "name": "Compartiment caché (véhicule)",
-              "price": 1200,
-              "unit": "LMN",
-              "note": "Volume variable. Risque douane."
-            }
+            { "name": "Réparation express (mineure)", "price": 220, "unit": "LMN", "note": "1–2h." },
+            { "name": "Révision complète", "price": 900, "unit": "LMN", "note": "24h, pièces non incluses." },
+            { "name": "Peinture 'Neutral' (anti-reconnaissance)", "price": 750, "unit": "LMN", "note": "Change empreinte visuelle." },
+            { "name": "Compartiment caché (véhicule)", "price": 1200, "unit": "LMN", "note": "Volume variable." },
+            { "name": "Brouilleur de plaque (montage)", "price": 900, "unit": "LMN", "note": "Courte durée." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rust_scrapyard",
+      "name": "Scrapyard Gate",
+      "district": "Rustbelt",
+      "kind": "industry",
+      "tagline": "Ferraille, pièces, métal qui parle.",
+      "desc": "Des montagnes de métal et des opportunités cachées. Ici, on récupère plus que des pièces.",
+      "sections": [
+        {
+          "title": "Pièces & matières",
+          "items": [
+            { "name": "Lot pièces détachées (standard)", "price": 180, "unit": "LMN", "note": "Utilisable craft/repair." },
+            { "name": "Lot pièces détachées (rare)", "price": 520, "unit": "LMN", "note": "Plus cher. Plus utile." },
+            { "name": "Matière composite (plaque)", "price": 260, "unit": "LMN", "note": "Renfort / blindage léger." }
+          ]
+        },
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Recherche pièce (ciblée)", "price": 220, "unit": "LMN", "note": "Dépend du stock du jour." },
+            { "name": "Découpe & ajustement", "price": 160, "unit": "LMN", "note": "Rapide, brut." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rust_substation6",
+      "name": "Substation 6",
+      "district": "Rustbelt",
+      "kind": "infrastructure",
+      "tagline": "Coupures stratégiques. Courants silencieux.",
+      "desc": "Une sous-station qui tient la ville par la gorge. Ici, la lumière est une négociation.",
+      "sections": [
+        {
+          "title": "Accès & fenêtres",
+          "items": [
+            { "name": "Fenêtre de coupure (zone)", "price": 700, "unit": "LMN", "note": "5 minutes. Timing strict." },
+            { "name": "Fenêtre de blackout (zone)", "price": 1, "unit": "FAVOR", "note": "Ça laisse des traces." }
+          ]
+        },
+        {
+          "title": "Matériel",
+          "items": [
+            { "name": "Kit 'Power-tap' (terrain)", "price": 420, "unit": "LMN", "note": "Accès temporaire au réseau." },
+            { "name": "Chargeur industriel (batteries)", "price": 260, "unit": "LMN", "note": "Pour drones/gear." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rust_greymarket",
+      "name": "Marché Gris",
+      "district": "Rustbelt",
+      "kind": "black_market",
+      "tagline": "Matériel, infos, accès. Sans origine.",
+      "desc": "Un marché de seconde vie. L'objet n'est pas neuf : il est déjà pardonné.",
+      "sections": [
+        {
+          "title": "Équipement terrain",
+          "items": [
+            { "name": "Gilet discret (léger)", "price": 650, "unit": "LMN", "note": "Sous veste." },
+            { "name": "Kit infiltration (urbain)", "price": 520, "unit": "LMN", "note": "Crochets + ruban + leurres." },
+            { "name": "Masque anti-capteurs (léger)", "price": 480, "unit": "LMN", "note": "Réduit reconnaissance." }
+          ]
+        },
+        {
+          "title": "Infos logistiques",
+          "items": [
+            { "name": "Plan de conteneurs (Harborline)", "price": 380, "unit": "LMN", "note": "Daté du jour." },
+            { "name": "Itinéraire 'Ringline' (fret)", "price": 420, "unit": "LMN", "note": "Boucle périphérique." }
           ]
         }
       ]
     },
 
     {
-      "id": "grid_gildedhall",
-      "name": "Gilded Hall",
-      "district": "Manhattan Grid",
-      "kind": "Immobilier & accès",
-      "tagline": "Tapis épais. Les clés s’échangent en silence.",
-      "desc": "Salle de rencontre. Tapis épais. Les secrets ne résonnent pas — ils s’impriment.",
+      "id": "bio_complex7",
+      "name": "BioMire — Complexe 7",
+      "district": "BioMire",
+      "kind": "laboratory",
+      "tagline": "Biotech, protocoles, chair négociée.",
+      "desc": "Un laboratoire qui respire comme une machine. Ici, la science a des vigiles.",
       "sections": [
         {
-          "title": "Appartements (RP)",
+          "title": "Consommables médicaux",
           "items": [
-            { "name": "Studio — Manhattan Grid (mensuel)", "price": 2200, "unit": "LMN/mo", "note": "Proche Metro Hub." },
-            { "name": "Loft — Shin Arcade (mensuel)", "price": 2600, "unit": "LMN/mo", "note": "Bruit inclus. Vue néon." },
-            { "name": "Appartement — Nouvelle-Paris (mensuel)", "price": 3100, "unit": "LMN/mo", "note": "Adresse 'respectable'." },
-            { "name": "Penthouse — Skyline Ward (mensuel)", "price": 5200, "unit": "LMN/mo", "note": "Accès SkyDock, sécurité." }
+            { "name": "Kit sutures + antiseptique", "price": 120, "unit": "LMN", "note": "Terrain." },
+            { "name": "Dose stérile (anti-infection)", "price": 180, "unit": "LMN", "note": "Après blessure." },
+            { "name": "Patch douleur (x3)", "price": 160, "unit": "LMN", "note": "Réduit symptômes." }
           ]
         },
         {
-          "title": "Achat (RP)",
+          "title": "Services (protocoles)",
           "items": [
-            { "name": "Micro-appartement (achat)", "price": 48000, "unit": "LMN", "note": "Quartiers variables. Paperwork requis." },
-            { "name": "Appartement standard (achat)", "price": 110000, "unit": "LMN", "note": "Contrat + taxes + 'frais'." },
-            { "name": "Penthouse (achat)", "price": 290000, "unit": "LMN", "note": "Nécessite lettre de crédit." }
+            { "name": "Analyse bio (échantillon)", "price": 420, "unit": "LMN", "note": "Résultat sous 12h." },
+            { "name": "Nettoyage toxines (basique)", "price": 650, "unit": "LMN", "note": "Selon exposition." },
+            { "name": "Protocole 'silence'", "price": 1, "unit": "FAVOR", "note": "Personne n'a vu. Personne ne sait." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bio_hush",
+      "name": "Clinique Hush",
+      "district": "BioMire",
+      "kind": "medical",
+      "tagline": "Soins discrets. Paiement avant anesthésie.",
+      "desc": "Une clinique clandestine aux règles claires : l'argent d'abord, la vie ensuite.",
+      "sections": [
+        {
+          "title": "Soins",
+          "items": [
+            { "name": "Soins urgents (stabilisation)", "price": 650, "unit": "LMN", "note": "Pas de questions." },
+            { "name": "Extraction balle/éclat", "price": 900, "unit": "LMN", "note": "Anesthésie simple." },
+            { "name": "Trauma + suture complète", "price": 1400, "unit": "LMN", "note": "1h. Discrétion." }
+          ]
+        },
+        {
+          "title": "Optionnel",
+          "items": [
+            { "name": "Dossier médical effacé", "price": 420, "unit": "LMN", "note": "Trace réduite." },
+            { "name": "Chambre iso (1 nuit)", "price": 900, "unit": "LMN", "note": "Repos sans regards." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bio_implant",
+      "name": "Implant Bay",
+      "district": "BioMire",
+      "kind": "augmentation",
+      "tagline": "Implants, calibrage. Chair & fer en harmonie.",
+      "desc": "Ici on installe des avantages. Et parfois des regrets.",
+      "sections": [
+        {
+          "title": "Implants (RP)",
+          "items": [
+            { "name": "Interface neurale (basique)", "price": 3200, "unit": "LMN", "note": "Accès gear & HUD." },
+            { "name": "Optique 'Low-Light'", "price": 2400, "unit": "LMN", "note": "Vision améliorée." },
+            { "name": "Renfort musculaire (léger)", "price": 3800, "unit": "LMN", "note": "Effort prolongé." }
+          ]
+        },
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Calibrage implant", "price": 650, "unit": "LMN", "note": "Évite rejet." },
+            { "name": "Maintenance (mensuel)", "price": 350, "unit": "LMN/mo", "note": "Nettoyage + réglages." },
+            { "name": "Retrait implant (discret)", "price": 1, "unit": "FAVOR", "note": "Ça laisse une dette." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bio_quarantine",
+      "name": "Quarantine Wing",
+      "district": "BioMire",
+      "kind": "secure",
+      "tagline": "Zone verrouillée. Aucun visage ne sort pareil.",
+      "desc": "Un couloir où même l'air est surveillé. Accès rare. Retour incertain.",
+      "sections": [
+        {
+          "title": "Accès (exception)",
+          "items": [
+            { "name": "Permis d'accès (inspection)", "price": 1800, "unit": "LMN", "note": "Fenêtre 30 min." },
+            { "name": "Accès 'interne' (non-traçable)", "price": 1, "unit": "FAVOR", "note": "Ne se demande qu'une fois." }
+          ]
+        },
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Décontamination complète", "price": 900, "unit": "LMN", "note": "Procédure lourde." },
+            { "name": "Scellé bio (échantillon)", "price": 650, "unit": "LMN", "note": "Transport sécurisé." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bio_coldstorage",
+      "name": "Cold Storage",
+      "district": "BioMire",
+      "kind": "storage",
+      "tagline": "Échantillons. Caisses. Froid permanent.",
+      "desc": "Des caisses qui ne doivent pas se réchauffer. Des noms qui ne doivent pas apparaître.",
+      "sections": [
+        {
+          "title": "Stockage",
+          "items": [
+            { "name": "Stockage cryo (48h)", "price": 420, "unit": "LMN", "note": "Étiquette scellée." },
+            { "name": "Stockage cryo (1 semaine)", "price": 1400, "unit": "LMN", "note": "Accès sur créneau." }
+          ]
+        },
+        {
+          "title": "Logistique",
+          "items": [
+            { "name": "Transport scellé (ville)", "price": 650, "unit": "LMN", "note": "Risque : contrôles." },
+            { "name": "Transport scellé (hors ville)", "price": 1, "unit": "FAVOR", "note": "On n'oublie pas ça." }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sky_skydock03",
+      "name": "SkyDock 03",
+      "district": "Skyline Ward",
+      "kind": "air_transport",
+      "tagline": "Transit aérien. Itinéraires hauts.",
+      "desc": "Des plateformes où les départs ne s'annoncent pas. Le ciel a ses tarifs.",
+      "sections": [
+        {
+          "title": "Trajets",
+          "items": [
+            { "name": "Navette (1 trajet)", "price": 650, "unit": "LMN", "note": "Fenêtre 20 min." },
+            { "name": "Navette (prioritaire)", "price": 1200, "unit": "LMN", "note": "Pas de file." },
+            { "name": "Trajet 'sans nom'", "price": 1, "unit": "FAVOR", "note": "Vous n'étiez pas là." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sky_rooftopspine",
+      "name": "Rooftop Spine",
+      "district": "Skyline Ward",
+      "kind": "infiltration",
+      "tagline": "Chemins de toits. Entrées improbables.",
+      "desc": "Une colonne de toits connectés. Ici, le sol n'est pas une option.",
+      "sections": [
+        {
+          "title": "Guides & accès",
+          "items": [
+            { "name": "Route toits (1 zone)", "price": 420, "unit": "LMN", "note": "Angles drones inclus." },
+            { "name": "Route toits (multi)", "price": 900, "unit": "LMN", "note": "Connexion Control Needle / Metro." }
+          ]
+        },
+        {
+          "title": "Équipement",
+          "items": [
+            { "name": "Gants adhérents (x1)", "price": 260, "unit": "LMN", "note": "Grip amélioré." },
+            { "name": "Corde silencieuse (15m)", "price": 180, "unit": "LMN", "note": "Accroche rapide." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sky_controlneedle",
+      "name": "Control Needle",
+      "district": "Skyline Ward",
+      "kind": "surveillance",
+      "tagline": "Les yeux de la ville.",
+      "desc": "Une aiguille de contrôle qui regarde sans cligner. On n'y entre pas, on s'y glisse.",
+      "sections": [
+        {
+          "title": "Fenêtres surveillance",
+          "items": [
+            { "name": "Désactivation cam (1 bloc, 3 min)", "price": 650, "unit": "LMN", "note": "Timing strict." },
+            { "name": "Désactivation cam (1 zone, 10 min)", "price": 1400, "unit": "LMN", "note": "Risque audit." },
+            { "name": "Angle mort 'pur' (opération)", "price": 1, "unit": "FAVOR", "note": "On ne répète pas." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sky_dronebay",
+      "name": "Drone Bay",
+      "district": "Skyline Ward",
+      "kind": "infrastructure",
+      "tagline": "Drones, pièces, maintenance.",
+      "desc": "Une baie où les drones se reposent avant d'aller surveiller votre respiration.",
+      "sections": [
+        {
+          "title": "Drones (RP)",
+          "items": [
+            { "name": "Drone scout (compact)", "price": 2600, "unit": "LMN", "note": "Vision + retour." },
+            { "name": "Drone cargo (léger)", "price": 3400, "unit": "LMN", "note": "Transport petit colis." },
+            { "name": "Drone 'mask' (signature floue)", "price": 1, "unit": "FAVOR", "note": "Ne demande pas comment." }
+          ]
+        },
+        {
+          "title": "Maintenance",
+          "items": [
+            { "name": "Maintenance drone (standard)", "price": 350, "unit": "LMN", "note": "Nettoyage + calibration." },
+            { "name": "Batterie (pack)", "price": 260, "unit": "LMN", "note": "Autonomie prolongée." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sky_freightelevator",
+      "name": "Freight Elevator",
+      "district": "Skyline Ward",
+      "kind": "transit",
+      "tagline": "Logistique verticale. Montées sans témoins.",
+      "desc": "Ascenseurs industriels reliant la ville par l'intérieur. Un trajet suffit à changer de monde.",
+      "sections": [
+        {
+          "title": "Passes",
+          "items": [
+            { "name": "Pass freight (1 montée)", "price": 220, "unit": "LMN", "note": "Contrôle aléatoire." },
+            { "name": "Pass freight (illimité 24h)", "price": 650, "unit": "LMN", "note": "Fenêtres plus simples." }
+          ]
+        },
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Itinéraire 'interne' (cargo)", "price": 420, "unit": "LMN", "note": "Évite les halls publics." }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "harbor_docks",
+      "name": "Harborline Docks",
+      "district": "Harborline",
+      "kind": "port",
+      "tagline": "Docks, transit, conteneurs.",
+      "desc": "Le ventre de la ville. Ici, tout arrive. Peu de choses sont nées ici.",
+      "sections": [
+        {
+          "title": "Fret & accès",
+          "items": [
+            { "name": "Badge dock (1 jour)", "price": 420, "unit": "LMN", "note": "Zones limitées." },
+            { "name": "Badge dock (1 semaine)", "price": 1200, "unit": "LMN", "note": "Moins de contrôles." }
+          ]
+        },
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Chargement discret (lot)", "price": 650, "unit": "LMN", "note": "Ne laisse pas de preuve." },
+            { "name": "Déchargement discret (lot)", "price": 650, "unit": "LMN", "note": "Ne pose pas de question." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "harbor_customs",
+      "name": "Customs Office",
+      "district": "Harborline",
+      "kind": "legal",
+      "tagline": "Tampons. Portes. Manifestes.",
+      "desc": "Les tampons sont des clés. Les manifestes sont des mensonges bien alignés.",
+      "sections": [
+        {
+          "title": "Documents",
+          "items": [
+            { "name": "Manifest 'propre' (lot)", "price": 900, "unit": "LMN", "note": "Couvre une cargaison." },
+            { "name": "Tampon d'urgence (fenêtre)", "price": 650, "unit": "LMN", "note": "Passe si timing." },
+            { "name": "Porte 'ouverte' (opération)", "price": 1, "unit": "FAVOR", "note": "Le port s'en souvient." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "harbor_warehousek",
+      "name": "Warehouse K",
+      "district": "Harborline",
+      "kind": "storage",
+      "tagline": "Stockage. Conteneurs. Disparitions.",
+      "desc": "Un entrepôt où les objets se mettent à oublier leur origine.",
+      "sections": [
+        {
+          "title": "Stockage",
+          "items": [
+            { "name": "Conteneur (48h)", "price": 420, "unit": "LMN", "note": "Accès code." },
+            { "name": "Conteneur (1 semaine)", "price": 1400, "unit": "LMN", "note": "Zone gardée." },
+            { "name": "Cache conteneur (scellé)", "price": 900, "unit": "LMN", "note": "Double verrou." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "harbor_tug",
+      "name": "Tug Station",
+      "district": "Harborline",
+      "kind": "infrastructure",
+      "tagline": "Remorqueurs. Courants. Itinéraires.",
+      "desc": "Des moteurs qui tirent la ville par la mer. Ici, la direction se marchande.",
+      "sections": [
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Route de remorquage (courte)", "price": 650, "unit": "LMN", "note": "Fenêtre 30 min." },
+            { "name": "Route de remorquage (longue)", "price": 1200, "unit": "LMN", "note": "Contourne surveillance." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "harbor_underpier",
+      "name": "Underpier",
+      "district": "Harborline",
+      "kind": "underground",
+      "tagline": "Rencontres brèves. Issues sûres.",
+      "desc": "Sous les docks, les rendez-vous ne durent jamais. Les regards non plus.",
+      "sections": [
+        {
+          "title": "Passages",
+          "items": [
+            { "name": "Passage Underpier → Catacombs", "price": 650, "unit": "LMN", "note": "Connexion souterraine." },
+            { "name": "Passage Underpier → Exit Tunnel", "price": 650, "unit": "LMN", "note": "Sortie rapide." }
+          ]
+        },
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Rendez-vous 'sans témoins'", "price": 300, "unit": "LMN", "note": "Créneau 15 min." }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "signal_datacathedral",
+      "name": "Data-Cathédrale",
+      "district": "Signal Basilica",
+      "kind": "data_center",
+      "tagline": "Données, sauvegardes, silences numériques.",
+      "desc": "Une cathédrale de serveurs. Ici, les prières sont des paquets de données.",
+      "sections": [
+        {
+          "title": "Services data",
+          "items": [
+            { "name": "Stockage chiffré (mensuel)", "price": 260, "unit": "LMN/mo", "note": "Coffre numérique." },
+            { "name": "Extraction data (simple)", "price": 650, "unit": "LMN", "note": "Cible faible." },
+            { "name": "Extraction data (dur)", "price": 1800, "unit": "LMN", "note": "Cible protégée." }
+          ]
+        },
+        {
+          "title": "Protection",
+          "items": [
+            { "name": "Pare-feu portable (licence)", "price": 520, "unit": "LMN", "note": "Réduit intrusion." },
+            { "name": "Purge log (opération)", "price": 1, "unit": "FAVOR", "note": "On efface un péché." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signal_broadcast",
+      "name": "Broadcast Core",
+      "district": "Signal Basilica",
+      "kind": "media",
+      "tagline": "Diffusion. Narratif. Contrôle du récit.",
+      "desc": "Quand la ville parle, c'est d'ici que vient la voix. Et quand la ville se tait, c'est aussi d'ici.",
+      "sections": [
+        {
+          "title": "Packages récit",
+          "items": [
+            { "name": "Couverture médiatique (positive)", "price": 900, "unit": "LMN", "note": "Efface une rumeur." },
+            { "name": "Couverture médiatique (silence)", "price": 1400, "unit": "LMN", "note": "Une affaire disparaît." },
+            { "name": "Narratif 'cible' (déviation)", "price": 1, "unit": "FAVOR", "note": "La ville regarde ailleurs." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signal_jammerloft",
+      "name": "Jammer Loft",
+      "district": "Signal Basilica",
+      "kind": "tech",
+      "tagline": "Brouillage. Fenêtres numériques.",
+      "desc": "Des appareils qui tordent les ondes. Ici, le silence est un produit.",
+      "sections": [
+        {
+          "title": "Brouillage",
+          "items": [
+            { "name": "Brouilleur (zone, 5 min)", "price": 420, "unit": "LMN", "note": "Courte durée." },
+            { "name": "Brouilleur (zone, 15 min)", "price": 900, "unit": "LMN", "note": "Plus risqué." },
+            { "name": "Fenêtre 'No-Signal' (opération)", "price": 1, "unit": "FAVOR", "note": "Le réseau se souvient." }
+          ]
+        },
+        {
+          "title": "Matériel",
+          "items": [
+            { "name": "Antenne portable", "price": 260, "unit": "LMN", "note": "Amplifie réception." },
+            { "name": "Kit 'ghost comms'", "price": 520, "unit": "LMN", "note": "Comms courtes." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signal_pressvault",
+      "name": "Press Vault",
+      "district": "Signal Basilica",
+      "kind": "archive",
+      "tagline": "Images, preuves, montages.",
+      "desc": "Des preuves sous clé. Les images ne mentent pas… mais elles se montent.",
+      "sections": [
+        {
+          "title": "Dossiers",
+          "items": [
+            { "name": "Dossier preuve (zone)", "price": 650, "unit": "LMN", "note": "Images + timecodes." },
+            { "name": "Dossier montage (cible)", "price": 900, "unit": "LMN", "note": "Narratif utile." },
+            { "name": "Effacement d'image (opération)", "price": 1, "unit": "FAVOR", "note": "Ça coûte plus qu'un LMN." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signal_spire",
+      "name": "Signal Spire",
+      "district": "Signal Basilica",
+      "kind": "landmark",
+      "tagline": "Antenne. Vue large. Contrôle.",
+      "desc": "La flèche qui perce le ciel. La ville s'y accroche comme à un fil.",
+      "sections": [
+        {
+          "title": "Accès",
+          "items": [
+            { "name": "Accès plateforme (1h)", "price": 300, "unit": "LMN", "note": "Vue + relais." },
+            { "name": "Accès maintenance (1h)", "price": 650, "unit": "LMN", "note": "Zones techniques." }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "ring_arena",
+      "name": "Nocturne Arena",
+      "district": "Nocturne Ring",
+      "kind": "combat_zone",
+      "tagline": "Arène. Règlements. L'honneur se paie.",
+      "desc": "Une arène où l'on vient régler ce que les contrats n'ont pas suffi à calmer.",
+      "sections": [
+        {
+          "title": "Accès",
+          "items": [
+            { "name": "Entrée spectateur", "price": 120, "unit": "LMN", "note": "Zone publique." },
+            { "name": "Entrée combattant", "price": 300, "unit": "LMN", "note": "Contrôle renforcé." },
+            { "name": "Accès loge (privé)", "price": 900, "unit": "LMN", "note": "Silence & distance." }
+          ]
+        },
+        {
+          "title": "Services",
+          "items": [
+            { "name": "Médiateur d'arène", "price": 650, "unit": "LMN", "note": "Évite l'escalade." },
+            { "name": "Duel classifié (hors public)", "price": 1, "unit": "FAVOR", "note": "On ferme les portes." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ring_housebook",
+      "name": "House Book",
+      "district": "Nocturne Ring",
+      "kind": "contracts",
+      "tagline": "Registre. Dettes. Sanctions.",
+      "desc": "Le livre des dettes. Chaque page est une chaîne. Et chaque chaîne a un prix.",
+      "sections": [
+        {
+          "title": "Dettes & sanctions",
+          "items": [
+            { "name": "Enregistrement de dette (standard)", "price": 250, "unit": "LMN", "note": "Dossier officiel Table." },
+            { "name": "Rachat de dette (mineure)", "price": 900, "unit": "LMN", "note": "Selon clause." },
+            { "name": "Annulation (exception)", "price": 1, "unit": "FAVOR", "note": "Personne n'efface gratuitement." }
+          ]
+        },
+        {
+          "title": "Paris",
+          "items": [
+            { "name": "Jetons pari (x100)", "price": 100, "unit": "LMN", "note": "Convertibles en gains." },
+            { "name": "Jetons pari (x500)", "price": 450, "unit": "LMN", "note": "Accès table haute." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ring_cage",
+      "name": "The Cage",
+      "district": "Nocturne Ring",
+      "kind": "combat_zone",
+      "tagline": "Combat brut. Règles simples.",
+      "desc": "Une cage de métal, et l'écho de la foule. Ici, la paix est un mensonge court.",
+      "sections": [
+        {
+          "title": "Accès",
+          "items": [
+            { "name": "Entrée combattant (cage)", "price": 260, "unit": "LMN", "note": "Contrôle strict." },
+            { "name": "Combat arrangé", "price": 650, "unit": "LMN", "note": "Opposant défini." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ring_backstage",
+      "name": "Backstage Corridor",
+      "district": "Nocturne Ring",
+      "kind": "secure",
+      "tagline": "Couloirs verrouillés. Sorties rapides.",
+      "desc": "Là où l'on respire après l'impact. Là où les deals se font sans public.",
+      "sections": [
+        {
+          "title": "Accès & sécurité",
+          "items": [
+            { "name": "Accès backstage (1h)", "price": 420, "unit": "LMN", "note": "Zone gardée." },
+            { "name": "Couloir scellé (opération)", "price": 1, "unit": "FAVOR", "note": "On ferme les yeux." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ring_exittunnel",
+      "name": "Exit Tunnel",
+      "district": "Nocturne Ring",
+      "kind": "underground",
+      "tagline": "Sortie rapide. Disparition.",
+      "desc": "Un tunnel qui avale les problèmes et recrache des survivants.",
+      "sections": [
+        {
+          "title": "Passages",
+          "items": [
+            { "name": "Exit Tunnel → Underpier", "price": 650, "unit": "LMN", "note": "Connexion souterraine." },
+            { "name": "Exit Tunnel → Catacombs", "price": 650, "unit": "LMN", "note": "Connexion souterraine." }
+          ]
+        },
+        {
+          "title": "Extraction",
+          "items": [
+            { "name": "Sortie 'clean' (fenêtre)", "price": 900, "unit": "LMN", "note": "Timing précis." },
+            { "name": "Sortie 'chasse' (si poursuivi)", "price": 1, "unit": "FAVOR", "note": "Dette lourde." }
           ]
         }
       ]
