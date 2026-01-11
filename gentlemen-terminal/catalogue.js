@@ -227,54 +227,159 @@ function setReduceFx(on){
     - passifs/modifs/hybrids may reduce energy max (definitive)
 */
 const CATALOGUE = [
-  // --- STATS PACKS (quantities) ---
-  { id:"S-PHYS-5", statKey:"phys", name:"↟ PHYSIQUE +5", type:"Stats", district:"Manhattan Grid", cost:0, tags:["stat","création"], desc:"Augmentation du Physique (cumulable).", effect:"+5 Physique (prix par palier)", req:"—", notes:"Le prix se calcule automatiquement."},
-  { id:"S-TECH-5", statKey:"tech", name:"↟ TECHNIQUE +5", type:"Stats", district:"Skyline Ward", cost:0, tags:["stat","précision"], desc:"Augmentation de Technique (cumulable).", effect:"+5 Technique (prix par palier)", req:"—", notes:"Le prix se calcule automatiquement."},
-  { id:"S-MENT-5", statKey:"ment", name:"↟ MENTAL +5", type:"Stats", district:"Signal Basilica", cost:0, tags:["stat","sang-froid"], desc:"Augmentation de Mental (cumulable).", effect:"+5 Mental (prix par palier)", req:"—", notes:"Le prix se calcule automatiquement."},
-  { id:"S-SOC-5", statKey:"soc", name:"↟ SOCIAL +5", type:"Stats", district:"Shin Arcade", cost:0, tags:["stat","couverture"], desc:"Augmentation du Social (cumulable).", effect:"+5 Social (prix par palier)", req:"—", notes:"Le prix se calcule automatiquement."},
+  /* =========================================================
+     STATS ↟ (quantités / prix dynamique par palier)
+  ========================================================= */
+  { id:"S-PHYS-5", statKey:"phys", name:"↟ PHYSIQUE +5", type:"Stats", district:"Manhattan Grid", cost:0, tags:["stat","création"], desc:"Augmentation du Physique (cumulable).", effect:"+5 Physique (prix par palier)", req:"—", notes:"<=65 : 1 PD · 66–80 : 2 PD · >80 : bloqué." },
+  { id:"S-TECH-5", statKey:"tech", name:"↟ TECHNIQUE +5", type:"Stats", district:"Skyline Ward", cost:0, tags:["stat","précision"], desc:"Augmentation de Technique (cumulable).", effect:"+5 Technique (prix par palier)", req:"—", notes:"<=65 : 1 PD · 66–80 : 2 PD · >80 : bloqué." },
+  { id:"S-MENT-5", statKey:"ment", name:"↟ MENTAL +5", type:"Stats", district:"Signal Basilica", cost:0, tags:["stat","sang-froid"], desc:"Augmentation du Mental (cumulable).", effect:"+5 Mental (prix par palier)", req:"—", notes:"<=65 : 1 PD · 66–80 : 2 PD · >80 : bloqué." },
+  { id:"S-SOC-5", statKey:"soc", name:"↟ SOCIAL +5", type:"Stats", district:"Shin Arcade", cost:0, tags:["stat","couverture"], desc:"Augmentation du Social (cumulable).", effect:"+5 Social (prix par palier)", req:"—", notes:"<=65 : 1 PD · 66–80 : 2 PD · >80 : bloqué." },
 
-  // --- IDENTITÉS / ACCÈS ---
-  { id:"ID-VANT-LEDGER", name:"Identité Scellée — Ledger Hall", type:"Équipement", district:"Vantacore", cost:2, tags:["identité","contrat"], desc:"Un profil propre, reconnu, accepté.", effect:"1 fois/session : annuler une complication légale mineure (fiction).", req:"SOC ≥ 45", notes:"Tu es ‘possédé’ par ce que tu signes."},
-  { id:"ID-BLACKEX-TEMP", name:"Identité Jetable — Black Exchange", type:"Équipement", district:"Vantacore", cost:1, tags:["identité","illégal"], desc:"Un visage temporaire, un nom qui meurt vite.", effect:"1 mission : +10 sur infiltration sociale si couverture plausible.", req:"SOC ≥ 35", notes:"Après usage : trace possible (MJ)."},
-  { id:"SAFE-CENTRAL", name:"Clé d’accès — Safehouse Central", type:"Équipement", district:"Manhattan Grid", cost:2, tags:["safehouse","logistique"], desc:"Une porte neutre. Un endroit qui ressemble à la paix.", effect:"Entre-missions : stabiliser 1 état (fiction) + préparer 1 avantage narratif.", req:"—", notes:"Arc 4 : plus si safe que ça."},
-  { id:"NP-ARCHIVE-S", name:"Index Sépia — Archive Sépia", type:"Équipement", district:"Nouvelle-Paris", cost:2, tags:["archives","vérité"], desc:"Un accès aux vieux dossiers.", effect:"1 fois/arc : obtenir une info structurelle fiable (pas un détail).", req:"MENT ≥ 45", notes:"La vérité ici existe. Elle se cache."},
+  /* =========================================================
+     VANTACORE (D1) — identité / dette / effacement
+  ========================================================= */
+  { id:"VC-LEDGER-IDSEALED", name:"Identité Scellée — Ledger Hall", type:"Équipement", district:"Vantacore", cost:2, tags:["identité","finance","contrat"], desc:"Profil propre et reconnu. Un nom qui tient debout.", effect:"1 fois/mission : ignorer une complication légale mineure si couverture plausible.", req:"SOC ≥ 45", notes:"Légal = traçable." },
+  { id:"VC-VAULT19-KEY", name:"Clé Privée — Vault 19", type:"Équipement", district:"Vantacore", cost:2, tags:["secure","coffre","stash"], desc:"Accès à un coffre discret, sécurisé, froid.", effect:"Entre-missions : stocker 1 élément sensible hors radar (fiction).", req:"—", notes:"Vault 19 ne garde pas gratuitement." },
+  { id:"VC-BROKER-FAVOR", name:"Faveur d’Intermédiaire — Broker’s Corner", type:"Équipement", district:"Vantacore", cost:1, tags:["contact","fixer","réseau"], desc:"Un nom, un angle, un passage.", effect:"+10 sur négociation de mission/offre si tu proposes quelque chose en échange.", req:"SOC ≥ 35", notes:"Les fixers se souviennent." },
+  { id:"VC-CLEANROOM-WIPE", name:"Service — Clean Room (Wipe)", type:"Action", district:"Vantacore", cost:2, tags:["service","effacement","trace"], desc:"Nettoyage post-op : tu n’étais pas là.", effect:"Coût 1⚡ : réduire un tag de trace (HEAT/SURV/MEDIA) si plausible.", req:"MENT ≥ 45", notes:"La Clean Room remplace plus qu’elle efface." },
+  { id:"VC-BLACKEX-TEMPID", name:"Identité Jetable — Black Exchange", type:"Équipement", district:"Vantacore", cost:1, tags:["market","identité","illégal"], desc:"Un badge temporaire, un faux souffle.", effect:"1 mission : +10 infiltration sociale si couverture cohérente.", req:"SOC ≥ 35", notes:"Après : risque de recoupement." },
 
-  // --- ÉQUIPEMENT / ARMES / GADGETS ---
-  { id:"EQ-SUPPRESSOR", name:"Silencieux ‘Null-Noise’", type:"Équipement", district:"Rustbelt", cost:1, tags:["arme","silence"], desc:"Un silence qui efface le problème.", effect:"+10 aux neutralisations discrètes (tir) si plausible.", req:"TECH ≥ 40", notes:"Si ça dérape, la trace est pire."},
-  { id:"EQ-GLASSWIRE", name:"Filament ‘Glasswire’", type:"Équipement", district:"Nouvelle-Paris", cost:1, tags:["infiltration","outil"], desc:"Un outil fin, propre.", effect:"+10 sur crochetage / accès physique.", req:"TECH ≥ 35", notes:"Évite les jets si la scène est préparée."},
-  { id:"EQ-DRONE-MOTH", name:"Microdrone ‘Moth’", type:"Équipement", district:"Skyline Ward", cost:2, tags:["drone","reco"], desc:"Une aile dans les angles morts.", effect:"1 fois/mission : révéler 1 zone/menace cachée.", req:"TECH ≥ 50", notes:"Skyline te regarde aussi."},
-  { id:"EQ-VR-PIT", name:"Sim ‘VR Pit’ (Entraînement)", type:"Renforcement", district:"Shin Arcade", cost:2, tags:["simulation","prépa"], desc:"Ton corps s’en souvient.", effect:"Avant mission : 1 ‘avantage’ de préparation (+10 sur un type d’action).", req:"MENT ≥ 40", notes:"Si tu ‘reconnais’ trop, c’est un problème."},
+  /* =========================================================
+     SHIN ARCADE (D2) — rumeur / fixers / rare / social
+  ========================================================= */
+  { id:"SA-FIXERBOOTH-SLOT", name:"Accès — Fixer Booth (Slot)", type:"Équipement", district:"Shin Arcade", cost:1, tags:["contact","missions","off-book"], desc:"Un créneau pour un contrat qui n’existe pas.", effect:"1 fois/arc : obtenir une mission off-book (récompense narrative).", req:"SOC ≥ 40", notes:"Off-book = conséquences floues." },
+  { id:"SA-VRPIT-TRAIN", name:"Sim — VR Pit (Prépa)", type:"Renforcement", district:"Shin Arcade", cost:2, tags:["training","simulation"], desc:"Tu répètes la scène avant de la vivre.", effect:"Avant mission : 1 avantage de préparation (+10 sur 1 type d’action).", req:"MENT ≥ 40", notes:"Si tu reconnais trop, c’est un problème." },
+  { id:"SA-KITSUNE-ETIQUETTE", name:"Étiquette Kitsune — Lounge", type:"Équipement", district:"Shin Arcade", cost:2, tags:["social","négociation","premium"], desc:"Tu sais parler sans t’exposer.", effect:"1 fois/mission : convertir un échec social en succès mitigé (fiction).", req:"SOC ≥ 55", notes:"Un succès mitigé coûte quelque chose." },
+  { id:"SA-BACKROOM13-RAREKIT", name:"Kit Rare — Backroom 13", type:"Équipement", district:"Shin Arcade", cost:3, tags:["black_market","rare","outil"], desc:"Un kit ‘impossible’ selon la ville.", effect:"Choisis 1 : micro-explosif discret / lockpick avancé / faux cachet douane.", req:"SOC ≥ 40", notes:"Backroom 13 vend des problèmes emballés." },
+  { id:"SA-NIGHTSTRIP-RUMOR", name:"Rumeur Contrôlée — Nightstrip", type:"Équipement", district:"Shin Arcade", cost:1, tags:["district_core","rumeur","couverture"], desc:"Tu injectes un récit avant l’action.", effect:"1 fois/mission : +10 à la première interaction sociale liée à ta couverture.", req:"—", notes:"La rumeur attire aussi." },
 
-  // --- ACTIONS ---
-  { id:"A-PIERCE-SHOT", name:"⚔ Tir Chirurgical", type:"Action", district:"Manhattan Grid", cost:2, tags:["tir","précision"], desc:"Un tir. Une zone. Zéro bavure.", effect:"Coût 1⚡ : si réussite, neutralisation propre (évite alerte mineure).", req:"TECH ≥ 55", notes:"Tu ne tires pas. Tu conclus."},
-  { id:"A-HACK-SNAP", name:"⚔ Hack Express", type:"Action", district:"Signal Basilica", cost:2, tags:["hack","réseau"], desc:"Tu convaincs le système qu’il était déjà ouvert.", effect:"Coût 1⚡ : 1 accès rapide (caméra/porte/terminal).", req:"TECH ≥ 50", notes:"Chaque hack laisse une signature."},
-  { id:"A-CLEAN-ROOM", name:"⚔ Nettoyage Post-Op", type:"Action", district:"Vantacore", cost:2, tags:["effacement","trace"], desc:"Tu nettoies l’histoire.", effect:"Coût 1⚡ : réduire 1 tag de trace (SURV/HEAT/MEDIA) si plausible.", req:"MENT ≥ 45", notes:"Clean Room n’efface pas. Elle remplace."},
+  /* =========================================================
+     MANHATTAN GRID (D3) — légal / contrats / corporate / hub
+  ========================================================= */
+  { id:"MG-SAFEHOUSE-CENTRAL", name:"Clé d’accès — Safehouse Central", type:"Équipement", district:"Manhattan Grid", cost:2, tags:["hub","safe","logistique"], desc:"Planque neutre, stockage, respiration.", effect:"Entre-missions : stabiliser 1 état narratif + préparer 1 avantage.", req:"—", notes:"Arc 4 : plus si safe." },
+  { id:"MG-CONTRACT-BUREAU", name:"Dépôt Prioritaire — Contract Bureau", type:"Équipement", district:"Manhattan Grid", cost:2, tags:["contracts","procédure"], desc:"Tes contrats montent en haut de pile.", effect:"1 fois/arc : obtenir accès à une mission ‘premium’ (récompense).", req:"SOC ≥ 40", notes:"Le premium a toujours un sponsor." },
+  { id:"MG-WRITSTEEL-COVER", name:"Couverture Juridique — Writ & Steel", type:"Équipement", district:"Manhattan Grid", cost:2, tags:["legal","tampon","protection"], desc:"Le monde croit à tes papiers.", effect:"1 fois/mission : annuler une conséquence légale directe si tu joues la procédure.", req:"SOC ≥ 45", notes:"La procédure se paie en dettes." },
+  { id:"MG-OBSIDIAN-BADGE", name:"Badge Corporate — Obsidian Tower", type:"Équipement", district:"Manhattan Grid", cost:3, tags:["corporate","accès","badge"], desc:"Le masque propre, version luxe.", effect:"Accès : zones corporate +10 aux interactions ‘cadre’.", req:"SOC ≥ 55", notes:"Si tu trahis, la chute est verticale." },
+  { id:"MG-METROHUB-GHOST", name:"Ticket ‘Ghost’ — Metro Hub", type:"Équipement", district:"Manhattan Grid", cost:1, tags:["transit","disparition"], desc:"Une traversée sans caméra utile.", effect:"1 fois/mission : +10 à l’exfiltration si tu passes par le hub.", req:"—", notes:"Le hub connaît tes horaires." },
+  { id:"MG-GILDED-ROOM", name:"Salle Neutre — Gilded Hall", type:"Équipement", district:"Manhattan Grid", cost:1, tags:["meeting","neutral"], desc:"Rencontre propre, règles propres.", effect:"1 fois/arc : réunion sans violence (fiction).", req:"—", notes:"La neutralité n’est jamais gratuite." },
 
-  // --- RENFORCEMENTS ---
-  { id:"R-ADRENAL", name:"⬚ Mode Adrénaline", type:"Renforcement", district:"Nocturne Ring", cost:1, tags:["combat","tempo"], desc:"Ton corps refuse de tomber.", effect:"(1 gratuit/combat) +10 sur 1 action physique/attaque ce tour.", req:"PHYS ≥ 45", notes:"Après : fatigue narrative possible."},
-  { id:"R-ICEVEIN", name:"⬚ Verrou Émotionnel", type:"Renforcement", district:"Signal Basilica", cost:2, tags:["sang-froid"], desc:"Froid. Stable.", effect:"(1 gratuit/combat) ignorer 1 malus de panique/stress.", req:"MENT ≥ 55", notes:"Ce que tu bloques ressort ailleurs."},
+  /* =========================================================
+     NOUVELLE-PARIS (D4) — mémoire / archives / souterrains
+  ========================================================= */
+  { id:"NP-ARCHIVE-SEPIA", name:"Index Sépia — Archive Sépia", type:"Équipement", district:"Nouvelle-Paris", cost:2, tags:["archive","vérité"], desc:"Accès à des dossiers originaux, non réécrits.", effect:"1 fois/arc : obtenir une info structurelle fiable.", req:"MENT ≥ 45", notes:"La vérité existe ici." },
+  { id:"NP-MUSEE-NOIR-PASS", name:"Passe Musée Noir", type:"Équipement", district:"Nouvelle-Paris", cost:2, tags:["archive","prototype"], desc:"Tu visites les versions ratées.", effect:"+10 investigation liée au Projet Héritage (fiction).", req:"MENT ≥ 40", notes:"Tu risques de te reconnaître." },
+  { id:"NP-SALON-VERRE-INV", name:"Invitation — Salon de Verre", type:"Équipement", district:"Nouvelle-Paris", cost:2, tags:["social","invitation-only"], desc:"Tu entres dans la conversation.", effect:"1 fois/mission : +10 social si tu joues ‘élite’.", req:"SOC ≥ 45", notes:"Le verre coupe." },
+  { id:"NP-GALERIES-PASS", name:"Passage — Galeries Souterraines", type:"Équipement", district:"Nouvelle-Paris", cost:1, tags:["underground","passage"], desc:"Une route sous la ville.", effect:"1 fois/mission : éviter un contrôle (SURV) si tu passes par là.", req:"—", notes:"Sous la ville, tout écoute." },
+  { id:"NP-CONTINENTAL-RULES", name:"Statut — Continental Annex", type:"Équipement", district:"Nouvelle-Paris", cost:2, tags:["safe","règles"], desc:"Un refuge. Des règles.", effect:"1 fois/arc : obtenir asile temporaire sans poursuite immédiate.", req:"SOC ≥ 35", notes:"Briser les règles = bannissement." },
 
-  // --- PASSIFS (réduisent énergie max) ---
-  { id:"P-REFLEX", name:"○ Réflexes Conditionnés", type:"Passif", district:"BioMire", cost:3, tags:["réflexe","survie"], desc:"Ton corps répond avant toi.", effect:"Passif : +10 aux réactions/initiative. Énergie max -1.", req:"SPÉCIAL ≥ 50", notes:"Tu n’es pas plus rapide. Tu es programmé.", energyMaxDelta:-1 },
-  { id:"P-QUIETHEART", name:"○ Cœur Silencieux", type:"Passif", district:"Nouvelle-Paris", cost:3, tags:["discrétion","pouls"], desc:"Respiration basse, rythme contrôlé.", effect:"Passif : +10 discrétion sous surveillance. Énergie max -1.", req:"MENT ≥ 50", notes:"Si tu craques, ça se voit encore plus.", energyMaxDelta:-1 },
-  { id:"P-HARDLINE-SKIN", name:"○ Peau ‘Hardline’", type:"Passif", district:"Rustbelt", cost:4, tags:["armure","résistance"], desc:"Un blindage sous la chair.", effect:"Passif : une blessure légère/mission ignorée. Énergie max -2.", req:"SPÉCIAL ≥ 60", notes:"Tu portes ton propre cercueil.", energyMaxDelta:-2 },
+  /* =========================================================
+     RUSTBELT (D5) — armurerie / workshop / sabotage
+  ========================================================= */
+  { id:"RB-HARDLINE-SUPP", name:"Silencieux ‘Null-Noise’ — HARDLINE", type:"Équipement", district:"Rustbelt", cost:1, tags:["weapon_shop","silence"], desc:"Le tir qui ne résonne pas.", effect:"+10 neutralisation discrète au tir si plausible.", req:"TECH ≥ 40", notes:"Le silence ne protège pas de tout." },
+  { id:"RB-HARDLINE-AMMO", name:"Munitions Spéciales (Pack)", type:"Équipement", district:"Rustbelt", cost:1, tags:["weapon_shop","ammo"], desc:"Le bon calibre au bon moment.", effect:"1 mission : +10 dégâts narratifs OU percer 1 protection légère (fiction).", req:"—", notes:"À déclarer avant la scène." },
+  { id:"RB-WORKSHOP-OPTIM", name:"Ajustage — Workshop Row", type:"Modification", district:"Rustbelt", cost:2, tags:["workshop","calibrage"], desc:"Ton gear devient une extension stable.", effect:"+10 sur 1 catégorie d’outil (armes OU infiltration OU drones) au choix.", req:"TECH ≥ 45", notes:"Une optimisation, pas un miracle." },
+  { id:"RB-SCRAPYARD-PARTS", name:"Pièces — Scrapyard Gate", type:"Équipement", district:"Rustbelt", cost:1, tags:["industry","pièces"], desc:"Des pièces qui ne sont pas censées exister.", effect:"Entre-missions : réparer/renforcer 1 équipement sans coût narratif.", req:"—", notes:"Traçabilité floue." },
+  { id:"RB-SUB6-BLACKOUT", name:"Plan — Substation 6 (Blackout)", type:"Action", district:"Rustbelt", cost:2, tags:["infrastructure","sabotage"], desc:"Une coupure au bon moment.", effect:"Coût 1⚡ : provoquer une fenêtre ‘no cam’ locale (fiction).", req:"TECH ≥ 50", notes:"La ville réagit." },
+  { id:"RB-GREYMARKET-TOOLS", name:"Kit Gris — Marché Gris", type:"Équipement", district:"Rustbelt", cost:2, tags:["black_market","outil"], desc:"Des outils non catalogués.", effect:"Choisis 1 : lockpick avancé / coupe-fil / microcam.", req:"—", notes:"Le gris colle aux doigts." },
 
-  // --- COMBOS ---
-  { id:"C-CORNER-EXEC", name:"◆ Angle Mort", type:"Combo", district:"Skyline Ward", cost:2, tags:["position","infiltration"], desc:"Bien placé → fin sans bruit.", effect:"Combo : si cible isolée + couverture, neutralisation gratuite (fiction).", req:"TECH ≥ 45", notes:"Sinon : devient une Action (2⚡)."},
-  { id:"C-DOUBLETRUTH", name:"◆ Double Vérité", type:"Combo", district:"Signal Basilica", cost:2, tags:["mensonge","social"], desc:"Une vérité, puis une torsion.", effect:"Combo : si tu possèdes une preuve, +20 au bluff/pression.", req:"SOC ≥ 50", notes:"Sinon : exposition (MEDIA)."},
-  { id:"C-EXIT-TUNNEL", name:"◆ Sortie Définitive", type:"Combo", district:"Nocturne Ring", cost:3, tags:["escape","extraction"], desc:"Une porte que personne ne voit.", effect:"Combo : si plan d’exfiltration préparé, extraction sans jet majeur.", req:"MENT ≥ 50", notes:"Sinon : coûte 2⚡."},
+  /* =========================================================
+     BIOMIRE (D6) — clinique / augmentation / quarantaine
+  ========================================================= */
+  { id:"BM-HUSH-STITCH", name:"Soins Discrets — Clinique Hush", type:"Équipement", district:"BioMire", cost:2, tags:["medical","soins"], desc:"On te répare sans poser de question (sauf paiement).", effect:"Entre-missions : effacer 1 blessure légère OU stabiliser 1 trauma.", req:"—", notes:"Un patient sur trois n’a pas d’identité." },
+  { id:"BM-IMPLANTBAY-CAL", name:"Calibrage — Implant Bay", type:"Modification", district:"BioMire", cost:3, tags:["augmentation","implant"], desc:"Ton corps accepte mieux l’inhumain.", effect:"Réduit le coût narratif des implants (fiction). Énergie max -1.", req:"SPÉCIAL ≥ 55", notes:"Tout ce qui rentre laisse une trace.", energyMaxDelta:-1 },
+  { id:"BM-COMPLEX7-ACCESS", name:"Accès — Complexe 7 (dossier incomplet)", type:"Équipement", district:"BioMire", cost:3, tags:["laboratory","héritage"], desc:"Un bout de vérité biologique.", effect:"1 fois/arc : obtenir une info sur ton origine (ou variante).", req:"MENT ≥ 45", notes:"Incomplet ≠ faux." },
+  { id:"BM-QUARANTINE-PASS", name:"Passe Quarantine Wing", type:"Équipement", district:"BioMire", cost:2, tags:["secure","danger"], desc:"Voir ce que tu pourrais devenir.", effect:"+10 résistance mentale face aux ‘miroirs’ (fiction).", req:"MENT ≥ 50", notes:"On y enferme des versions instables." },
+  { id:"BM-COLDSTORAGE-STASH", name:"Caisse Scellée — Cold Storage", type:"Équipement", district:"BioMire", cost:2, tags:["storage","échantillon"], desc:"Un stockage froid, hors regard.", effect:"Entre-missions : conserver 1 preuve biologique / donnée sensible.", req:"—", notes:"Ce qui est froid ne dort pas." },
 
-  // --- MODIFICATIONS / HYBRIDATIONS ---
-  { id:"M-NEURAL-SPLICE", name:"⟁ Splice Neural", type:"Modification", district:"BioMire", cost:4, tags:["implant","réseau"], desc:"Une passerelle dans le crâne.", effect:"+10 hacks / +10 perception techno. Énergie max -1.", req:"SPÉCIAL ≥ 60, TECH ≥ 50", notes:"Tu n’es plus seul dans ta tête.", energyMaxDelta:-1 },
-  { id:"H-GLASSMORPH", name:"⟠ Trait ‘Glassmorph’", type:"Hybridation", district:"Shin Arcade", cost:4, tags:["mutation","camouflage"], desc:"Texture de peau qui casse les reflets.", effect:"+15 discrétion visuelle. Énergie max -2.", req:"SPÉCIAL ≥ 65", notes:"Les gens sentent que quelque chose cloche.", energyMaxDelta:-2 },
-  { id:"M-ARMORY-BONE", name:"⟁ Renfort Osseux", type:"Modification", district:"Rustbelt", cost:3, tags:["corps","choc"], desc:"Tes os ne cèdent plus facilement.", effect:"Ignorer 1 chute/impact significatif (fiction). Énergie max -1.", req:"SPÉCIAL ≥ 55", notes:"C’est solide. Pas indolore.", energyMaxDelta:-1 },
+  /* =========================================================
+     SKYLINE WARD (D7) — drones / verticalité / surveillance
+  ========================================================= */
+  { id:"SW-DRONE-MOTH", name:"Microdrone ‘Moth’", type:"Équipement", district:"Skyline Ward", cost:2, tags:["drone","reco"], desc:"Une aile dans l’angle mort.", effect:"1 fois/mission : révéler 1 menace/zone cachée.", req:"TECH ≥ 50", notes:"Le ciel est une salle de contrôle." },
+  { id:"SW-NEEDLE-PERM", name:"Autorisation — Control Needle", type:"Équipement", district:"Skyline Ward", cost:2, tags:["surveillance","autorisation"], desc:"Tu passes parce que tu es ‘autorisé’.", effect:"1 fois/mission : éviter un scan si tu as une couverture crédible.", req:"SOC ≥ 40", notes:"Les autorisations laissent des logs." },
+  { id:"SW-ROOFTOP-KIT", name:"Kit Vertical — Rooftop Spine", type:"Équipement", district:"Skyline Ward", cost:2, tags:["infiltration","vertical"], desc:"Grappin, ancrages, silencieux mécanique.", effect:"+10 infiltration verticale / fuite par les toits.", req:"PHYS ≥ 45", notes:"Tomber, c’est signer." },
+  { id:"SW-SKYDOCK-EXFIL", name:"Jeton Extraction — SkyDock 03", type:"Équipement", district:"Skyline Ward", cost:3, tags:["air_transport","extraction"], desc:"Une extraction aérienne possible.", effect:"1 fois/arc : exfiltration ‘propre’ si la scène est jouable.", req:"—", notes:"Le prix dépend du bruit." },
+  { id:"SW-FREIGHT-ELEV", name:"Accès — Freight Elevator", type:"Équipement", district:"Skyline Ward", cost:1, tags:["transit","accès"], desc:"Une montée discrète, un couloir technique.", effect:"+10 sur déplacement rapide vertical si plausible.", req:"—", notes:"Les couloirs techniques ne pardonnent pas." },
 
-  // --- CONTRAINTES (gain PD) ---
-  { id:"K-DEBT-LEDGER", name:"⚠ Dette Scellée (Contrat)", type:"Contrainte", district:"Vantacore", cost:-2, tags:["dette","contrat"], desc:"Tu dois quelque chose. Officiellement.", effect:"Gain +2 PD à la création.", req:"—", notes:"En campagne : ‘dette’ peut imposer pression/mission."},
-  { id:"K-SURVEIL-NEEDLE", name:"⚠ Trace Skyline", type:"Contrainte", district:"Skyline Ward", cost:-1, tags:["surveillance"], desc:"Ton signal est trop propre. Donc trop visible.", effect:"Gain +1 PD à la création.", req:"—", notes:"En campagne : surveillance plus fréquente."},
-  { id:"K-BIOMIRE-STABILITY", name:"⚠ Instabilité Bio", type:"Contrainte", district:"BioMire", cost:-2, tags:["bio","instable"], desc:"Ton corps accepte… mais il le fait payer.", effect:"Gain +2 PD à la création.", req:"SPÉCIAL ≥ 55", notes:"En campagne : 1 fois/mission, complication ‘instabilité’."},
-  { id:"K-PRESS-VAULT", name:"⚠ Dossier Média", type:"Contrainte", district:"Signal Basilica", cost:-1, tags:["media"], desc:"Quelqu’un a un récit sur toi.", effect:"Gain +1 PD à la création.", req:"—", notes:"En campagne : risque MEDIA (rumeur/montage)."},
+  /* =========================================================
+     HARBORLINE (D8) — docks / douane / containers / underpier
+  ========================================================= */
+  { id:"HL-MANIFEST-FALSE", name:"Manifeste Falsifié — Customs Office", type:"Équipement", district:"Harborline", cost:2, tags:["legal","douane"], desc:"Les papiers disent que c’est bon.", effect:"1 mission : +10 import/export / passage barrière.", req:"SOC ≥ 40", notes:"Un tampon peut tuer un dossier." },
+  { id:"HL-WAREHOUSEK-LOCK", name:"Box — Warehouse K", type:"Équipement", district:"Harborline", cost:2, tags:["storage","cache"], desc:"Un conteneur qui devient ton tiroir.", effect:"Entre-missions : stocker 1 équipement illégal sans fouille immédiate.", req:"—", notes:"Tout ce qui reste trop longtemps devient une preuve." },
+  { id:"HL-DOCKS-INSIDE", name:"Contact Dock — Harborline Docks", type:"Équipement", district:"Harborline", cost:1, tags:["port","contact"], desc:"Quelqu’un te dit quand passer.", effect:"+10 sur infiltration portuaire / timing.", req:"SOC ≥ 35", notes:"Le port a ses propres lois." },
+  { id:"HL-TUG-SABO", name:"Serrure Technique — Tug Station", type:"Action", district:"Harborline", cost:2, tags:["infrastructure","sabotage"], desc:"Une petite panne, un gros effet.", effect:"Coût 1⚡ : retarder un convoi / créer 1 fenêtre.", req:"TECH ≥ 45", notes:"Les docks détestent les retards." },
+  { id:"HL-UNDERPIER-MEET", name:"Point Mort — Underpier", type:"Équipement", district:"Harborline", cost:1, tags:["underground","meeting"], desc:"Rencontre brève, sans nom.", effect:"1 fois/mission : échanger un objet/information sans exposition directe.", req:"—", notes:"On parle vite, on oublie vite." },
+
+  /* =========================================================
+     SIGNAL BASILICA (D9) — data / média / brouillage / récit
+  ========================================================= */
+  { id:"SB-DATACATH-KEY", name:"Clé de Session — Data-Cathédrale", type:"Équipement", district:"Signal Basilica", cost:3, tags:["data_center","accès"], desc:"Accès à des données trop lourdes pour les rues.", effect:"1 fois/arc : obtenir un ‘paquet’ de data utile (preuve ou levier).", req:"TECH ≥ 50", notes:"La data change la guerre." },
+  { id:"SB-JAMMER-LOFT", name:"Brouilleur — Jammer Loft", type:"Équipement", district:"Signal Basilica", cost:2, tags:["tech","brouillage"], desc:"Une fenêtre numérique noire.", effect:"1 fois/mission : +10 infiltration numérique OU couper 1 drone/cam local (fiction).", req:"TECH ≥ 45", notes:"Le brouillage attire les yeux." },
+  { id:"SB-BROADCAST-PULSE", name:"Pulse — Broadcast Core", type:"Action", district:"Signal Basilica", cost:2, tags:["media","récit"], desc:"Tu pousses un récit au bon moment.", effect:"Coût 1⚡ : réduire MEDIA (si plausible) ou créer une diversion narrative.", req:"SOC ≥ 40", notes:"Le récit est une arme." },
+  { id:"SB-PRESS-VAULT", name:"Accès — Press Vault (preuves/montages)", type:"Équipement", district:"Signal Basilica", cost:2, tags:["archive","preuves"], desc:"Images, preuves, montages : la vérité malléable.", effect:"1 fois/arc : obtenir un dossier média (vrai ou falsifiable).", req:"MENT ≥ 40", notes:"Une preuve peut être retournée." },
+  { id:"SB-SIGNAL-SPIRE", name:"Relais — Signal Spire", type:"Équipement", district:"Signal Basilica", cost:1, tags:["landmark","vue"], desc:"Position haute, signal haut.", effect:"+10 sur observation / repérage si tu prends le temps.", req:"—", notes:"Prendre le temps est dangereux." },
+
+  /* =========================================================
+     NOCTURNE RING (D10) — violence ritualisée / dettes / cage
+  ========================================================= */
+  { id:"NR-ARENA-ENTRY", name:"Accès — Nocturne Arena", type:"Équipement", district:"Nocturne Ring", cost:2, tags:["combat_zone","accès"], desc:"Tu entres dans la violence officielle.", effect:"1 fois/arc : obtenir un contact / sponsor via l’arène.", req:"PHYS ≥ 45 ou SOC ≥ 45", notes:"L’arène regarde tout." },
+  { id:"NR-HOUSEBOOK-DEBT", name:"Inscription — House Book", type:"Contrainte", district:"Nocturne Ring", cost:-2, tags:["contracts","dette_sang"], desc:"Ton nom est inscrit. L’honneur se paie.", effect:"Gain +2 PD à la création.", req:"—", notes:"En campagne : dettes de sang / sanctions." },
+  { id:"NR-CAGE-GLANCE", name:"Visite — The Cage", type:"Équipement", district:"Nocturne Ring", cost:2, tags:["combat_zone","héritage"], desc:"Voir les Gentlemen expérimentaux.", effect:"+10 pour comprendre/anticiper une menace ‘Gentlemen’ (fiction).", req:"MENT ≥ 45", notes:"Tu peux te reconnaître aussi." },
+  { id:"NR-BACKSTAGE-PASS", name:"Passe — Backstage Corridor", type:"Équipement", district:"Nocturne Ring", cost:1, tags:["secure","accès"], desc:"Une porte derrière les cris.", effect:"+10 à exfiltration arène si tu connais les couloirs.", req:"—", notes:"Les couloirs ont des gardiens." },
+  { id:"NR-EXIT-TUNNEL", name:"Route — Exit Tunnel", type:"Équipement", district:"Nocturne Ring", cost:1, tags:["underground","escape"], desc:"Une sortie qui ne devrait pas exister.", effect:"1 fois/mission : éviter un verrouillage si fuite souterraine plausible.", req:"—", notes:"Tout tunnel mène à un autre tunnel." },
+
+  /* =========================================================
+     ACTIONS (combat / infil / hack / clean)
+  ========================================================= */
+  { id:"A-CHIRURGICAL-SHOT", name:"⚔ Tir Chirurgical", type:"Action", district:"Manhattan Grid", cost:2, tags:["tir","précision"], desc:"Un tir. Une zone. Pas de bavure.", effect:"Coût 1⚡ : si réussite, neutralisation propre (évite alerte mineure).", req:"TECH ≥ 55", notes:"Tu ne tires pas. Tu conclus." },
+  { id:"A-SNAP-HACK", name:"⚔ Hack Express", type:"Action", district:"Signal Basilica", cost:2, tags:["hack","réseau"], desc:"Tu convaincs le système qu’il était déjà ouvert.", effect:"Coût 1⚡ : 1 accès rapide (caméra/porte/terminal).", req:"TECH ≥ 50", notes:"Chaque hack laisse une signature." },
+  { id:"A-QUIET-TAKEDOWN", name:"⚔ Neutralisation Rapide", type:"Action", district:"Skyline Ward", cost:2, tags:["close","infiltration"], desc:"Une main, un angle, fin.", effect:"Coût 1⚡ : neutraliser une cible isolée sans bruit majeur (fiction).", req:"PHYS ≥ 50", notes:"Si témoin : ça explose." },
+  { id:"A-CLEANPOST", name:"⚔ Nettoyage Post-Op", type:"Action", district:"Vantacore", cost:2, tags:["trace","effacement"], desc:"Tu nettoies l’histoire.", effect:"Coût 1⚡ : réduire 1 tag HEAT/SURV/MEDIA si plausible.", req:"MENT ≥ 45", notes:"Effacer = déplacer." },
+  { id:"A-PORT-SLIP", name:"⚔ Glissade Portuaire", type:"Action", district:"Harborline", cost:2, tags:["transit","port"], desc:"Passer quand personne ne regarde.", effect:"Coût 1⚡ : éviter un contrôle douane/port si route plausible.", req:"SOC ≥ 35", notes:"Les docks ont des chiens." },
+
+  /* =========================================================
+     RENFORCEMENTS (1 gratuit/combat, ensuite coût)
+  ========================================================= */
+  { id:"R-ADRENALINE", name:"⬚ Mode Adrénaline", type:"Renforcement", district:"Nocturne Ring", cost:1, tags:["combat","tempo"], desc:"Ton corps refuse de tomber.", effect:"(1 gratuit/combat) +10 sur 1 action physique/attaque ce tour.", req:"PHYS ≥ 45", notes:"Après : fatigue narrative possible." },
+  { id:"R-ICEVEIN", name:"⬚ Verrou Émotionnel", type:"Renforcement", district:"Signal Basilica", cost:2, tags:["sang-froid"], desc:"Froid. Stable.", effect:"(1 gratuit/combat) ignorer 1 malus de panique/stress.", req:"MENT ≥ 55", notes:"Bloquer = payer plus tard." },
+  { id:"R-FOCUS-TRACK", name:"⬚ Focus Tactique", type:"Renforcement", district:"Manhattan Grid", cost:1, tags:["tactique"], desc:"Tu vois la trajectoire.", effect:"(1 gratuit/combat) +10 sur tir OU hack OU social, au choix.", req:"MENT ≥ 45", notes:"Concentration = dette." },
+
+  /* =========================================================
+     PASSIFS (réduisent énergie max)
+  ========================================================= */
+  { id:"P-REFLEX", name:"○ Réflexes Conditionnés", type:"Passif", district:"BioMire", cost:3, tags:["réflexe","survie"], desc:"Ton corps répond avant toi.", effect:"Passif : +10 réactions/initiative. Énergie max -1.", req:"SPÉCIAL ≥ 50", notes:"Tu es programmé.", energyMaxDelta:-1 },
+  { id:"P-QUIETHEART", name:"○ Cœur Silencieux", type:"Passif", district:"Nouvelle-Paris", cost:3, tags:["discrétion","pouls"], desc:"Respiration basse, rythme contrôlé.", effect:"Passif : +10 discrétion sous surveillance. Énergie max -1.", req:"MENT ≥ 50", notes:"Si tu craques, ça se voit.", energyMaxDelta:-1 },
+  { id:"P-HARDLINE-SKIN", name:"○ Peau ‘Hardline’", type:"Passif", district:"Rustbelt", cost:4, tags:["armure","résistance"], desc:"Blindage sous la chair.", effect:"Passif : ignorer 1 blessure légère/mission. Énergie max -2.", req:"SPÉCIAL ≥ 60", notes:"Tu portes ton cercueil.", energyMaxDelta:-2 },
+  { id:"P-CAMERA-SENSE", name:"○ Sens Caméra", type:"Passif", district:"Skyline Ward", cost:3, tags:["surveillance","angles"], desc:"Tu sens les angles morts.", effect:"Passif : +10 infiltration en zone surveillée. Énergie max -1.", req:"TECH ≥ 50", notes:"La ville est un œil.", energyMaxDelta:-1 },
+  { id:"P-LIE-RESIST", name:"○ Résistance au Récit", type:"Passif", district:"Signal Basilica", cost:3, tags:["media","mental"], desc:"Tu ne bois pas tout.", effect:"Passif : ignorer 1 manipulation MEDIA/arc (fiction). Énergie max -1.", req:"MENT ≥ 55", notes:"Ça t’isole.", energyMaxDelta:-1 },
+
+  /* =========================================================
+     COMBOS (conditions → gratuit, sinon action coût doublé)
+  ========================================================= */
+  { id:"C-DEADANGLE", name:"◆ Angle Mort", type:"Combo", district:"Skyline Ward", cost:2, tags:["position","infiltration"], desc:"Bien placé → fin sans bruit.", effect:"Si cible isolée + couverture : neutralisation gratuite (fiction).", req:"TECH ≥ 45", notes:"Sinon : Action (2⚡)." },
+  { id:"C-DOUBLETRUTH", name:"◆ Double Vérité", type:"Combo", district:"Signal Basilica", cost:2, tags:["mensonge","social"], desc:"Une vérité, puis une torsion.", effect:"Si tu possèdes une preuve : +20 bluff/pression.", req:"SOC ≥ 50", notes:"Sinon : exposition MEDIA." },
+  { id:"C-EXITROUTE", name:"◆ Sortie Définitive", type:"Combo", district:"Nocturne Ring", cost:3, tags:["escape","extraction"], desc:"Une porte que personne ne voit.", effect:"Si exfil préparée : extraction sans jet majeur.", req:"MENT ≥ 50", notes:"Sinon : coûte 2⚡." },
+  { id:"C-CLAUSE-KILL", name:"◆ Clause de Rupture", type:"Combo", district:"Vantacore", cost:2, tags:["contrat","légal"], desc:"Tu utilises la procédure comme une lame.", effect:"Si contrat signé/valide : annuler 1 sanction légale (fiction).", req:"SOC ≥ 45", notes:"Sinon : dette." },
+
+  /* =========================================================
+     MODIFICATIONS / HYBRIDATIONS (plus rares)
+  ========================================================= */
+  { id:"M-NEURAL-SPLICE", name:"⟁ Splice Neural", type:"Modification", district:"BioMire", cost:4, tags:["implant","réseau"], desc:"Une passerelle dans le crâne.", effect:"+10 hack +10 perception techno. Énergie max -1.", req:"SPÉCIAL ≥ 60, TECH ≥ 50", notes:"Tu n’es pas seul dans ta tête.", energyMaxDelta:-1 },
+  { id:"M-BONE-REINFORCE", name:"⟁ Renfort Osseux", type:"Modification", district:"Rustbelt", cost:3, tags:["corps","choc"], desc:"Tes os ne cèdent plus facilement.", effect:"Ignorer 1 impact/chute significatif (fiction). Énergie max -1.", req:"SPÉCIAL ≥ 55", notes:"Solide ≠ indolore.", energyMaxDelta:-1 },
+  { id:"M-RETINA-OVERLAY", name:"⟁ Overlay Rétinien", type:"Modification", district:"Skyline Ward", cost:3, tags:["vision","surveillance"], desc:"Ta vision lit les couches.", effect:"+10 repérage +10 tir de précision (fiction). Énergie max -1.", req:"SPÉCIAL ≥ 55, TECH ≥ 50", notes:"Les lumières te suivent.", energyMaxDelta:-1 },
+  { id:"H-GLASSMORPH", name:"⟠ Trait ‘Glassmorph’", type:"Hybridation", district:"Shin Arcade", cost:4, tags:["mutation","camouflage"], desc:"Ta peau casse les reflets.", effect:"+15 discrétion visuelle. Énergie max -2.", req:"SPÉCIAL ≥ 65", notes:"On sent que quelque chose cloche.", energyMaxDelta:-2 },
+  { id:"H-COLD-BLOOD", name:"⟠ Sang Froid (Bio)", type:"Hybridation", district:"BioMire", cost:4, tags:["bio","stress"], desc:"Ton corps gère l’adrénaline autrement.", effect:"1 fois/mission : ignorer panique/stress (fiction). Énergie max -2.", req:"SPÉCIAL ≥ 65, MENT ≥ 50", notes:"Les émotions te quittent.", energyMaxDelta:-2 },
+
+  /* =========================================================
+     CONTRAINTES (gain PD) — pour construire des fiches “à dette”
+  ========================================================= */
+  { id:"K-DEBT-LEDGER", name:"⚠ Dette Scellée (Contrat)", type:"Contrainte", district:"Vantacore", cost:-2, tags:["dette","contrat"], desc:"Tu dois quelque chose. Officiellement.", effect:"Gain +2 PD à la création.", req:"—", notes:"En campagne : pression/mission forcée possible." },
+  { id:"K-SKYLINE-TRACE", name:"⚠ Trace Skyline", type:"Contrainte", district:"Skyline Ward", cost:-1, tags:["surveillance"], desc:"Ton signal est trop visible.", effect:"Gain +1 PD à la création.", req:"—", notes:"En campagne : scans plus fréquents." },
+  { id:"K-BIOMIRE-UNSTABLE", name:"⚠ Instabilité Bio", type:"Contrainte", district:"BioMire", cost:-2, tags:["bio","instable"], desc:"Ton corps accepte… mais il le fait payer.", effect:"Gain +2 PD à la création.", req:"SPÉCIAL ≥ 55", notes:"En campagne : 1 complication/mission possible." },
+  { id:"K-PRESS-FILE", name:"⚠ Dossier Média", type:"Contrainte", district:"Signal Basilica", cost:-1, tags:["media"], desc:"Quelqu’un a un récit sur toi.", effect:"Gain +1 PD à la création.", req:"—", notes:"En campagne : risque MEDIA (rumeur/montage)." },
+  { id:"K-HARBOR-OWE", name:"⚠ Dette Portuaire", type:"Contrainte", district:"Harborline", cost:-1, tags:["port","contrebandier"], desc:"Tu dois un service à un dockmaster.", effect:"Gain +1 PD à la création.", req:"—", notes:"En campagne : appel de dette." },
+  { id:"K-RING-ODDS", name:"⚠ Paris sur ton Nom", type:"Contrainte", district:"Nocturne Ring", cost:-1, tags:["ring","réputation"], desc:"Quelqu’un parie ta chute.", effect:"Gain +1 PD à la création.", req:"—", notes:"En campagne : duels/pression." }
 ];
+
 
 /* ===================== BASE STATS ===================== */
 function loadBaseStats(){
@@ -915,3 +1020,4 @@ document.addEventListener("DOMContentLoaded", ()=>{
     if (e.key === "Escape") setOpen(false);
   });
 })();
+
