@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Archives PDF GENTLEMEN : acces protege aux dossiers du Projet Heritage." />
+  <title>GENTLEMEN - Archives PDF</title>
+  <link rel="stylesheet" href="assets/css/lore.css" />
+</head>
+
+<body class="fx-on archives-page">
+  <div class="home-dock" id="homeDock">
+    <button class="home-tab" id="homeTab" type="button" aria-expanded="false" title="Ouvrir le dock">
+      <span class="home-tab-g">G</span>
+    </button>
+
+    <div class="home-panel" id="homePanel" aria-hidden="true">
+      <a class="home-action" href="../index.html">
+        <span class="home-action-title">TERMINAL PRINCIPAL</span>
+        <span class="home-action-sub">Retour a l'accueil</span>
+      </a>
+      <a class="home-action" href="lore.html">
+        <span class="home-action-title">RETOUR AU LORE</span>
+        <span class="home-action-sub">Revenir au dossier Heritage</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="bgimg" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="sigil" aria-hidden="true">G</span>
+      <div class="brand-text">
+        <div class="title">GENTLEMEN</div>
+        <div class="subtitle">ARCHIVES PDF / PROJET HERITAGE</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a class="navchip" href="lore.html">LORE</a>
+      <span class="navchip active">ARCHIVES</span>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="panel archive-panel">
+      <div class="panel-brackets" aria-hidden="true">
+        <span class="br tl"></span><span class="br tr"></span>
+        <span class="br bl"></span><span class="br br"></span>
+      </div>
+
+      <div class="panel-head">
+        <div class="panel-head-left">
+          <div class="tag">ACCES / RESTREINT</div>
+          <h1 class="h1">ARCHIVES PDF <span class="cursor" aria-hidden="true">|</span></h1>
+          <p class="meta">
+            Statut : <span class="meta-badge">Verrouille</span>
+            • Niveau : <span class="meta-badge danger">Restreint</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="panel-body archive-body">
+        <section class="archive-intro" id="archiveIntro">
+          <div class="archive-copy">
+            <div class="archive-title">Dossiers classes</div>
+            <p>
+              Cette section conserve les traces du Projet Heritage, ses fragments, ses ecarts et ses versions
+              interdites. L'acces exige une cle d'autorisation valide.
+            </p>
+            <p class="archive-note">
+              Saisis le mot de passe de clearance pour consulter les dossiers classes.
+            </p>
+          </div>
+
+          <form class="archive-auth" id="archiveAuth" autocomplete="off">
+            <label class="archive-label" for="archivePassword">Mot de passe</label>
+            <input id="archivePassword" class="archive-input" type="password" placeholder="Entrer le mot de passe" />
+            <div class="archive-actions">
+              <button class="btn" type="submit">DEVERROUILLER</button>
+              <a class="btn" href="lore.html">ANNULER</a>
+            </div>
+            <div class="archive-feedback" id="archiveFeedback" aria-live="polite"></div>
+          </form>
+        </section>
+
+        <section class="archive-content hidden" id="archiveContent">
+          <div class="archive-copy">
+            <div class="archive-title">Dossiers disponibles</div>
+            <p>Choisis un dossier pour ouvrir les archives autorisees.</p>
+          </div>
+
+          <div class="archive-grid" id="archiveGrid"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <noscript>
+    <div class="noscriptBanner">Initialisation incomplete. Le protocole d'ouverture des archives ne repond pas.</div>
+  </noscript>
+
+  <script src="assets/js/archives.js" defer></script>
+</body>
+</html>

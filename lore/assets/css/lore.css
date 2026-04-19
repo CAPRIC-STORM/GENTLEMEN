@@ -1,4 +1,8 @@
 :root{
+  --bg0:#07080b;
+  --bg2:#0f1115;
+  --panelA: rgba(11,12,15,.92);
+  --panelB: rgba(8,9,12,.88);
   /* ✅ TON UNIQUE (gris-noir splendide) */
   --tone: #0b0c0f;          /* couleur maîtresse */
   --tone2:#0b0c0f;          /* volontairement identique */
@@ -21,6 +25,30 @@
   --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
 }
 
+@font-face{
+  font-family:"Orbitron";
+  src:url("../../assets/fonts/Orbitron-Medium.ttf") format("truetype");
+  font-weight:500;
+  font-style:normal;
+  font-display:swap;
+}
+
+@font-face{
+  font-family:"Orbitron";
+  src:url("../../assets/fonts/Orbitron-Bold.ttf") format("truetype");
+  font-weight:700;
+  font-style:normal;
+  font-display:swap;
+}
+
+@font-face{
+  font-family:"Oxanium";
+  src:url("../../assets/fonts/Oxanium-Regular.ttf") format("truetype");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+
 
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
@@ -36,6 +64,16 @@ body{
     radial-gradient(700px 520px at 78% 18%, rgba(255,70,90,.06), transparent 58%),
     radial-gradient(900px 680px at 62% 72%, rgba(255,255,255,.03), transparent 55%),
     linear-gradient(180deg, var(--bg0), var(--bg2));
+}
+
+.btn:focus-visible,
+.search input:focus-visible,
+.audio-volume:focus-visible,
+.home-tab:focus-visible,
+.home-action:focus-visible{
+  outline:none;
+  border-color:rgba(120,240,220,.38) !important;
+  box-shadow:0 0 0 2px rgba(120,240,220,.18), 0 0 0 5px rgba(120,240,220,.06);
 }
 
 /* Neutraliser la vidéo/fallback (tu gardes ton HTML intact) */
@@ -285,6 +323,17 @@ body.dim .noise{ opacity:.05; }
 .meta-badge.danger{
   border-color: rgba(255,70,90,.30);
   background: rgba(255,70,90,.08);
+}
+
+.panel-actions{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.archive-link{
+  text-decoration:none;
 }
 
 .panel-head-right{
@@ -604,6 +653,146 @@ body.reduce-effects .home-panel,
 body.reduce-effects .home-tab,
 body.reduce-effects .home-action{
   transition: none !important;
+}
+
+.noscriptBanner{
+  position:fixed;
+  right:14px;
+  bottom:14px;
+  max-width:min(420px, calc(100% - 28px));
+  padding:10px 12px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:14px;
+  background:rgba(8,9,12,.94);
+  color:var(--text);
+  font-size:13px;
+  z-index:80;
+}
+
+.archive-panel{
+  min-height:420px;
+}
+
+.archive-body{
+  position:relative;
+  z-index:2;
+}
+
+.archive-intro,
+.archive-content{
+  display:grid;
+  gap:18px;
+}
+
+.archive-copy{
+  max-width:70ch;
+}
+
+.archive-title{
+  font-family:var(--mono);
+  font-size:18px;
+  letter-spacing:.08em;
+  margin-bottom:8px;
+}
+
+.archive-note{
+  color:var(--muted);
+}
+
+.archive-auth{
+  width:min(460px, 100%);
+  display:grid;
+  gap:12px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+  background:rgba(0,0,0,.24);
+}
+
+.archive-label{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.16em;
+  color:var(--muted);
+}
+
+.archive-input{
+  width:100%;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.28);
+  color:var(--text);
+  font-family:var(--mono);
+  outline:none;
+}
+
+.archive-input:focus-visible,
+.archive-card:focus-visible{
+  outline:none;
+  border-color:rgba(120,240,220,.38) !important;
+  box-shadow:0 0 0 2px rgba(120,240,220,.18), 0 0 0 5px rgba(120,240,220,.06);
+}
+
+.archive-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.archive-feedback{
+  min-height:18px;
+  color:rgba(255,70,90,.92);
+  font-size:13px;
+}
+
+.archive-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:12px;
+}
+
+.archive-card{
+  display:grid;
+  gap:8px;
+  padding:14px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+  background:rgba(0,0,0,.20);
+  color:var(--text);
+  text-decoration:none;
+  transition:transform .14s ease, border-color .14s ease, background .14s ease, box-shadow .14s ease;
+}
+
+.archive-card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(120,240,220,.24);
+  background:rgba(0,0,0,.30);
+  box-shadow:0 18px 34px rgba(0,0,0,.24);
+}
+
+.archive-kicker,
+.archive-meta{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.16em;
+  color:var(--muted);
+}
+
+.archive-name{
+  font-family:var(--mono);
+  font-size:15px;
+  letter-spacing:.06em;
+}
+
+.archives-page .navchip{
+  text-decoration:none;
+}
+
+@media (max-width: 900px){
+  .archive-grid{
+    grid-template-columns:1fr;
+  }
 }
 
 /* Mobile: move a bit down so it doesn't fight with UI */
