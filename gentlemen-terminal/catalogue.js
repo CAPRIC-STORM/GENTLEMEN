@@ -38,6 +38,15 @@ function setMute(on){
   $("#muteState") && ($("#muteState").textContent = on ? "MUTE: ON" : "MUTE: OFF");
   localStorage.setItem(LS.mute, on ? "1" : "0");
   applyVolumes();
+  if(on){
+    pauseBgm();
+    setAudioDebug("AUDIO: MUET");
+  }
+  else if(audioUnlocked && bgm){
+    const p = bgm.play();
+    if(p && typeof p.catch === "function") p.catch(()=> setAudioDebug("AUDIO: BGM BLOQUÉ"));
+    else setAudioDebug("AUDIO: OK");
+  }
 }
 
 function getVol(){
@@ -58,8 +67,13 @@ function applyVolumes(){
   if(bgm) bgm.volume = Math.min(1, v * 0.55);
 }
 
+function setAudioDebug(msg){
+  const el = $("#audioDebug");
+  if(el) el.textContent = msg;
+}
+
 function safePlay(aud){
-  if(!audioUnlocked || getMute()) return;
+  if(!audioUnlocked || getMute() || !aud) return;
   try{ aud.currentTime = 0; }catch(_){}
   const p = aud.play();
   if(p && typeof p.catch === "function") p.catch(()=>{});
@@ -71,29 +85,22 @@ function stopAllAudio(){
     try{ a.pause(); }catch(_){}
     try{ a.currentTime = 0; }catch(_){}
   });
-
-  // important : au retour, le navigateur exige un nouveau geste utilisateur
-  audioUnlocked = false;
-
-  // réactive le bouton (au cas où page cache / bfcache)
-  const b = document.querySelector("#btnUnlockAudio");
-  if(b){
-    b.disabled = false;
-    const lab = b.querySelector(".btnLabel");
-    if(lab) lab.textContent = "INITIALISER AUDIO";
-  }
 }
 
-document.addEventListener("visibilitychange", ()=>{ if(document.hidden) stopAllAudio(); });
-window.addEventListener("pagehide", stopAllAudio);
+function pauseBgm(){
+  if(!bgm) return;
+  try{ bgm.pause(); }catch(_){}
+}
 
-window.addEventListener("pageshow", () => {
-  // Quand on revient sur la page (même depuis cache), on ré-arme la relance
-  if(localStorage.getItem(LS.audioEver) === "1"){
-    audioUnlocked = false; // on force un nouvel unlock (contexte audio nouveau)
-    armAutoUnlockOnFirstGesture();
+  document.addEventListener("visibilitychange", ()=>{
+  if(document.hidden) pauseBgm();
+  else if(audioUnlocked && bgm && !getMute()){
+    const p = bgm.play();
+    if(p && typeof p.catch === "function") p.catch(()=> setAudioDebug("AUDIO: BGM BLOQUÉ"));
+    else setAudioDebug("AUDIO: OK");
   }
 });
+window.addEventListener("pagehide", stopAllAudio);
 
 
 /**
@@ -101,39 +108,31 @@ window.addEventListener("pageshow", () => {
  * If user already unlocked once in the past, we auto-arm this on first click anywhere.
  */
 async function unlockAudio(){
-  // si déjà unlock: on tente juste de relancer la musique (utile si elle a été stoppée)
   if(audioUnlocked){
-    applyVolumes();
-    if(bgm && !getMute()){
-      try{
-        const p = bgm.play();
-        if(p && typeof p.catch === "function") p.catch(()=>{});
-      }catch(_){}
+    if(!getMute() && bgm){
+      const p = bgm.play();
+      if(p && typeof p.catch === "function") p.catch(()=> setAudioDebug("AUDIO: BLOCAGE NAV"));
+      else setAudioDebug("AUDIO: OK");
     }
     return;
   }
 
-  // (re)crée les objets audio à chaque unlock :
-  // plus fiable après retour de page / bfcache / restrictions navigateur
   SFX.click = createAudio("assets/audio/ui-click.mp3");
   SFX.confirm = createAudio("assets/audio/ui-confirm.mp3");
   bgm = createAudio("assets/audio/catalogue-ambience.mp3", true);
 
   try{
-    // warmup obligatoire sur geste user
     SFX.click.volume = 0;
-    const warm = SFX.click.play();
-    if(warm && typeof warm.catch === "function") await warm.catch(()=>{});
+    await SFX.click.play();
     SFX.click.pause();
     SFX.click.currentTime = 0;
-
     audioUnlocked = true;
     localStorage.setItem(LS.audioEver, "1");
   }catch(_){
     audioUnlocked = false;
+    setAudioDebug("AUDIO: UNLOCK REFUSÉ");
   }
 
-  // UI bouton
   const b = document.querySelector("#btnUnlockAudio");
   if(b){
     b.disabled = audioUnlocked;
@@ -143,48 +142,20 @@ async function unlockAudio(){
 
   applyVolumes();
 
-  if(audioUnlocked){
-    // petit feedback
-    safePlay(SFX.confirm);
-
-    // lancer la musique (sans autoplay car on est dans le clic)
-    if(!getMute() && bgm){
-      try{
-        const p = bgm.play();
-        if(p && typeof p.catch === "function") p.catch(()=>{});
-      }catch(_){}
-    }
+  if(audioUnlocked && SFX.confirm) safePlay(SFX.confirm);
+  if(audioUnlocked && !getMute() && bgm){
+    try{
+      const p = bgm.play();
+      if(p && typeof p.catch === "function"){
+        p.then(()=> setAudioDebug("AUDIO: OK")).catch(()=> setAudioDebug("AUDIO: BGM BLOQUÉ"));
+      }else{
+        setAudioDebug("AUDIO: OK");
+      }
+    }catch(_){}
   }
-}
-
-
-/** If previously unlocked once, relaunch audio on the first user interaction (no autoplay on load). */
-function armAutoUnlockOnFirstGesture(){
-  if(localStorage.getItem(LS.audioEver) !== "1") return;
-
-  const b = $("#btnUnlockAudio");
-  if(b){
-    b.querySelector(".btnLabel").textContent = "AUDIO (CLIC POUR RELANCER)";
-    b.disabled = false;
+  else if(audioUnlocked){
+    setAudioDebug("AUDIO: MUET");
   }
-
-  const handler = async () => {
-    document.removeEventListener("pointerdown", handler, true);
-    document.removeEventListener("keydown", handler, true);
-
-    // unlock + relance musique (si déjà unlocked, on relance juste)
-    await unlockAudio();
-
-    if(audioUnlocked && bgm && !getMute()){
-      try{
-        const p = bgm.play();
-        if(p && typeof p.catch === "function") p.catch(()=>{});
-      }catch(_){}
-    }
-  };
-
-  document.addEventListener("pointerdown", handler, true);
-  document.addEventListener("keydown", handler, true);
 }
 
 
@@ -938,9 +909,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
   wireGlobalSfx();
   applyVolumes();
 
-  // IMPORTANT: music comes back on return (first gesture autounlock if ever unlocked)
-  armAutoUnlockOnFirstGesture();
-
   // search & filters
   $("#q")?.addEventListener("input", render);
   $("#type")?.addEventListener("change", render);
@@ -1020,4 +988,3 @@ document.addEventListener("DOMContentLoaded", ()=>{
     if (e.key === "Escape") setOpen(false);
   });
 })();
-

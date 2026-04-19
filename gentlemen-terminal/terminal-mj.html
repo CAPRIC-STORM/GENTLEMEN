@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Terminal MJ GENTLEMEN : accès protégé vers l'outil de préparation, de lecture et de génération de fiches PNJ." />
+  <title>GENTLEMEN — Terminal MJ</title>
+  <link rel="stylesheet" href="terminal-mj.css" />
+</head>
+
+<body>
+  <div class="bg" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="logoBox" aria-hidden="true">G</span>
+        <div class="brandText">
+          <div class="brandName">TERMINAL MJ</div>
+          <div class="brandSub">POSTE DE CONTRÔLE · DOSSIERS PNJ · ACCÈS PROTÉGÉ</div>
+        </div>
+      </div>
+
+      <div class="topbarRight">
+        <a class="btn ghost" href="catalogue.html">
+          <span class="btnIco" aria-hidden="true">⟵</span>
+          <span class="btnLabel">RETOUR CATALOGUE</span>
+        </a>
+        <a class="btn ghost" href="../index.html">
+          <span class="btnIco" aria-hidden="true">⌂</span>
+          <span class="btnLabel">ACCUEIL</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="heroCard">
+        <div class="heroKicker mono">CLEARANCE / MJ</div>
+        <h1>POSTE DE PRÉPARATION OPÉRATIONNELLE</h1>
+        <p>
+          Ce terminal n’est pas un registre joueur. Il agrège les profils, les sujets Nexus, les dossiers
+          nommés et les exports de terrain utilisés pour piloter Lumia Island côté MJ.
+        </p>
+      </section>
+
+      <section class="gateGrid">
+        <article class="panel gatePanel" id="gatePanel">
+          <div class="panelTitle">AUTHENTIFICATION</div>
+          <p class="panelText">
+            Une clearance privée est exigée avant d’ouvrir l’atelier PNJ. La salle ne diffuse rien.
+            Elle vérifie seulement que l’accès est volontaire et assumé.
+          </p>
+
+          <form id="authForm" class="authForm" autocomplete="off">
+            <label class="field">
+              <span class="fieldLabel mono">MOT DE PASSE</span>
+              <input id="authInput" type="password" placeholder="Entrer la clearance MJ" />
+            </label>
+            <button class="btn primary full" type="submit">
+              <span class="btnIco" aria-hidden="true">⌁</span>
+              <span class="btnLabel">VALIDER LA CLEARANCE</span>
+            </button>
+            <div class="feedback mono tiny" id="authFeedback" aria-live="polite"></div>
+          </form>
+        </article>
+
+        <article class="panel readyPanel hidden" id="readyPanel">
+          <div class="panelTitle">ACCÈS VALIDÉ</div>
+          <p class="panelText">
+            Le poste MJ est prêt. Tu peux maintenant ouvrir le générateur, consulter les profils et préparer
+            les dossiers Saison I, Saison II et hybrides depuis le même atelier.
+          </p>
+
+          <div class="readyGrid">
+            <div class="readyCard">
+              <div class="readyLabel">CONTENU</div>
+              <div class="readyValue">PNJ · Nexus · Hybrides</div>
+            </div>
+            <div class="readyCard">
+              <div class="readyLabel">USAGE</div>
+              <div class="readyValue">Lecture · Génération · Export</div>
+            </div>
+          </div>
+
+          <a class="btn primary full" id="openMjTool" href="../pnj-tool/index.html">
+            <span class="btnIco" aria-hidden="true">⌘</span>
+            <span class="btnLabel">OUVRIR LE PNJ TOOL</span>
+          </a>
+        </article>
+
+        <article class="panel sidePanel">
+          <div class="panelTitle">PROTOCOLE</div>
+          <ul class="panelList">
+            <li>Lecture rapide des dossiers et presets.</li>
+            <li>Génération de profils humains, Nexus ou hybrides.</li>
+            <li>Exports texte structurés pour usage immédiat en session.</li>
+          </ul>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <noscript>
+    <div class="noscriptBanner">JavaScript est désactivé. Le terminal MJ ne peut pas valider la clearance.</div>
+  </noscript>
+
+  <script src="terminal-mj.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Catalogue Nexus GENTLEMEN : branche secrète saison II, mutations, noyaux et points de destin." />
+  <title>GENTLEMEN — Protocole Ulysse</title>
+  <link rel="stylesheet" href="catalogue-nexus.css" />
+</head>
+
+<body data-page="catalogue-nexus">
+  <div class="home-dock" id="homeDock">
+    <button class="home-tab" id="homeTab" type="button" aria-expanded="false" title="Ouvrir le dock">
+      <span class="home-tab-g">G</span>
+    </button>
+
+    <div class="home-panel" id="homePanel" aria-hidden="true">
+      <a class="home-action" href="../index.html">
+        <span class="home-action-title">TERMINAL PRINCIPAL</span>
+        <span class="home-action-sub">Retour à l’accueil</span>
+      </a>
+      <a class="home-action" href="catalogue.html">
+        <span class="home-action-title">RETOUR AU CATALOGUE</span>
+        <span class="home-action-sub">Revenir à la forge de création</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="bg" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="logoBox" aria-hidden="true">G</span>
+        <div class="brandText">
+          <div class="brandName">PROTOCOLE ULYSSE</div>
+          <div class="brandSub">SAISON II · MATRICE NEXUS · BRANCHE CLASSIFIÉE</div>
+        </div>
+      </div>
+
+      <div class="topbarRight">
+        <a class="btn ghost" href="catalogue.html">
+          <span class="btnIco" aria-hidden="true">⟵</span>
+          <span class="btnLabel">CATALOGUE</span>
+        </a>
+
+        <div class="audioBar" role="group" aria-label="Contrôles audio">
+          <button class="btn primary" id="btnUnlockAudio" type="button">
+            <span class="btnIco" aria-hidden="true">⟡</span>
+            <span class="btnLabel">INITIALISER AUDIO</span>
+          </button>
+
+          <button class="btn ghost" id="btnMute" type="button" aria-pressed="false">
+            <span class="btnIco" aria-hidden="true">⏺</span>
+            <span class="btnLabel">MUTE</span>
+          </button>
+
+          <label class="volWrap" title="Volume global">
+            <span class="volTxt">VOL</span>
+            <input id="vol" class="vol" type="range" min="0" max="100" value="42" />
+          </label>
+        </div>
+        <div class="mono tiny" id="audioDebug" style="min-width:140px; color:rgba(245,245,245,.55);">AUDIO: OFF</div>
+
+        <button class="btn ghost" id="btnReduceEffects" type="button" aria-pressed="false">
+          <span class="btnIco" aria-hidden="true">◫</span>
+          <span class="btnLabel">EFFETS</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <aside class="panel sidePanel">
+        <div class="panelHeader">
+          <div class="hudTitle">ACCÈS / ULYSSE</div>
+          <div class="hudMeta mono">La suite logique du catalogue. Réservée aux survivants capables de porter l’Héritage.</div>
+        </div>
+
+        <div class="panelBody">
+          <section class="lockBox" id="lockBox">
+            <div class="lockTitle">CLEARANCE REQUISE</div>
+            <p class="lockText">
+              Cette branche ne s’ouvre qu’après validation d’une clearance de niveau supérieur.
+              Elle contient les protocoles Saison II : noyaux, mutations, amplificateurs et instabilités.
+            </p>
+            <form id="authForm" class="authForm" autocomplete="off">
+              <label class="f">
+                <span class="t mono">MOT DE PASSE</span>
+                <input id="authInput" type="password" placeholder="Entrer la clearance" />
+              </label>
+              <button class="btn primary full" type="submit">
+                <span class="btnIco" aria-hidden="true">⌁</span>
+                <span class="btnLabel">DÉVERROUILLER</span>
+              </button>
+              <div class="feedback mono tiny" id="authFeedback" aria-live="polite"></div>
+            </form>
+          </section>
+
+          <section class="hidden" id="unlockedSide">
+            <div class="ruleCard">
+              <div class="rcTitle">SYSTÈME / ALLOCATION</div>
+              <ul class="rcList">
+                <li><b>Base système :</b> 8 Points de Destin</li>
+                <li><b>Trajectoire marquante :</b> +1 à +3</li>
+                <li><b>Objectif majeur accompli :</b> +2</li>
+                <li><b>Survie à un arc critique :</b> +1</li>
+                <li><b>Lien Héritage / Burnwood / Baron :</b> +1 à +3</li>
+              </ul>
+            </div>
+
+            <div class="hr"></div>
+
+            <div class="ruleCard">
+              <div class="rcTitle">Structure Saison II</div>
+              <ol class="rcList">
+                <li><b>Noyau :</b> l’axe biologique du sujet</li>
+                <li><b>Capacités :</b> les manifestations achetées</li>
+                <li><b>Amplificateurs :</b> les versions poussées</li>
+                <li><b>Instabilités :</b> le prix réel du Nexus</li>
+              </ol>
+            </div>
+
+            <div class="hr"></div>
+
+            <div class="budget">
+              <div class="bLine">
+                <span class="k mono">POINTS DE DÉPART</span>
+                <span class="v mono">
+                  <input id="destinyBase" class="budgetInput" type="number" min="0" step="1" value="8" />
+                </span>
+              </div>
+              <div class="bLine">
+                <span class="k mono">DÉPENSÉ</span>
+                <span class="v mono"><b id="destinySpent">0</b></span>
+              </div>
+              <div class="bLine">
+                <span class="k mono">GAINS</span>
+                <span class="v mono"><b id="destinyGain">0</b></span>
+              </div>
+              <div class="bLine">
+                <span class="k mono">RESTE</span>
+                <span class="v mono"><b id="destinyLeft">8</b></span>
+              </div>
+              <div class="bLine">
+                <span class="k mono">ENTRÉES</span>
+                <span class="v mono"><b id="selectionCount">0</b></span>
+              </div>
+              <div class="hint mono tiny">
+                Valeur système à renseigner selon ce que le MJ t’a communiqué. Le total se met ensuite à jour selon les achats et contreparties sélectionnés.
+              </div>
+            </div>
+
+            <div class="hr"></div>
+
+            <div class="ruleCard">
+              <div class="rcTitle">SÉLECTION ACTIVE</div>
+              <div class="selectionList" id="selectionList"></div>
+              <button class="btn ghost full" id="resetSelection" type="button">
+                <span class="btnIco" aria-hidden="true">⟲</span>
+                <span class="btnLabel">VIDER LA SÉLECTION</span>
+              </button>
+            </div>
+
+          </section>
+        </div>
+      </aside>
+
+      <section class="content">
+        <div class="contentHeader">
+          <div class="hudTitle">CATALOGUE NEXUS</div>
+          <div class="hudMeta mono">Éveil, dérivation, domination, séquelle. Cette branche ne vend pas des pouvoirs : elle sélectionne des survivants.</div>
+        </div>
+
+        <section class="hero hidden" id="heroSection">
+          <div class="heroLeft">
+            <div class="heroKicker mono">THÈME / SIGNAL D’ÉMERGENCE</div>
+            <h1>Holding Out For A Hero</h1>
+            <p>
+              Pas une esthétique rétro. Un sentiment. Une montée. La ville attend qu’un sujet tienne, qu’un corps encaisse,
+              qu’une trajectoire devienne plus grande que l’humain initial. Le Protocole Ulysse commence là.
+            </p>
+          </div>
+          <div class="heroRight">
+            <div class="signalCard">
+              <span class="signalTag">NEXUS</span>
+              <strong>Le héros n’est pas sauveur.</strong>
+              <p>Ici, le survivant devient vecteur. Et le vecteur finit toujours par payer quelque chose.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="matrix hidden" id="matrixSection">
+          <article class="matrixCard">
+            <div class="matrixTitle">Noyaux de mutation</div>
+            <p>Prédateur, Forteresse, Brasier, Cryoforme, Dualité, Vectoriel, Parasitage, Prime dérivé.</p>
+          </article>
+          <article class="matrixCard">
+            <div class="matrixTitle">Familles</div>
+            <p>Physique, sensoriel, organique, neurocognitif, thermique, vital, Nexus, Apex, instabilités.</p>
+          </article>
+          <article class="matrixCard">
+            <div class="matrixTitle">Philosophie</div>
+            <p>Le pouvoir s’achète par strates. La monstruosité, elle, s’installe par accumulation.</p>
+          </article>
+        </section>
+
+        <section class="filtersBlock hidden" id="filtersBlock">
+          <div class="searchBox" role="search">
+            <span class="searchIco" aria-hidden="true">⌕</span>
+            <input id="q" type="search" autocomplete="off" placeholder="Noyau, capacité, famille, classe..." />
+            <button class="searchClear" id="clearQ" type="button" aria-label="Effacer">×</button>
+          </div>
+
+          <div class="chipRow" id="familyChips"></div>
+        </section>
+
+        <section class="planGrid hidden" id="planGrid">
+          <article class="planCard">
+            <div class="planTitle">Ce qu’on peut construire</div>
+            <ul class="planList">
+              <li>Une allocation système directement liée aux accomplissements de Saison I.</li>
+              <li>Un builder mutation avec noyau, capacités, amplificateurs et contreparties.</li>
+              <li>Un résumé final du sujet Héritage exportable dans la fiche PJ.</li>
+            </ul>
+          </article>
+          <article class="planCard">
+            <div class="planTitle">Angle RP</div>
+            <ul class="planList">
+              <li>On ne choisit pas un “pouvoir cool”.</li>
+              <li>On choisit la forme que prend la survie au Nexus.</li>
+              <li>Chaque puissance importante a une conséquence, une dette ou une dégradation.</li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="catalogueBlock hidden" id="catalogueBlock">
+          <div class="tableHeader mono">
+            <span id="count">—</span> entrées · cliquez pour lecture détaillée
+          </div>
+          <div class="grid" id="grid"></div>
+        </section>
+
+        <div class="drawer" id="drawer" aria-hidden="true">
+          <div class="drawerPanel" role="dialog" aria-modal="true" aria-label="Détails mutation">
+            <div class="drawerTop">
+              <div>
+                <div class="drawerTitle" id="dTitle">—</div>
+                <div class="drawerMeta mono" id="dMeta">—</div>
+              </div>
+              <button class="btn ghost" id="closeDrawer" type="button">
+                <span class="btnIco" aria-hidden="true">×</span>
+                <span class="btnLabel">FERMER</span>
+              </button>
+            </div>
+
+            <div class="drawerBody">
+              <div class="pillRow" id="dPills"></div>
+
+              <div class="dBlock">
+                <div class="dLabel mono">DESCRIPTION</div>
+                <div class="dText" id="dDesc">—</div>
+              </div>
+
+              <div class="dGrid">
+                <div class="dBlock">
+                  <div class="dLabel mono">EFFET</div>
+                  <div class="dText mono" id="dEffect">—</div>
+                </div>
+                <div class="dBlock">
+                  <div class="dLabel mono">COÛT / CLASSE</div>
+                  <div class="dText mono" id="dCost">—</div>
+                </div>
+              </div>
+
+              <div class="dGrid">
+                <div class="dBlock">
+                  <div class="dLabel mono">PRÉREQUIS</div>
+                  <div class="dText mono" id="dReq">—</div>
+                </div>
+                <div class="dBlock">
+                  <div class="dLabel mono">CONTREPARTIE</div>
+                  <div class="dText mono" id="dRisk">—</div>
+                </div>
+              </div>
+
+              <div class="dBlock">
+                <div class="dLabel mono">NOTE LORE</div>
+                <div class="dText" id="dLore">—</div>
+              </div>
+
+              <div class="drawerActions">
+                <button class="btn primary" id="dAction" type="button">
+                  <span class="btnLabel">AJOUTER À LA SÉLECTION</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="mono tiny">
+        PREFS: LOCALSTORAGE · <span id="fxState">FX: ON</span> · <span id="muteState">MUTE: OFF</span>
+      </div>
+      <div class="mono tiny">BUILD: ULYSSE v0.1 — SAISON II / BRANCHE SECRÈTE</div>
+    </footer>
+  </div>
+
+  <noscript>
+    <div class="noscriptBanner">JavaScript est désactivé. Le protocole Ulysse ne peut pas ouvrir la branche Nexus.</div>
+  </noscript>
+
+  <script src="catalogue-nexus.js" defer></script>
+</body>
+</html>

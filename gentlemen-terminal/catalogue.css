@@ -15,6 +15,38 @@
   --r2:22px;
 }
 
+@font-face{
+  font-family:"Orbitron";
+  src:url("../assets/fonts/Orbitron-Medium.ttf") format("truetype");
+  font-weight:500;
+  font-style:normal;
+  font-display:swap;
+}
+
+@font-face{
+  font-family:"Orbitron";
+  src:url("../assets/fonts/Orbitron-Bold.ttf") format("truetype");
+  font-weight:700;
+  font-style:normal;
+  font-display:swap;
+}
+
+@font-face{
+  font-family:"Oxanium";
+  src:url("../assets/fonts/Oxanium-Regular.ttf") format("truetype");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+
+@font-face{
+  font-family:"Oxanium";
+  src:url("../assets/fonts/Oxanium-SemiBold.ttf") format("truetype");
+  font-weight:600;
+  font-style:normal;
+  font-display:swap;
+}
+
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
 body{
@@ -104,6 +136,20 @@ body{
 .btnLabel{ font-family:var(--hud); font-size:11px; letter-spacing:1.2px; white-space:nowrap; }
 .btn.primary{ border-color: rgba(255,255,255,.22); background: rgba(255,255,255,.03); }
 .btn.ghost{ border-color: var(--line2); }
+
+.btn:focus-visible,
+.searchBox input:focus-visible,
+.searchClear:focus-visible,
+.f select:focus-visible,
+.baseField input:focus-visible,
+.vol:focus-visible,
+.home-tab:focus-visible,
+.home-action:focus-visible,
+.card:focus-visible{
+  outline:none;
+  border-color:rgba(255,255,255,.28) !important;
+  box-shadow:0 0 0 2px rgba(255,255,255,.12), 0 0 0 5px rgba(255,255,255,.05);
+}
 
 /* Audio */
 .audioBar{
@@ -232,6 +278,11 @@ body{
 .fRow{ display:flex; gap:10px; }
 
 .exportHint{ margin-top:10px; color:var(--dim); }
+.protocolCard{ display:grid; gap:12px; }
+.protocolCopy{
+  color:var(--muted);
+  line-height:1.6;
+}
 
 /* Base stats inputs */
 .baseGrid{
@@ -303,9 +354,10 @@ body{
   transition: transform .14s ease, border-color .14s ease, background .14s ease;
 }
 .card:hover{
-  transform: translateY(-1px);
+  transform: translateY(-2px);
   border-color: rgba(255,255,255,.18);
   background: rgba(0,0,0,.20);
+  box-shadow: 0 14px 28px rgba(0,0,0,.20);
 }
 .card.selected{
   border-color: rgba(255,255,255,.28);
@@ -577,6 +629,20 @@ body.reduce-effects .home-panel,
 body.reduce-effects .home-tab,
 body.reduce-effects .home-action{
   transition: none !important;
+}
+
+.noscriptBanner{
+  position:fixed;
+  right:14px;
+  bottom:14px;
+  max-width:min(420px, calc(100% - 28px));
+  padding:10px 12px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:14px;
+  background:rgba(8,8,8,.94);
+  color:var(--text);
+  font-size:13px;
+  z-index:40;
 }
 
 /* Mobile: move a bit down so it doesn't fight with UI */
