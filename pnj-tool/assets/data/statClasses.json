@@ -1,0 +1,32 @@
+[
+  {
+    "id": "tier0",
+    "label": "TIER 0 — Civil",
+    "stats": { "vie": 20, "physique": 15, "special": 15, "mental": 25, "social": 30 }
+  },
+  {
+    "id": "tier1",
+    "label": "TIER 1 — Standard",
+    "stats": { "vie": 30, "physique": 30, "special": 25, "mental": 25, "social": 20 }
+  },
+  {
+    "id": "tier2",
+    "label": "TIER 2 — Dangereux",
+    "stats": { "vie": 35, "physique": 35, "special": 30, "mental": 30, "social": 20 }
+  },
+  {
+    "id": "tier3",
+    "label": "TIER 3 — Top Humain",
+    "stats": { "vie": 40, "physique": 40, "special": 35, "mental": 35, "social": 25 }
+  },
+  {
+    "id": "tier4",
+    "label": "TIER 4 — Surhumain",
+    "stats": { "vie": 50, "physique": 55, "special": 40, "mental": 30, "social": 15 }
+  },
+  {
+    "id": "tier5",
+    "label": "TIER 5 — Anomalie",
+    "stats": { "vie": 60, "physique": 65, "special": 65, "mental": 40, "social": 15 }
+  }
+]

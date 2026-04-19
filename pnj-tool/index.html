@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GENTLEMEN — TERMINAL PNJ</title>
+
+  <!-- Si tu veux 100% offline: télécharge ces polices et mets-les en local -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Oxanium:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="gmark" title="GENTLEMEN">G</div>
+      <div class="brandText">
+        <div class="kicker">TERMINAL // MJ</div>
+        <div class="title">TABLE PNJ — CASTING OFFICIEL</div>
+      </div>
+    </div>
+
+    <div class="topActions">
+      <button class="chipBtn" id="btnHelp">RACCOURCIS</button>
+      <label class="switch">
+        <input type="checkbox" id="reduceFx">
+        <span>Réduire effets</span>
+      </label>
+      <button class="btn ghost" id="btnExport">EXPORT</button>
+      <button class="btn" id="btnSave">SAUVER</button>
+      <button class="btn danger" id="btnResetAll">RESET</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- LEFT: INDEX -->
+    <section class="panel left">
+      <div class="panelHead">
+        <h2>DOSSIERS</h2>
+        <div class="meta">Recherche + filtres + favoris</div>
+      </div>
+
+      <div class="stack">
+        <input class="input" id="q" placeholder="Rechercher: Sniper, Héritage, Fixer, Tech..." />
+        <div class="row2">
+          <select class="select" id="tier">
+            <option value="">Tous tiers</option>
+            <option value="civil">Civil</option>
+            <option value="humain">Humain</option>
+            <option value="top">Top humain</option>
+            <option value="surhumain">Surhumain</option>
+            <option value="anomalie">Anomalie</option>
+            <option value="event">Évènement</option>
+          </select>
+          <select class="select" id="role">
+            <option value="">Tous rôles</option>
+            <option value="combat">Combat</option>
+            <option value="infil">Infiltration</option>
+            <option value="tech">Tech/Nexus</option>
+            <option value="social">Social/Contrôle</option>
+            <option value="support">Support</option>
+          </select>
+        </div>
+        <div class="row2">
+          <select class="select" id="modeFilter">
+            <option value="">Tous modes</option>
+            <option value="season1">Saison I</option>
+            <option value="season2">Saison II</option>
+            <option value="hybrid">Hybride</option>
+          </select>
+          <div class="filterInfo" id="filterInfo">—</div>
+        </div>
+
+        <div class="favRow">
+          <button class="btn ghost" id="btnFavOnly">★ Favoris</button>
+          <button class="btn ghost" id="btnQuickRand">RANDOM</button>
+        </div>
+      </div>
+
+      <div class="list" id="list"></div>
+
+      <div class="footerHint">
+        <span class="kbd">Entrée</span> charger •
+        <span class="kbd">F</span> favori •
+        <span class="kbd">1-4</span> dégâts •
+        <span class="kbd">E</span> -⚡ •
+        <span class="kbd">R</span> +⚡
+      </div>
+    </section>
+
+    <!-- CENTER: BUILDER -->
+    <section class="panel mid">
+      <div class="panelHead">
+        <h2>ASSEMBLAGE</h2>
+        <div class="meta">Clique pour ajouter. Double-clic pour retirer.</div>
+      </div>
+
+      <div class="builderTop">
+        <div>
+          <label class="label">Nom PNJ</label>
+          <input class="input" id="pnjName" placeholder="ex: Agent N-12 / Merc Vantacore / Sujet..." />
+        </div>
+        <div>
+          <label class="label">Base archétype</label>
+          <select class="select" id="base"></select>
+        </div>
+      </div>
+
+      <div class="dossierSummary" id="dossierSummary">
+        <div class="summaryTop">
+          <div>
+            <div class="summaryKicker">LECTURE RAPIDE</div>
+            <div class="summaryTitle" id="summaryTitle">Aucun profil chargé</div>
+          </div>
+          <div class="summaryBadges" id="summaryBadges"></div>
+        </div>
+        <div class="summaryGrid">
+          <div class="summaryCard">
+            <div class="summaryLabel">Usage</div>
+            <div class="summaryValue" id="summaryUsage">—</div>
+          </div>
+          <div class="summaryCard">
+            <div class="summaryLabel">Source</div>
+            <div class="summaryValue" id="summarySource">—</div>
+          </div>
+          <div class="summaryCard wide">
+            <div class="summaryLabel">Familles / Axe</div>
+            <div class="summaryValue" id="summaryFamilies">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="cap">Capacités</button>
+        <button class="tab" data-tab="skills">Compétences</button>
+        <button class="tab" data-tab="gear">Gadgets</button>
+        <button class="tab" data-tab="items">Items</button>
+      </div>
+
+      <div class="tabBody" id="tab-cap"></div>
+      <div class="tabBody hidden" id="tab-skills"></div>
+      <div class="tabBody hidden" id="tab-gear"></div>
+      <div class="tabBody hidden" id="tab-items"></div>
+    </section>
+
+    <!-- RIGHT: ACTIVE SHEET -->
+    <section class="panel right">
+      <div class="panelHead">
+        <h2>FICHE ACTIVE</h2>
+        <div class="meta" id="typeLine">—</div>
+      </div>
+
+      <div class="sheetHeader">
+        <div class="sheetName" id="sheetName">PNJ —</div>
+        <div class="chips" id="chips"></div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><span>❤ VIE</span><b id="sVie">0</b></div>
+        <div class="stat"><span>⚡ ÉNERGIE</span><b id="sEne">0</b></div>
+        <div class="stat"><span>💪 PHYS</span><b id="sPhy">0</b></div>
+        <div class="stat"><span>✨ SPÉ</span><b id="sSpe">0</b></div>
+        <div class="stat"><span>🧠 MENTAL</span><b id="sMen">0</b></div>
+        <div class="stat"><span>👥 SOCIAL</span><b id="sSoc">0</b></div>
+      </div>
+
+      <div class="combatGrid">
+        <div class="block">
+          <div class="blockTitle">Dégâts (1–4)</div>
+          <div class="btnGrid">
+            <button class="btn" data-dmg="1">-1</button>
+            <button class="btn" data-dmg="2">-2</button>
+            <button class="btn" data-dmg="3">-3</button>
+            <button class="btn danger" data-dmg="4">-4</button>
+          </div>
+          <div class="miniRow">
+            <button class="btn ghost" id="btnHeal1">+1</button>
+            <button class="btn ghost" id="btnHeal5">+5</button>
+            <button class="btn ghost" id="btnDown">DOWN</button>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="blockTitle">⚡ Énergie</div>
+          <div class="btnGrid">
+            <button class="btn ghost" id="btnEminus">-1</button>
+            <button class="btn ghost" id="btnEplus">+1</button>
+            <button class="btn" id="btnRecalc">Recalc (10%)</button>
+            <button class="btn ghost" id="btnTurn">Reset tour</button>
+          </div>
+          <div class="metaSmall">Canon: ⚡ = 10% du ✨ spécial (arrondi).:contentReference[oaicite:10]{index=10}:contentReference[oaicite:11]{index=11}</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="blockTitle">Dossier actif</div>
+        <div class="loadoutSections" id="loadoutSections">
+          <div class="loadoutGroup">
+            <div class="groupTitle">Acquisitions Saison I</div>
+            <div class="lines" id="loadoutS1"></div>
+          </div>
+          <div class="loadoutGroup">
+            <div class="groupTitle">Acquisitions Nexus</div>
+            <div class="lines" id="loadoutNexus"></div>
+          </div>
+          <div class="loadoutGroup">
+            <div class="groupTitle">Gear / Items</div>
+            <div class="lines" id="loadoutGear"></div>
+          </div>
+          <div class="loadoutGroup">
+            <div class="groupTitle">Kits / Signatures</div>
+            <div class="lines" id="loadoutKit"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="blockTitle">Notes / États</div>
+        <textarea class="textarea" id="notes" placeholder="Blessé, marqué, immobilisé... / dette, extraction, renfort..."></textarea>
+      </div>
+
+      <div class="actionsBottom">
+        <button class="btn ghost" id="btnCopy">COPIER</button>
+        <button class="btn" id="btnPrint">IMPRIMER</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal help -->
+  <div class="modal hidden" id="modal">
+    <div class="modalCard">
+      <div class="modalHead">
+        <div class="modalTitle">Raccourcis</div>
+        <button class="btn ghost" id="btnClose">FERMER</button>
+      </div>
+      <div class="modalBody">
+        <div class="helpGrid">
+          <div><span class="kbd">↑/↓</span> naviguer index</div>
+          <div><span class="kbd">Entrée</span> charger fiche</div>
+          <div><span class="kbd">F</span> favori</div>
+          <div><span class="kbd">1 2 3 4</span> dégâts</div>
+          <div><span class="kbd">E / R</span> -⚡ / +⚡</div>
+          <div><span class="kbd">Ctrl+S</span> sauver</div>
+          <div><span class="kbd">Ctrl+C</span> copier fiche</div>
+          <div><span class="kbd">Esc</span> fermer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

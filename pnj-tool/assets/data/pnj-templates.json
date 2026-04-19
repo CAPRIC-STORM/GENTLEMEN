@@ -1,0 +1,526 @@
+[
+  {
+    "id": "civil",
+    "name": "Civil / Contact",
+    "base_id": "civil",
+    "mode": "season1",
+    "modes": [
+      "season1"
+    ],
+    "summary": "Fuit / négocie / ment pour survivre",
+    "s1_picks": [
+      {
+        "id": "civil:kit:1",
+        "label": "Témoin utile",
+        "effect": "1 fois/scène, donne 1 indice vrai.",
+        "source": "template-mj"
+      },
+      {
+        "id": "civil:kit:2",
+        "label": "Faux calme",
+        "effect": "1 fois/combat, évite 1 dégât.",
+        "source": "template-mj"
+      },
+      {
+        "id": "civil:kit:3",
+        "label": "Réseau local",
+        "effect": "1 fois/session, connaît 1 contact utile.",
+        "source": "template-mj"
+      }
+    ],
+    "nexus_core": null,
+    "nexus_picks": [],
+    "loadout": {
+      "gear": [
+        "Téléphone jetable",
+        "Balise de traque"
+      ],
+      "items": []
+    },
+    "mj_signature": {
+      "style": "Fuit / négocie / ment pour survivre",
+      "routine": "social",
+      "faille": "",
+      "notes": ""
+    },
+    "source": "template-mj"
+  },
+  {
+    "id": "gang",
+    "name": "Gang / Mercenaire de rue",
+    "base_id": "gang",
+    "mode": "season1",
+    "modes": [
+      "season1"
+    ],
+    "summary": "Brutal, dangereux en groupe",
+    "s1_picks": [
+      {
+        "id": "gang:kit:1",
+        "label": "Rafale sale (⚡1)",
+        "effect": "+1 dégât OU 2 cibles (1 dégât).",
+        "source": "template-mj"
+      },
+      {
+        "id": "gang:kit:2",
+        "label": "Pression",
+        "effect": "Hors combat, force un PNJ faible à reculer.",
+        "source": "template-mj"
+      },
+      {
+        "id": "gang:kit:3",
+        "label": "Coup bas",
+        "effect": "+1 dégât si cible déjà blessée/au sol.",
+        "source": "template-mj"
+      }
+    ],
+    "nexus_core": null,
+    "nexus_picks": [],
+    "loadout": {
+      "gear": [
+        "Armure tactique légère",
+        "Injecteur de stimulants"
+      ],
+      "items": []
+    },
+    "mj_signature": {
+      "style": "Brutal, dangereux en groupe",
+      "routine": "combat",
+      "faille": "",
+      "notes": ""
+    },
+    "source": "template-mj"
+  },
+  {
+    "id": "sniper",
+    "name": "Sniper (élite humaine)",
+    "base_id": "sniper",
+    "mode": "season1",
+    "modes": [
+      "season1"
+    ],
+    "summary": "Distance, fuit si close",
+    "s1_picks": [
+      {
+        "id": "sniper:kit:1",
+        "label": "Tir parfait",
+        "effect": "Si non repéré, 1er tir = +2 dégâts.",
+        "source": "template-mj"
+      },
+      {
+        "id": "sniper:kit:2",
+        "label": "Reposition (⚡1)",
+        "effect": "Sort de ligne de vue (inciblable ce tour).",
+        "source": "template-mj"
+      },
+      {
+        "id": "sniper:kit:3",
+        "label": "Marquage (⚡1)",
+        "effect": "Prochaine attaque alliée +1 dégât.",
+        "source": "template-mj"
+      }
+    ],
+    "nexus_core": null,
+    "nexus_picks": [],
+    "loadout": {
+      "gear": [
+        "Lunettes multi-spectres",
+        "Balise de traque"
+      ],
+      "items": []
+    },
+    "mj_signature": {
+      "style": "Distance, fuit si close",
+      "routine": "combat / infil",
+      "faille": "",
+      "notes": ""
+    },
+    "source": "template-mj"
+  },
+  {
+    "id": "close",
+    "name": "Corps à corps (maître martial)",
+    "base_id": "close",
+    "mode": "season1",
+    "modes": [
+      "season1"
+    ],
+    "summary": "Rush, verrouille une cible",
+    "s1_picks": [
+      {
+        "id": "close:kit:1",
+        "label": "Enchaînement (⚡1)",
+        "effect": "Attaque 2 fois ce tour.",
+        "source": "template-mj"
+      },
+      {
+        "id": "close:kit:2",
+        "label": "Désarmement",
+        "effect": "1 fois/combat, arme neutralisée 1 tour.",
+        "source": "template-mj"
+      },
+      {
+        "id": "close:kit:3",
+        "label": "Riposte",
+        "effect": "Si attaque mêlée rate → inflige 1 dégât.",
+        "source": "template-mj"
+      }
+    ],
+    "nexus_core": null,
+    "nexus_picks": [],
+    "loadout": {
+      "gear": [
+        "Lames mono-fil",
+        "Armure tactique légère"
+      ],
+      "items": []
+    },
+    "mj_signature": {
+      "style": "Rush, verrouille une cible",
+      "routine": "combat",
+      "faille": "",
+      "notes": ""
+    },
+    "source": "template-mj"
+  },
+  {
+    "id": "fixer_genie",
+    "name": "Fixer / Manipulateur (génie)",
+    "base_id": "fixer_genie",
+    "mode": "season1",
+    "modes": [
+      "season1",
+      "hybrid"
+    ],
+    "summary": "Contrôle de scène, peu de combat",
+    "s1_picks": [
+      {
+        "id": "fixer_genie:kit:1",
+        "label": "Influence",
+        "effect": "Micro-événement crédible (contact, accès, info…).",
+        "source": "template-mj"
+      },
+      {
+        "id": "fixer_genie:kit:2",
+        "label": "Marchandage",
+        "effect": "Annule une escalade contre contrepartie.",
+        "source": "template-mj"
+      },
+      {
+        "id": "fixer_genie:kit:3",
+        "label": "Lecture froide",
+        "effect": "Révèle 1 faiblesse → +1 sur interactions.",
+        "source": "template-mj"
+      }
+    ],
+    "nexus_core": null,
+    "nexus_picks": [],
+    "loadout": {
+      "gear": [
+        "Modulateur émotionnel",
+        "Interface neuronale"
+      ],
+      "items": [
+        "Mémoire synthétique (souvenirs implantés)"
+      ]
+    },
+    "mj_signature": {
+      "style": "Contrôle de scène, peu de combat",
+      "routine": "social",
+      "faille": "",
+      "notes": ""
+    },
+    "source": "template-mj"
+  },
+  {
+    "id": "soldat_aug",
+    "name": "Soldat augmenté",
+    "base_id": "soldat_aug",
+    "mode": "season2",
+    "modes": [
+      "season2",
+      "hybrid"
+    ],
+    "summary": "Frontal, encaisse, casse les lignes",
+    "s1_picks": [
+      {
+        "id": "soldat_aug:kit:1",
+        "label": "Blindage",
+        "effect": "Réduit dégâts reçus de 1 (min 1).",
+        "source": "template-mj"
+      },
+      {
+        "id": "soldat_aug:kit:2",
+        "label": "Charge (⚡1)",
+        "effect": "Déplacement + attaque mêlée (2 dégâts).",
+        "source": "template-mj"
+      },
+      {
+        "id": "soldat_aug:kit:3",
+        "label": "Verrou tactique",
+        "effect": "1 fois/combat, empêche fuite/contourner (1 tour).",
+        "source": "template-mj"
+      }
+    ],
+    "nexus_core": null,
+    "nexus_picks": [],
+    "loadout": {
+      "gear": [
+        "Armure augmentée",
+        "Implants de réaction"
+      ],
+      "items": [
+        "Prototype Héritage raté (bonus + effet secondaire)"
+      ]
+    },
+    "mj_signature": {
+      "style": "Frontal, encaisse, casse les lignes",
+      "routine": "combat / tech",
+      "faille": "",
+      "notes": ""
+    },
+    "source": "template-mj"
+  },
+  {
+    "id": "heritage",
+    "name": "Projet Héritage",
+    "base_id": "heritage",
+    "mode": "season2",
+    "modes": [
+      "season2",
+      "hybrid"
+    ],
+    "summary": "Boss organique, imprévisible",
+    "s1_picks": [
+      {
+        "id": "heritage:kit:1",
+        "label": "Mutation active (⚡2)",
+        "effect": "Mode: +2 dmg / -2 dmg subis / +1 déplacement/tour.",
+        "source": "template-mj"
+      },
+      {
+        "id": "heritage:kit:2",
+        "label": "Régénération",
+        "effect": "1 fois/combat, +5 PV OU annule 1 état.",
+        "source": "template-mj"
+      },
+      {
+        "id": "heritage:kit:3",
+        "label": "Adaptation",
+        "effect": "Après 1 type subi, réduit ce type de dégâts de 1.",
+        "source": "template-mj"
+      }
+    ],
+    "nexus_core": null,
+    "nexus_picks": [],
+    "loadout": {
+      "gear": [
+        "Stabilisateur Héritage",
+        "Amplificateur Nexus"
+      ],
+      "items": [
+        "Sérum d’adaptation (transforme le corps)"
+      ]
+    },
+    "mj_signature": {
+      "style": "Boss organique, imprévisible",
+      "routine": "combat / tech",
+      "faille": "",
+      "notes": ""
+    },
+    "source": "template-mj"
+  },
+  {
+    "id": "baron",
+    "name": "Baron (pouvoir systémique)",
+    "base_id": "baron",
+    "mode": "season2",
+    "modes": [
+      "season2",
+      "hybrid"
+    ],
+    "summary": "Perd par exposition/isolement, pas par PV",
+    "s1_picks": [
+      {
+        "id": "baron:kit:1",
+        "label": "Autorité de district",
+        "effect": "1 fois/scène: renfort/verrou/cam/blackout/accès.",
+        "source": "template-mj"
+      },
+      {
+        "id": "baron:kit:2",
+        "label": "Intouchable",
+        "effect": "1ère mort annulée (protocole/extraction/doublure).",
+        "source": "template-mj"
+      },
+      {
+        "id": "baron:kit:3",
+        "label": "Dette",
+        "effect": "Hors combat, force un PNJ à agir si chantage plausible.",
+        "source": "template-mj"
+      }
+    ],
+    "nexus_core": null,
+    "nexus_picks": [],
+    "loadout": {
+      "gear": [
+        "Armes intelligentes",
+        "Interface neuronale"
+      ],
+      "items": [
+        "Clé biologique Sujet 0 (accès interdit)"
+      ]
+    },
+    "mj_signature": {
+      "style": "Perd par exposition/isolement, pas par PV",
+      "routine": "social / control",
+      "faille": "",
+      "notes": ""
+    },
+    "source": "template-mj"
+  },
+  {
+    "id": "blackwater",
+    "name": "BLACKWATER (évènement)",
+    "base_id": "blackwater",
+    "mode": "season2",
+    "modes": [
+      "season2",
+      "hybrid"
+    ],
+    "summary": "Boss narratif, pression maximale",
+    "s1_picks": [
+      {
+        "id": "blackwater:kit:1",
+        "label": "Neutralisation (⚡1)",
+        "effect": "KO PNJ standard OU inflige 4 dégâts.",
+        "source": "template-mj"
+      },
+      {
+        "id": "blackwater:kit:2",
+        "label": "Supériorité",
+        "effect": "1 fois/combat, annule 1 action ennemie.",
+        "source": "template-mj"
+      },
+      {
+        "id": "blackwater:kit:3",
+        "label": "Extraction",
+        "effect": "1 fois/scène, quitte la zone avec cible/objet.",
+        "source": "template-mj"
+      }
+    ],
+    "nexus_core": null,
+    "nexus_picks": [],
+    "loadout": {
+      "gear": [
+        "Armure augmentée",
+        "Bouclier Nexus",
+        "Drone de reconnaissance"
+      ],
+      "items": [
+        "Noyau Nexus instable (puissance / risque mortel)"
+      ]
+    },
+    "mj_signature": {
+      "style": "Boss narratif, pression maximale",
+      "routine": "combat / tech",
+      "faille": "",
+      "notes": ""
+    },
+    "source": "template-mj"
+  },
+  {
+    "id": "hacker",
+    "name": "Hacker / Netrunner",
+    "base_id": "hacker",
+    "mode": "season1",
+    "modes": [
+      "season1"
+    ],
+    "summary": "Contrôle environnement, fragile",
+    "s1_picks": [
+      {
+        "id": "hacker:kit:1",
+        "label": "Override (⚡1)",
+        "effect": "Ouvre porte / coupe cam / désactive verrou (1 tour).",
+        "source": "template-mj"
+      },
+      {
+        "id": "hacker:kit:2",
+        "label": "Blackout local (⚡2)",
+        "effect": "Coupe éclairage + caméras (1 tour).",
+        "source": "template-mj"
+      },
+      {
+        "id": "hacker:kit:3",
+        "label": "Contre-hack",
+        "effect": "1 fois/combat, annule hack adverse.",
+        "source": "template-mj"
+      }
+    ],
+    "nexus_core": null,
+    "nexus_picks": [],
+    "loadout": {
+      "gear": [
+        "Brouilleur portatif",
+        "Micro-drones espions"
+      ],
+      "items": [
+        "IA autonome type Rhea (conseil / contrôle / trahison possible)"
+      ]
+    },
+    "mj_signature": {
+      "style": "Contrôle environnement, fragile",
+      "routine": "tech",
+      "faille": "",
+      "notes": ""
+    },
+    "source": "template-mj"
+  },
+  {
+    "id": "infil",
+    "name": "Infiltrateur / Silencieux",
+    "base_id": "infil",
+    "mode": "season1",
+    "modes": [
+      "season1"
+    ],
+    "summary": "Invisible, létal, fuit si révélé",
+    "s1_picks": [
+      {
+        "id": "infil:kit:1",
+        "label": "Disparition (⚡1)",
+        "effect": "Non-ciblable à distance si couverture plausible (1 tour).",
+        "source": "template-mj"
+      },
+      {
+        "id": "infil:kit:2",
+        "label": "Neutralisation silencieuse",
+        "effect": "KO sans alerte.",
+        "source": "template-mj"
+      },
+      {
+        "id": "infil:kit:3",
+        "label": "Effacement",
+        "effect": "Aucune trace, aucune preuve.",
+        "source": "template-mj"
+      }
+    ],
+    "nexus_core": null,
+    "nexus_picks": [],
+    "loadout": {
+      "gear": [
+        "Grapin magnétique",
+        "Lames mono-fil"
+      ],
+      "items": []
+    },
+    "mj_signature": {
+      "style": "Invisible, létal, fuit si révélé",
+      "routine": "infil",
+      "faille": "",
+      "notes": ""
+    },
+    "source": "template-mj"
+  }
+]

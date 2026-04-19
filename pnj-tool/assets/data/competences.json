@@ -1,0 +1,37 @@
+[
+  {
+    "id": "rafale",
+    "name": "Rafale sale",
+    "type": "Combat",
+    "cost": 1,
+    "effect": "+1 dégât OU 2 cibles proches (1 dégât)"
+  },
+  {
+    "id": "disparition",
+    "name": "Disparition tactique",
+    "type": "Infiltration",
+    "cost": 1,
+    "effect": "Non-ciblable à distance 1 tour"
+  },
+  {
+    "id": "blindage",
+    "name": "Blindage",
+    "type": "Passif",
+    "cost": 0,
+    "effect": "Réduit tous dégâts reçus de 1 (min 1)"
+  },
+  {
+    "id": "neutralisation",
+    "name": "Neutralisation",
+    "type": "BLACKWATER",
+    "cost": 1,
+    "effect": "4 dégâts OU KO PNJ standard"
+  },
+  {
+    "id": "marquage",
+    "name": "Marquage",
+    "type": "Tactique",
+    "cost": 1,
+    "effect": "Prochaine attaque alliée +1 dégât"
+  }
+]

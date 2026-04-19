@@ -1,0 +1,531 @@
+[
+  {
+    "id": "civil",
+    "label": "Civil / Contact",
+    "mode": "season1",
+    "modes": [
+      "season1"
+    ],
+    "tier": "civil",
+    "roles": [
+      "social"
+    ],
+    "stats": {
+      "vie": 20,
+      "phy": 20,
+      "spe": 15,
+      "men": 25,
+      "soc": 30
+    },
+    "style": "Fuit / négocie / ment pour survivre",
+    "allowed_catalogue_tags": [
+      "contact",
+      "fixer",
+      "social",
+      "negociation",
+      "identity",
+      "legal"
+    ],
+    "allowed_nexus_families": [],
+    "default_loadout": [
+      {
+        "type": "gear",
+        "name": "Téléphone jetable"
+      },
+      {
+        "type": "gear",
+        "name": "Balise de traque"
+      }
+    ],
+    "default_notes": ""
+  },
+  {
+    "id": "gang",
+    "label": "Gang / Mercenaire de rue",
+    "mode": "season1",
+    "modes": [
+      "season1"
+    ],
+    "tier": "humain",
+    "roles": [
+      "combat"
+    ],
+    "stats": {
+      "vie": 30,
+      "phy": 30,
+      "spe": 25,
+      "men": 25,
+      "soc": 20
+    },
+    "style": "Brutal, dangereux en groupe",
+    "allowed_catalogue_tags": [
+      "weapon_shop",
+      "ammo",
+      "safe",
+      "contracts",
+      "combat"
+    ],
+    "allowed_nexus_families": [],
+    "default_loadout": [
+      {
+        "type": "gear",
+        "name": "Armure tactique légère"
+      },
+      {
+        "type": "gear",
+        "name": "Injecteur de stimulants"
+      }
+    ],
+    "default_notes": ""
+  },
+  {
+    "id": "sniper",
+    "label": "Sniper (élite humaine)",
+    "mode": "season1",
+    "modes": [
+      "season1"
+    ],
+    "tier": "top",
+    "roles": [
+      "combat",
+      "infil"
+    ],
+    "stats": {
+      "vie": 30,
+      "phy": 25,
+      "spe": 35,
+      "men": 40,
+      "soc": 15
+    },
+    "style": "Distance, fuit si close",
+    "allowed_catalogue_tags": [
+      "weapon_shop",
+      "ammo",
+      "safe",
+      "contracts",
+      "combat",
+      "secure",
+      "trace",
+      "underground",
+      "passage",
+      "disparition"
+    ],
+    "allowed_nexus_families": [],
+    "default_loadout": [
+      {
+        "type": "gear",
+        "name": "Lunettes multi-spectres"
+      },
+      {
+        "type": "gear",
+        "name": "Balise de traque"
+      }
+    ],
+    "default_notes": ""
+  },
+  {
+    "id": "close",
+    "label": "Corps à corps (maître martial)",
+    "mode": "season1",
+    "modes": [
+      "season1"
+    ],
+    "tier": "top",
+    "roles": [
+      "combat"
+    ],
+    "stats": {
+      "vie": 35,
+      "phy": 40,
+      "spe": 30,
+      "men": 30,
+      "soc": 20
+    },
+    "style": "Rush, verrouille une cible",
+    "allowed_catalogue_tags": [
+      "weapon_shop",
+      "ammo",
+      "safe",
+      "contracts",
+      "combat"
+    ],
+    "allowed_nexus_families": [],
+    "default_loadout": [
+      {
+        "type": "gear",
+        "name": "Lames mono-fil"
+      },
+      {
+        "type": "gear",
+        "name": "Armure tactique légère"
+      }
+    ],
+    "default_notes": ""
+  },
+  {
+    "id": "fixer_genie",
+    "label": "Fixer / Manipulateur (génie)",
+    "mode": "season1",
+    "modes": [
+      "season1",
+      "hybrid"
+    ],
+    "tier": "surhumain",
+    "roles": [
+      "social"
+    ],
+    "stats": {
+      "vie": 25,
+      "phy": 15,
+      "spe": 30,
+      "men": 50,
+      "soc": 50
+    },
+    "style": "Contrôle de scène, peu de combat",
+    "allowed_catalogue_tags": [
+      "contact",
+      "fixer",
+      "social",
+      "negociation",
+      "identity",
+      "legal"
+    ],
+    "allowed_nexus_families": [
+      "Neurocognitif",
+      "Nexus"
+    ],
+    "default_loadout": [
+      {
+        "type": "gear",
+        "name": "Modulateur émotionnel"
+      },
+      {
+        "type": "gear",
+        "name": "Interface neuronale"
+      },
+      {
+        "type": "item",
+        "name": "Mémoire synthétique (souvenirs implantés)"
+      }
+    ],
+    "default_notes": ""
+  },
+  {
+    "id": "soldat_aug",
+    "label": "Soldat augmenté",
+    "mode": "season2",
+    "modes": [
+      "season2",
+      "hybrid"
+    ],
+    "tier": "surhumain",
+    "roles": [
+      "combat",
+      "tech"
+    ],
+    "stats": {
+      "vie": 45,
+      "phy": 55,
+      "spe": 40,
+      "men": 30,
+      "soc": 10
+    },
+    "style": "Frontal, encaisse, casse les lignes",
+    "allowed_catalogue_tags": [
+      "weapon_shop",
+      "ammo",
+      "safe",
+      "contracts",
+      "combat",
+      "workshop",
+      "tool",
+      "drone",
+      "implant",
+      "augmentation"
+    ],
+    "allowed_nexus_families": [
+      "Noyau",
+      "Physique",
+      "Sensoriel",
+      "Organique",
+      "Neurocognitif",
+      "Thermique",
+      "Vital",
+      "Nexus",
+      "Apex",
+      "Instabilite"
+    ],
+    "default_loadout": [
+      {
+        "type": "gear",
+        "name": "Armure augmentée"
+      },
+      {
+        "type": "gear",
+        "name": "Implants de réaction"
+      },
+      {
+        "type": "item",
+        "name": "Prototype Héritage raté (bonus + effet secondaire)"
+      }
+    ],
+    "default_notes": ""
+  },
+  {
+    "id": "heritage",
+    "label": "Projet Héritage",
+    "mode": "season2",
+    "modes": [
+      "season2",
+      "hybrid"
+    ],
+    "tier": "anomalie",
+    "roles": [
+      "combat",
+      "tech"
+    ],
+    "stats": {
+      "vie": 60,
+      "phy": 65,
+      "spe": 65,
+      "men": 40,
+      "soc": 15
+    },
+    "style": "Boss organique, imprévisible",
+    "allowed_catalogue_tags": [
+      "weapon_shop",
+      "ammo",
+      "safe",
+      "contracts",
+      "combat",
+      "workshop",
+      "tool",
+      "drone",
+      "implant",
+      "augmentation"
+    ],
+    "allowed_nexus_families": [
+      "Noyau",
+      "Physique",
+      "Sensoriel",
+      "Organique",
+      "Neurocognitif",
+      "Thermique",
+      "Vital",
+      "Nexus",
+      "Apex",
+      "Instabilite"
+    ],
+    "default_loadout": [
+      {
+        "type": "gear",
+        "name": "Stabilisateur Héritage"
+      },
+      {
+        "type": "gear",
+        "name": "Amplificateur Nexus"
+      },
+      {
+        "type": "item",
+        "name": "Sérum d’adaptation (transforme le corps)"
+      }
+    ],
+    "default_notes": ""
+  },
+  {
+    "id": "baron",
+    "label": "Baron (pouvoir systémique)",
+    "mode": "season2",
+    "modes": [
+      "season2",
+      "hybrid"
+    ],
+    "tier": "humain",
+    "roles": [
+      "social",
+      "control"
+    ],
+    "stats": {
+      "vie": 35,
+      "phy": 25,
+      "spe": 45,
+      "men": 60,
+      "soc": 70
+    },
+    "style": "Perd par exposition/isolement, pas par PV",
+    "allowed_catalogue_tags": [
+      "contact",
+      "fixer",
+      "social",
+      "negociation",
+      "identity",
+      "legal"
+    ],
+    "allowed_nexus_families": [
+      "Neurocognitif",
+      "Nexus"
+    ],
+    "default_loadout": [
+      {
+        "type": "gear",
+        "name": "Armes intelligentes"
+      },
+      {
+        "type": "gear",
+        "name": "Interface neuronale"
+      },
+      {
+        "type": "item",
+        "name": "Clé biologique Sujet 0 (accès interdit)"
+      }
+    ],
+    "default_notes": ""
+  },
+  {
+    "id": "blackwater",
+    "label": "BLACKWATER (évènement)",
+    "mode": "season2",
+    "modes": [
+      "season2",
+      "hybrid"
+    ],
+    "tier": "event",
+    "roles": [
+      "combat",
+      "tech"
+    ],
+    "stats": {
+      "vie": 80,
+      "phy": 70,
+      "spe": 70,
+      "men": 50,
+      "soc": 20
+    },
+    "style": "Boss narratif, pression maximale",
+    "allowed_catalogue_tags": [
+      "weapon_shop",
+      "ammo",
+      "safe",
+      "contracts",
+      "combat",
+      "workshop",
+      "tool",
+      "drone",
+      "implant",
+      "augmentation"
+    ],
+    "allowed_nexus_families": [
+      "Noyau",
+      "Physique",
+      "Sensoriel",
+      "Organique",
+      "Neurocognitif",
+      "Thermique",
+      "Vital",
+      "Nexus",
+      "Apex",
+      "Instabilite"
+    ],
+    "default_loadout": [
+      {
+        "type": "gear",
+        "name": "Armure augmentée"
+      },
+      {
+        "type": "gear",
+        "name": "Bouclier Nexus"
+      },
+      {
+        "type": "gear",
+        "name": "Drone de reconnaissance"
+      },
+      {
+        "type": "item",
+        "name": "Noyau Nexus instable (puissance / risque mortel)"
+      }
+    ],
+    "default_notes": ""
+  },
+  {
+    "id": "hacker",
+    "label": "Hacker / Netrunner",
+    "mode": "season1",
+    "modes": [
+      "season1"
+    ],
+    "tier": "top",
+    "roles": [
+      "tech"
+    ],
+    "stats": {
+      "vie": 25,
+      "phy": 15,
+      "spe": 40,
+      "men": 40,
+      "soc": 20
+    },
+    "style": "Contrôle environnement, fragile",
+    "allowed_catalogue_tags": [
+      "workshop",
+      "tool",
+      "drone",
+      "implant",
+      "augmentation"
+    ],
+    "allowed_nexus_families": [],
+    "default_loadout": [
+      {
+        "type": "gear",
+        "name": "Brouilleur portatif"
+      },
+      {
+        "type": "gear",
+        "name": "Micro-drones espions"
+      },
+      {
+        "type": "item",
+        "name": "IA autonome type Rhea (conseil / contrôle / trahison possible)"
+      }
+    ],
+    "default_notes": ""
+  },
+  {
+    "id": "infil",
+    "label": "Infiltrateur / Silencieux",
+    "mode": "season1",
+    "modes": [
+      "season1"
+    ],
+    "tier": "top",
+    "roles": [
+      "infil"
+    ],
+    "stats": {
+      "vie": 30,
+      "phy": 30,
+      "spe": 35,
+      "men": 35,
+      "soc": 25
+    },
+    "style": "Invisible, létal, fuit si révélé",
+    "allowed_catalogue_tags": [
+      "secure",
+      "trace",
+      "underground",
+      "passage",
+      "disparition"
+    ],
+    "allowed_nexus_families": [],
+    "default_loadout": [
+      {
+        "type": "gear",
+        "name": "Grapin magnétique"
+      },
+      {
+        "type": "gear",
+        "name": "Lames mono-fil"
+      }
+    ],
+    "default_notes": ""
+  }
+]
