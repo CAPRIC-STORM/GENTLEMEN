@@ -1,21 +1,25 @@
-/* Lumia Island Map — Click-only / Global View (Districts only)
-   - No hover highlight (labels + highlight only on click / right panel)
-   - Global view shows ONLY district labels
-   - Routes clickable + searchable
-   - Audio unlock via INITIALISER (no autoplay)
-*/
+const VIEWBOX = { width: 1400, height: 900 };
+const MIN_ZOOM = 0.78;
+const MAX_ZOOM = 2.8;
+const BASE_FOCUS_PADDING = 56;
 
 const state = {
   data: null,
-  selected: { kind: null, id: null }, // "poi" | "route" | "district"
+  mode: "all",
+  search: "",
+  selected: null,
   reduceEffects: false,
+  globalView: false,
   uiSound: true,
-  volume: 0.35,
+  volume: 0.34,
   audioUnlocked: false,
   zoom: 1,
   pan: { x: 0, y: 0 },
-  drag: { on: false, x0: 0, y0: 0, panX0: 0, panY0: 0 },
-  globalView: false
+  drag: { on: false, x: 0, y: 0, panX: 0, panY: 0 },
+  lists: {
+    results: [],
+    districts: []
+  }
 };
 
 const els = {
@@ -26,535 +30,828 @@ const els = {
   btnGlobal: document.getElementById("btnGlobal"),
   btnSound: document.getElementById("btnSound"),
   vol: document.getElementById("vol"),
-
+  homeDock: document.getElementById("homeDock"),
+  homeTab: document.getElementById("homeTab"),
+  homePanel: document.getElementById("homePanel"),
+  mapViewport: document.getElementById("mapViewport"),
   mapSvg: document.getElementById("mapSvg"),
   world: document.getElementById("world"),
-  mapViewport: document.getElementById("mapViewport"),
   districtLayer: document.getElementById("districtLayer"),
   routeLayer: document.getElementById("routeLayer"),
   poiLayer: document.getElementById("poiLayer"),
-
+  labelLayer: document.getElementById("labelLayer"),
   hudZoom: document.getElementById("hudZoom"),
   hudFocus: document.getElementById("hudFocus"),
-
+  hudDistricts: document.getElementById("hudDistricts"),
+  hudPois: document.getElementById("hudPois"),
   search: document.getElementById("search"),
+  modeChips: document.getElementById("modeChips"),
+  summaryStrip: document.getElementById("summaryStrip"),
   resultList: document.getElementById("resultList"),
+  resultMeta: document.getElementById("resultMeta"),
   districtList: document.getElementById("districtList"),
   card: document.getElementById("card")
 };
 
-// Audio
 const sounds = {
   click: new Audio("./assets/audio/ui_click.mp3"),
   ok: new Audio("./assets/audio/ui_ok.mp3"),
   warn: new Audio("./assets/audio/ui_warn.mp3")
 };
 
-function applySoundSettings(){
-  Object.values(sounds).forEach(a => {
-    a.preload = "auto";
-    a.volume = state.volume;
+const TYPE_LABELS = {
+  air_transport: "Transport aérien",
+  archive: "Archives",
+  augmentation: "Augmentation",
+  black_market: "Marché noir",
+  combat_zone: "Zone de combat",
+  contact: "Contact",
+  contracts: "Contrats",
+  corporate: "Corporation",
+  data_center: "Data center",
+  district_core: "Noyau de district",
+  finance: "Finance",
+  hub: "Hub",
+  industry: "Industrie",
+  infiltration: "Infiltration",
+  infrastructure: "Infrastructure",
+  laboratory: "Laboratoire",
+  landmark: "Repère",
+  legal: "Légal",
+  market: "Marché",
+  media: "Médias",
+  medical: "Médical",
+  meeting: "Rencontre",
+  port: "Port",
+  safe: "Refuge",
+  secure: "Sécurisé",
+  service: "Service",
+  social: "Social",
+  storage: "Stockage",
+  surveillance: "Surveillance",
+  tech: "Technologie",
+  training: "Entraînement",
+  transit: "Transit",
+  underground: "Souterrain",
+  weapon_shop: "Armement",
+  workshop: "Atelier"
+};
+
+const MODE_LABELS = {
+  all: "Tout",
+  district: "Territoires",
+  route: "Routes",
+  poi: "Nœuds"
+};
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function normalize(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
+function svgEl(tag) {
+  return document.createElementNS("http://www.w3.org/2000/svg", tag);
+}
+
+function makePathD(points) {
+  return points.map((point, index) => `${index === 0 ? "M" : "L"} ${point[0]} ${point[1]}`).join(" ");
+}
+
+function applySoundSettings() {
+  Object.values(sounds).forEach((audio) => {
+    audio.preload = "auto";
+    audio.volume = state.volume;
   });
   els.vol.value = String(state.volume);
   els.btnSound.setAttribute("aria-pressed", String(state.uiSound));
-  els.btnSound.textContent = state.uiSound ? "🔊" : "🔇";
+  els.btnSound.textContent = state.uiSound ? "SOUND" : "MUTE";
 }
 
-function safePlay(aud){
-  if(!state.uiSound) return;
-  if(!state.audioUnlocked) return;
-  try{
-    aud.currentTime = 0;
-    const p = aud.play();
-    if(p && typeof p.catch === "function") p.catch(()=>{});
+function safePlay(audio) {
+  if (!state.uiSound || !state.audioUnlocked) return;
+  try {
+    audio.currentTime = 0;
+    const playPromise = audio.play();
+    if (playPromise?.catch) playPromise.catch(() => {});
   } catch {}
 }
 
-function unlockAudio(){
-  if(state.audioUnlocked) return;
+function unlockAudio() {
+  if (state.audioUnlocked) return;
   state.audioUnlocked = true;
-  try{
-    const a = sounds.click;
-    a.currentTime = 0;
-    const p = a.play();
-    if(p && typeof p.then === "function"){
-      p.then(() => { a.pause(); a.currentTime = 0; }).catch(()=>{});
-    }
+  safePlay(sounds.ok);
+}
+
+function savePrefs() {
+  try {
+    localStorage.setItem("mapReduceEffects", state.reduceEffects ? "1" : "0");
+    localStorage.setItem("mapUiSound", state.uiSound ? "1" : "0");
+    localStorage.setItem("mapUiVol", String(state.volume));
+    localStorage.setItem("mapGlobalView", state.globalView ? "1" : "0");
   } catch {}
 }
 
-// Prefs
-function loadPrefs(){
-  try{
-    const reduce = localStorage.getItem("reduceEffects");
-    if(reduce !== null) state.reduceEffects = (reduce === "1");
-    const uiSound = localStorage.getItem("uiSound");
-    if(uiSound !== null) state.uiSound = (uiSound === "1");
-    const vol = localStorage.getItem("uiVol");
-    if(vol !== null){
-      const n = Number(vol);
-      if(!Number.isNaN(n)) state.volume = Math.max(0, Math.min(1, n));
-    }
-    const gv = localStorage.getItem("globalView");
-    if(gv !== null) state.globalView = (gv === "1");
+function loadPrefs() {
+  try {
+    state.reduceEffects = localStorage.getItem("mapReduceEffects") === "1";
+    const uiSound = localStorage.getItem("mapUiSound");
+    if (uiSound !== null) state.uiSound = uiSound === "1";
+    const volume = Number(localStorage.getItem("mapUiVol"));
+    if (!Number.isNaN(volume) && volume >= 0 && volume <= 1) state.volume = volume;
+    state.globalView = localStorage.getItem("mapGlobalView") === "1";
   } catch {}
 }
-function savePrefs(){
-  try{
-    localStorage.setItem("reduceEffects", state.reduceEffects ? "1" : "0");
-    localStorage.setItem("uiSound", state.uiSound ? "1" : "0");
-    localStorage.setItem("uiVol", String(state.volume));
-    localStorage.setItem("globalView", state.globalView ? "1" : "0");
-  } catch {}
+
+function setFocusLabel(text) {
+  if (text) {
+    els.hudFocus.textContent = text;
+    els.hudFocus.classList.remove("muted");
+  } else {
+    els.hudFocus.textContent = "Aucun";
+    els.hudFocus.classList.add("muted");
+  }
 }
-function applyReduceEffects(){
+
+function applyReduceEffects() {
   document.body.classList.toggle("reduce-effects", state.reduceEffects);
+  els.btnNoFx.setAttribute("aria-pressed", String(state.reduceEffects));
 }
-function applyGlobalView(){
-  // CSS handles: global-view shows ONLY district labels
+
+function applyGlobalView() {
   document.body.classList.toggle("global-view", state.globalView);
   els.btnGlobal.setAttribute("aria-pressed", String(state.globalView));
-  els.btnGlobal.textContent = state.globalView ? "VUE GLOBALE ✓" : "VUE GLOBALE";
 }
 
-// Helpers
-function escapeHtml(s){
-  return String(s)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
-function setCard(title, bodyHtml){
-  els.card.innerHTML = `
-    <div class="cardTitle">${escapeHtml(title)}</div>
-    <div class="cardBody">${bodyHtml}</div>
-  `;
-}
-
-function setZoomHud(){
+function updateZoomHud() {
   els.hudZoom.textContent = `${Math.round(state.zoom * 100)}%`;
 }
 
-function setFocusHud(text){
-  els.hudFocus.textContent = text ? text : "Aucun";
-  if(text) els.hudFocus.classList.remove("muted");
-  else els.hudFocus.classList.add("muted");
+function updateHudCounts() {
+  els.hudDistricts.textContent = String(state.data?.districts?.length || 0);
+  els.hudPois.textContent = String(state.data?.locations?.length || 0);
 }
 
-function applyWorldTransform(){
+function applyTransform() {
   els.world.setAttribute("transform", `translate(${state.pan.x} ${state.pan.y}) scale(${state.zoom})`);
-  setZoomHud();
+  updateZoomHud();
 }
 
-// SVG helpers
-function clientToSvg(clientX, clientY){
-  const pt = els.mapSvg.createSVGPoint();
-  pt.x = clientX; pt.y = clientY;
-  const ctm = els.mapSvg.getScreenCTM();
-  if(!ctm) return { x: 0, y: 0 };
-  const inv = ctm.inverse();
-  const p = pt.matrixTransform(inv);
-  return { x: (p.x - state.pan.x) / state.zoom, y: (p.y - state.pan.y) / state.zoom };
-}
-function svgEl(tag){
-  return document.createElementNS("http://www.w3.org/2000/svg", tag);
-}
-function makePathD(points){
-  if(!points || points.length < 2) return "";
-  return points.map((p,i)=> `${i===0?"M":"L"} ${p[0]},${p[1]}`).join(" ");
+function clampPan(x, y, zoom = state.zoom) {
+  const viewport = els.mapViewport.getBoundingClientRect();
+  const scaledWidth = VIEWBOX.width * zoom;
+  const scaledHeight = VIEWBOX.height * zoom;
+  const minX = Math.min(0, viewport.width - scaledWidth - 40);
+  const maxX = Math.max(0, (viewport.width - scaledWidth) / 2);
+  const minY = Math.min(0, viewport.height - scaledHeight - 40);
+  const maxY = Math.max(0, (viewport.height - scaledHeight) / 2);
+
+  return {
+    x: Math.min(maxX, Math.max(minX, x)),
+    y: Math.min(maxY, Math.max(minY, y))
+  };
 }
 
-// Data lookup
-function getDistrict(id){ return (state.data.districts || []).find(d => d.id === id); }
-function getPoi(id){ return (state.data.locations || []).find(l => l.id === id); }
-function getRoute(id){ return (state.data.routes || []).find(r => r.id === id); }
-
-// Selection
-function clearAllSelected(){
-  document.querySelectorAll(".poiGroup.selected").forEach(n => n.classList.remove("selected"));
-  document.querySelectorAll(".routeGroup.selected").forEach(n => n.classList.remove("selected"));
-  document.querySelectorAll(".districtGroup.selected").forEach(n => n.classList.remove("selected"));
-  state.selected.kind = null;
-  state.selected.id = null;
+function setView(nextZoom, nextPan) {
+  state.zoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, nextZoom));
+  state.pan = clampPan(nextPan.x, nextPan.y, state.zoom);
+  applyTransform();
 }
-function select(kind, id){
-  clearAllSelected();
-  state.selected.kind = kind;
-  state.selected.id = id;
 
-  if(kind === "poi"){
-    const node = document.querySelector(`.poiGroup[data-poi="${CSS.escape(id)}"]`);
-    if(node) node.classList.add("selected");
+function resetView() {
+  const viewport = els.mapViewport.getBoundingClientRect();
+  const zoom = Math.min(viewport.width / VIEWBOX.width, viewport.height / VIEWBOX.height) * 0.98;
+  const pan = {
+    x: (viewport.width - VIEWBOX.width * zoom) / 2,
+    y: (viewport.height - VIEWBOX.height * zoom) / 2
+  };
+  setView(Math.max(MIN_ZOOM, zoom), pan);
+}
+
+function boundsFromPath(pathString) {
+  const path = svgEl("path");
+  path.setAttribute("d", pathString);
+  els.labelLayer.appendChild(path);
+  const box = path.getBBox();
+  path.remove();
+  return box;
+}
+
+function focusBox(box, padding = BASE_FOCUS_PADDING) {
+  const viewport = els.mapViewport.getBoundingClientRect();
+  const zoomX = (viewport.width - padding * 2) / box.width;
+  const zoomY = (viewport.height - padding * 2) / box.height;
+  const zoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, Math.min(zoomX, zoomY)));
+  const pan = {
+    x: viewport.width / 2 - (box.x + box.width / 2) * zoom,
+    y: viewport.height / 2 - (box.y + box.height / 2) * zoom
+  };
+  setView(zoom, pan);
+}
+
+function getDistrictById(id) {
+  return state.data.districts.find((district) => district.id === id) || null;
+}
+
+function getDistrictShape(id) {
+  return state.data.districtShapes.find((shape) => shape.id === id) || null;
+}
+
+function getRouteById(id) {
+  return state.data.routes.find((route) => route.id === id) || null;
+}
+
+function getPoiById(id) {
+  return state.data.locations.find((location) => location.id === id) || null;
+}
+
+function getSelectionEntity(selection = state.selected) {
+  if (!selection) return null;
+  if (selection.kind === "district") return getDistrictById(selection.id);
+  if (selection.kind === "route") return getRouteById(selection.id);
+  if (selection.kind === "poi") return getPoiById(selection.id);
+  return null;
+}
+
+function districtPois(id) {
+  return state.data.locations.filter((location) => location.district === id);
+}
+
+function selectionMatches(selection, item) {
+  return Boolean(selection && selection.kind === item.kind && selection.id === item.id);
+}
+
+function buildSearchText(item) {
+  if (item.kind === "district") {
+    return [item.name, item.function, "territoire district"].join(" ");
   }
-  if(kind === "route"){
-    const node = document.querySelector(`.routeGroup[data-route="${CSS.escape(id)}"]`);
-    if(node) node.classList.add("selected");
+
+  if (item.kind === "route") {
+    return [item.name, item.desc, item.kindLabel, "route axe transit"].join(" ");
   }
-  if(kind === "district"){
-    const node = document.querySelector(`.districtGroup[data-district="${CSS.escape(id)}"]`);
-    if(node) node.classList.add("selected");
-  }
+
+  const district = getDistrictById(item.district);
+  return [
+    item.name,
+    item.desc,
+    TYPE_LABELS[item.type] || item.type,
+    district?.name || "",
+    "noeud lieu point"
+  ].join(" ");
 }
 
-// Render districts
-function renderDistricts(){
-  els.districtLayer.innerHTML = "";
-  const shapes = state.data.districtShapes || [];
+function buildItems() {
+  const districts = state.data.districts.map((district) => ({
+    kind: "district",
+    id: district.id,
+    name: district.name,
+    function: district.function,
+    count: districtPois(district.id).length
+  }));
 
-  shapes.forEach(s => {
-    const d = getDistrict(s.id);
-    if(!d) return;
+  const routes = state.data.routes.map((route) => ({
+    kind: "route",
+    id: route.id,
+    name: route.name,
+    desc: route.desc || "",
+    kindLabel: route.kind === "rail" ? "Rail" : "Axe"
+  }));
 
-    const g = svgEl("g");
-    g.classList.add("districtGroup");
-    g.dataset.district = d.id;
-
-    const p = svgEl("path");
-    p.setAttribute("d", s.path);
-    p.setAttribute("class", "districtShape");
-
-    const label = svgEl("text");
-    label.setAttribute("class", "mapLabel districtLabel");
-    label.setAttribute("x", d.label?.x ?? 0);
-    label.setAttribute("y", d.label?.y ?? 0);
-    label.textContent = d.name;
-
-    p.addEventListener("click", (e) => {
-      e.stopPropagation();
-      select("district", d.id);
-      openDistrictFolder(d.id);
-      setCard(`Territoire // ${d.name}`, `<span class="muted">${escapeHtml(d.function)}</span>`);
-      setFocusHud(d.name);
-      safePlay(sounds.ok);
-    });
-
-    g.appendChild(p);
-    g.appendChild(label);
-    els.districtLayer.appendChild(g);
+  const pois = state.data.locations.map((location) => {
+    const district = getDistrictById(location.district);
+    return {
+      kind: "poi",
+      id: location.id,
+      name: location.name,
+      desc: location.desc || "",
+      type: location.type,
+      district: location.district,
+      districtName: district?.name || "Secteur inconnu"
+    };
   });
+
+  return { districts, routes, pois };
 }
 
-// Render routes (clickable with hitbox)
-function renderRoutes(){
-  els.routeLayer.innerHTML = "";
-  const routes = state.data.routes || [];
+function filteredItems() {
+  const { districts, routes, pois } = buildItems();
+  const query = normalize(state.search);
+  const all = [...districts, ...routes, ...pois].filter((item) => {
+    if (state.mode !== "all" && item.kind !== state.mode) return false;
+    if (!query) return true;
+    return normalize(buildSearchText(item)).includes(query);
+  });
 
-  routes.forEach(r => {
-    const g = svgEl("g");
-    g.classList.add("routeGroup");
-    g.dataset.route = r.id;
-    g.classList.add(r.kind === "rail" ? "rail" : "road");
-
-    const onPick = () => {
-      select("route", r.id);
-      setCard(`Infrastructure // ${r.name}`, `<span class="muted">${escapeHtml(r.desc || "")}</span>`);
-      setFocusHud(r.name);
-      safePlay(sounds.click);
-    };
-
-    const addStroke = (d) => {
-      const casing = svgEl("path");
-      casing.setAttribute("class","casing");
-      casing.setAttribute("d", d);
-
-      const main = svgEl("path");
-      main.setAttribute("class","main");
-      main.setAttribute("d", d);
-
-      const hit = svgEl("path");
-      hit.setAttribute("class","routeHit");
-      hit.setAttribute("d", d);
-      hit.setAttribute("stroke-width", "18");
-      hit.addEventListener("click", (e) => { e.stopPropagation(); onPick(); });
-
-      g.appendChild(casing);
-      g.appendChild(main);
-      g.appendChild(hit);
-    };
-
-    if(r.id === "axis_cross" && Array.isArray(r.segments)){
-      r.segments.forEach(seg => addStroke(makePathD(seg.points)));
-    } else if(r.id === "rail_ring" && Array.isArray(r.points)){
-      addStroke(makePathD(r.points));
+  all.sort((a, b) => {
+    if (a.kind !== b.kind) {
+      const order = { district: 0, route: 1, poi: 2 };
+      return order[a.kind] - order[b.kind];
     }
+    return a.name.localeCompare(b.name, "fr");
+  });
 
-    const label = svgEl("text");
-    label.setAttribute("class","mapLabel routeLabel");
-    label.setAttribute("x", r.label?.x ?? 0);
-    label.setAttribute("y", r.label?.y ?? 0);
-    label.textContent = r.name;
-    label.addEventListener("click", (e) => { e.stopPropagation(); onPick(); });
+  return { all, districts, routes, pois };
+}
 
-    g.appendChild(label);
-    els.routeLayer.appendChild(g);
+function updateMapVisibility(filtered) {
+  const visibleDistrictIds = new Set(filtered.all.filter((item) => item.kind === "district").map((item) => item.id));
+  const visibleRouteIds = new Set(filtered.all.filter((item) => item.kind === "route").map((item) => item.id));
+  const visiblePoiIds = new Set(filtered.all.filter((item) => item.kind === "poi").map((item) => item.id));
+  const showAll = state.mode === "all" && !state.search;
+
+  document.querySelectorAll(".districtGroup").forEach((node) => {
+    node.classList.toggle("dimmed", !showAll && !visibleDistrictIds.has(node.dataset.id));
+  });
+  document.querySelectorAll(".routeGroup").forEach((node) => {
+    node.classList.toggle("dimmed", !showAll && !visibleRouteIds.has(node.dataset.id));
+  });
+  document.querySelectorAll(".poiGroup").forEach((node) => {
+    node.classList.toggle("dimmed", !showAll && !visiblePoiIds.has(node.dataset.id));
   });
 }
 
-// Render POIs
-function renderPOIs(){
-  els.poiLayer.innerHTML = "";
-  const locs = state.data.locations || [];
+function setSummaryChips(items) {
+  if (!items.length) {
+    els.summaryStrip.innerHTML = `<span class="summaryChip active">Mode : ${MODE_LABELS[state.mode]}</span>`;
+    return;
+  }
 
-  locs.forEach(loc => {
-    const g = svgEl("g");
-    g.classList.add("poiGroup");
-    g.dataset.poi = loc.id;
+  els.summaryStrip.innerHTML = items.map((item) => (
+    `<button class="summaryChip ${item.active ? "active" : ""}" type="button" data-summary-action="${escapeHtml(item.action || "")}">${escapeHtml(item.label)}</button>`
+  )).join("");
 
-    const dot = svgEl("circle");
-    dot.setAttribute("cx", loc.x);
-    dot.setAttribute("cy", loc.y);
-    dot.setAttribute("r", "4");
-    dot.setAttribute("class","poiDot");
-
-    const hit = svgEl("circle");
-    hit.setAttribute("cx", loc.x);
-    hit.setAttribute("cy", loc.y);
-    hit.setAttribute("r", "14");
-    hit.setAttribute("class","poiHit");
-
-    const label = svgEl("text");
-    label.setAttribute("x", loc.x + 12);
-    label.setAttribute("y", loc.y - 12);
-    label.setAttribute("class", "mapLabel poiLabel");
-    label.textContent = loc.name;
-
-    const onPick = () => {
-      select("poi", loc.id);
-      openDistrictFolder(loc.district);
-
-      const d = getDistrict(loc.district);
-      const links = (loc.links || []).map(id => getPoi(id)?.name).filter(Boolean);
-
-      setCard(`${loc.name}`, `
-        <div class="muted">${escapeHtml(d ? d.name : "Territoire inconnu")} • ${escapeHtml(loc.type)}</div>
-        <div style="margin-top:8px;">${escapeHtml(loc.desc || "")}</div>
-        ${links.length ? `<div style="margin-top:10px;" class="muted">Connexions :</div>
-          <ul style="margin:6px 0 0 18px; padding:0;">
-            ${links.map(n => `<li>${escapeHtml(n)}</li>`).join("")}
-          </ul>` : ""}
-      `);
-
-      setFocusHud(loc.name);
-      safePlay(sounds.ok);
-    };
-
-    hit.addEventListener("click", (e) => { e.stopPropagation(); onPick(); });
-    label.addEventListener("click", (e) => { e.stopPropagation(); onPick(); });
-
-    g.appendChild(dot);
-    g.appendChild(hit);
-    g.appendChild(label);
-    els.poiLayer.appendChild(g);
+  els.summaryStrip.querySelectorAll("[data-summary-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const action = button.dataset.summaryAction;
+      if (action === "clear-search") {
+        state.search = "";
+        els.search.value = "";
+        refreshLists();
+      }
+      if (action === "reset-mode") {
+        state.mode = "all";
+        syncModeButtons();
+        refreshLists();
+      }
+      if (action === "recenter") {
+        focusSelection();
+      }
+    });
   });
 }
 
-// District folders
-function buildDistrictFolders(){
-  els.districtList.innerHTML = "";
-  const locs = state.data.locations || [];
+function detailHtmlForSelection(selection) {
+  if (!selection) {
+    return `
+      <div class="detailKicker">Accès lecture</div>
+      <div class="detailTitle">Veille cartographique</div>
+      <div class="detailBody">Sélectionne un territoire, une route ou un nœud pour afficher sa lecture détaillée.</div>
+    `;
+  }
 
-  (state.data.districts || []).forEach(d => {
-    const list = locs.filter(l => l.district === d.id).sort((a,b)=>a.name.localeCompare(b.name));
-
-    const wrap = document.createElement("div");
-    wrap.className = "folder";
-    wrap.dataset.district = d.id;
-
-    wrap.innerHTML = `
-      <div class="folderHead">
-        <div>
-          <div class="folderName">${escapeHtml(d.name)}</div>
-          <div class="folderFn">${escapeHtml(d.function)}</div>
-        </div>
-        <div class="folderMeta">${list.length} lieux</div>
+  if (selection.kind === "district") {
+    const district = getDistrictById(selection.id);
+    const pois = districtPois(selection.id);
+    return `
+      <div class="detailKicker">Territoire verrouillé</div>
+      <div class="detailTitle">${escapeHtml(district.name)}</div>
+      <div class="detailBody">${escapeHtml(district.function)}</div>
+      <div class="detailMeta">
+        <span class="chipLabel">Territoire</span>
+        <span class="chipLabel">${pois.length} nœuds</span>
       </div>
-      <div class="folderBody">
-        ${list.map(loc => `
-          <div class="poiItem" data-kind="poi" data-id="${escapeHtml(loc.id)}">
-            <div>
-              <div class="poiName">${escapeHtml(loc.name)}</div>
-              <div class="poiType">${escapeHtml(loc.type)}</div>
-            </div>
-            <div class="poiTiny">↗</div>
-          </div>
-        `).join("")}
+      <div class="detailLinks">
+        <div class="detailLinksHead">Nœuds liés</div>
+        <div class="detailLinkRow">
+          ${pois.map((poi) => `<button class="detailLink" type="button" data-link-kind="poi" data-link-id="${escapeHtml(poi.id)}">${escapeHtml(poi.name)}</button>`).join("")}
+        </div>
       </div>
     `;
-
-    wrap.querySelector(".folderHead").addEventListener("click", () => {
-      const wasOpen = wrap.classList.contains("open");
-      document.querySelectorAll(".folder.open").forEach(x => x.classList.remove("open"));
-      if(!wasOpen) wrap.classList.add("open");
-
-      select("district", d.id);
-      setCard(`Territoire // ${d.name}`, `<span class="muted">${escapeHtml(d.function)}</span>`);
-      setFocusHud(d.name);
-      safePlay(sounds.click);
-    });
-
-    wrap.querySelectorAll(".poiItem").forEach(el => {
-      el.addEventListener("click", () => pickFromIndex(el.dataset.kind, el.dataset.id));
-    });
-
-    els.districtList.appendChild(wrap);
-  });
-}
-
-function openDistrictFolder(id){
-  const folder = [...document.querySelectorAll(".folder")].find(f => f.dataset.district === id);
-  if(!folder) return;
-  document.querySelectorAll(".folder.open").forEach(x => x.classList.remove("open"));
-  folder.classList.add("open");
-}
-
-// SEARCH INDEX: POIs + ROUTES
-let SEARCH_INDEX = [];
-
-function buildSearchIndex(){
-  const items = [];
-
-  (state.data.routes || []).forEach(r => {
-    items.push({
-      kind: "route",
-      id: r.id,
-      name: r.name,
-      type: r.kind === "rail" ? "rail" : "road",
-      desc: r.desc || ""
-    });
-  });
-
-  (state.data.locations || []).forEach(l => {
-    items.push({
-      kind: "poi",
-      id: l.id,
-      name: l.name,
-      type: l.type || "",
-      desc: l.desc || ""
-    });
-  });
-
-  return items;
-}
-
-function searchIndex(q){
-  const query = (q || "").trim().toLowerCase();
-  if(!query) return [];
-  const out = SEARCH_INDEX.filter(it => {
-    const name = it.name.toLowerCase();
-    const desc = it.desc.toLowerCase();
-    const type = it.type.toLowerCase();
-    return name.includes(query) || desc.includes(query) || type.includes(query);
-  });
-  return out.slice(0, 60);
-}
-
-function renderResults(list, q){
-  if(!q || !q.trim()){
-    els.resultList.classList.add("muted");
-    els.resultList.innerHTML = "Tape pour filtrer (lieux + routes).";
-    return;
-  }
-  if(!list.length){
-    els.resultList.classList.add("muted");
-    els.resultList.innerHTML = "Aucun résultat.";
-    return;
   }
 
-  els.resultList.classList.remove("muted");
-  els.resultList.innerHTML = `
-    <div class="muted" style="margin-bottom:8px;">${list.length} résultat(s)</div>
-    ${list.map(it => `
-      <div class="poiItem" data-kind="${escapeHtml(it.kind)}" data-id="${escapeHtml(it.id)}">
-        <div>
-          <div class="poiName">${escapeHtml(it.name)}</div>
-          <div class="poiType">${escapeHtml(it.kind === "route" ? (it.type === "rail" ? "route • rail" : "route • road") : it.type)}</div>
-        </div>
-        <div class="poiTiny">↗</div>
+  if (selection.kind === "route") {
+    const route = getRouteById(selection.id);
+    return `
+      <div class="detailKicker">Infrastructure active</div>
+      <div class="detailTitle">${escapeHtml(route.name)}</div>
+      <div class="detailBody">${escapeHtml(route.desc || "Aucune lecture disponible.")}</div>
+      <div class="detailMeta">
+        <span class="chipLabel">${escapeHtml(route.kind === "rail" ? "Rail périphérique" : "Axe structurant")}</span>
       </div>
-    `).join("")}
+    `;
+  }
+
+  const poi = getPoiById(selection.id);
+  const district = getDistrictById(poi.district);
+  const links = (poi.links || []).map((id) => getPoiById(id)).filter(Boolean);
+  return `
+    <div class="detailKicker">Nœud verrouillé</div>
+    <div class="detailTitle">${escapeHtml(poi.name)}</div>
+    <div class="detailBody">${escapeHtml(poi.desc || "Aucune lecture disponible.")}</div>
+    <div class="detailMeta">
+      <span class="chipLabel">${escapeHtml(TYPE_LABELS[poi.type] || poi.type)}</span>
+      <span class="chipLabel">${escapeHtml(district?.name || "Secteur inconnu")}</span>
+    </div>
+    ${links.length ? `
+      <div class="detailLinks">
+        <div class="detailLinksHead">Connexions connues</div>
+        <div class="detailLinkRow">
+          ${links.map((link) => `<button class="detailLink" type="button" data-link-kind="poi" data-link-id="${escapeHtml(link.id)}">${escapeHtml(link.name)}</button>`).join("")}
+        </div>
+      </div>
+    ` : ""}
   `;
 }
 
-function pickFromIndex(kind, id){
-  if(kind === "poi"){
-    const hit = document.querySelector(`.poiGroup[data-poi="${CSS.escape(id)}"] .poiHit`);
-    if(hit) hit.dispatchEvent(new MouseEvent("click", { bubbles:true }));
+function bindDetailLinks() {
+  els.card.querySelectorAll("[data-link-kind]").forEach((button) => {
+    button.addEventListener("click", () => {
+      pickSelection(button.dataset.linkKind, button.dataset.linkId, { center: true, sound: "click" });
+    });
+  });
+}
+
+function renderDetailCard() {
+  els.card.innerHTML = detailHtmlForSelection(state.selected);
+  bindDetailLinks();
+}
+
+function syncSelectedClasses() {
+  document.querySelectorAll(".districtGroup, .routeGroup, .poiGroup").forEach((node) => node.classList.remove("selected"));
+  document.querySelectorAll(".resultItem, .districtEntry").forEach((node) => node.classList.remove("selected"));
+
+  if (!state.selected) return;
+
+  document.querySelectorAll(`[data-map-kind="${state.selected.kind}"][data-id="${CSS.escape(state.selected.id)}"]`).forEach((node) => {
+    node.classList.add("selected");
+  });
+  document.querySelectorAll(`[data-entry-kind="${state.selected.kind}"][data-entry-id="${CSS.escape(state.selected.id)}"]`).forEach((node) => {
+    node.classList.add("selected");
+  });
+}
+
+function focusSelection() {
+  if (!state.selected) {
+    resetView();
     return;
   }
-  if(kind === "route"){
-    const r = getRoute(id);
-    if(!r) return;
-    select("route", id);
-    setCard(`Infrastructure // ${r.name}`, `<span class="muted">${escapeHtml(r.desc || "")}</span>`);
-    setFocusHud(r.name);
+
+  if (state.selected.kind === "district") {
+    const shape = getDistrictShape(state.selected.id);
+    if (shape) focusBox(boundsFromPath(shape.path), 70);
+    return;
+  }
+
+  if (state.selected.kind === "route") {
+    const route = getRouteById(state.selected.id);
+    const pathString = route.points
+      ? makePathD(route.points)
+      : route.segments.map((segment) => makePathD(segment.points)).join(" ");
+    focusBox(boundsFromPath(pathString), 90);
+    return;
+  }
+
+  const poi = getPoiById(state.selected.id);
+  if (poi) focusBox({ x: poi.x - 110, y: poi.y - 110, width: 220, height: 220 }, 120);
+}
+
+function pickSelection(kind, id, options = {}) {
+  state.selected = { kind, id };
+  const entity = getSelectionEntity();
+  setFocusLabel(entity?.name || null);
+  renderDetailCard();
+  syncSelectedClasses();
+  if (options.center !== false) focusSelection();
+  if (options.sound === "ok") safePlay(sounds.ok);
+  if (options.sound === "click") safePlay(sounds.click);
+}
+
+function renderResults(filtered) {
+  state.lists.results = filtered.all;
+
+  if (!filtered.all.length) {
+    els.resultList.innerHTML = `<div class="muted">Aucun résultat ne répond à ce filtrage. Change l’angle ou efface la recherche.</div>`;
+    els.resultMeta.textContent = "0 signal retenu";
+    return;
+  }
+
+  els.resultMeta.textContent = `${filtered.all.length} signal${filtered.all.length > 1 ? "s" : ""} retenu${filtered.all.length > 1 ? "s" : ""}`;
+  els.resultList.innerHTML = filtered.all.map((item) => {
+    if (item.kind === "district") {
+      return `
+        <button class="resultItem ${selectionMatches(state.selected, item) ? "selected" : ""}" type="button" data-entry-kind="district" data-entry-id="${escapeHtml(item.id)}">
+          <div class="resultHead">
+            <div>
+              <div class="resultKind">Territoire</div>
+              <div class="resultTitle">${escapeHtml(item.name)}</div>
+            </div>
+            <span class="chipLabel">${item.count} nœuds</span>
+          </div>
+          <div class="resultDesc">${escapeHtml(item.function)}</div>
+        </button>
+      `;
+    }
+
+    if (item.kind === "route") {
+      return `
+        <button class="resultItem ${selectionMatches(state.selected, item) ? "selected" : ""}" type="button" data-entry-kind="route" data-entry-id="${escapeHtml(item.id)}">
+          <div class="resultHead">
+            <div>
+              <div class="resultKind">Route</div>
+              <div class="resultTitle">${escapeHtml(item.name)}</div>
+            </div>
+            <span class="chipLabel">${escapeHtml(item.kindLabel)}</span>
+          </div>
+          <div class="resultDesc">${escapeHtml(item.desc)}</div>
+        </button>
+      `;
+    }
+
+    return `
+      <button class="resultItem ${selectionMatches(state.selected, item) ? "selected" : ""}" type="button" data-entry-kind="poi" data-entry-id="${escapeHtml(item.id)}">
+        <div class="resultHead">
+          <div>
+            <div class="resultKind">Nœud</div>
+            <div class="resultTitle">${escapeHtml(item.name)}</div>
+          </div>
+          <span class="chipLabel">${escapeHtml(TYPE_LABELS[item.type] || item.type)}</span>
+        </div>
+        <div class="resultDesc">${escapeHtml(item.desc)}</div>
+        <div class="resultMetaRow">
+          <span class="chipLabel">${escapeHtml(item.districtName)}</span>
+        </div>
+      </button>
+    `;
+  }).join("");
+
+  els.resultList.querySelectorAll("[data-entry-kind]").forEach((button) => {
+    button.addEventListener("click", () => {
+      pickSelection(button.dataset.entryKind, button.dataset.entryId, { center: true, sound: "click" });
+    });
+  });
+}
+
+function renderDistrictList() {
+  const districts = state.data.districts.slice().sort((a, b) => a.name.localeCompare(b.name, "fr"));
+  els.districtList.innerHTML = districts.map((district) => {
+    const count = districtPois(district.id).length;
+    return `
+      <button class="districtEntry ${selectionMatches(state.selected, { kind: "district", id: district.id }) ? "selected" : ""}" type="button" data-entry-kind="district" data-entry-id="${escapeHtml(district.id)}">
+        <div class="districtRow">
+          <div>
+            <div class="districtMeta">Territoire</div>
+            <div class="districtName">${escapeHtml(district.name)}</div>
+          </div>
+          <div class="districtPoiCount">${count} nœuds</div>
+        </div>
+        <div class="districtFunction">${escapeHtml(district.function)}</div>
+      </button>
+    `;
+  }).join("");
+
+  els.districtList.querySelectorAll("[data-entry-kind]").forEach((button) => {
+    button.addEventListener("click", () => {
+      pickSelection("district", button.dataset.entryId, { center: true, sound: "ok" });
+    });
+  });
+}
+
+function syncModeButtons() {
+  els.modeChips.querySelectorAll(".modeChip").forEach((button) => {
+    button.classList.toggle("active", button.dataset.mode === state.mode);
+  });
+}
+
+function refreshLists() {
+  const filtered = filteredItems();
+  updateMapVisibility(filtered);
+  renderResults(filtered);
+  renderDistrictList();
+
+  const summary = [
+    { label: `Mode : ${MODE_LABELS[state.mode]}`, action: "reset-mode", active: true },
+    ...(state.search ? [{ label: `Recherche : ${state.search}`, action: "clear-search", active: true }] : []),
+    ...(state.selected ? [{ label: "Recentrer sur le focus", action: "recenter", active: false }] : [])
+  ];
+  setSummaryChips(summary);
+  syncSelectedClasses();
+}
+
+function createDistrictNode(shape, district) {
+  const group = svgEl("g");
+  group.classList.add("districtGroup");
+  group.dataset.mapKind = "district";
+  group.dataset.id = district.id;
+
+  const path = svgEl("path");
+  path.setAttribute("class", "districtShape mapFocus");
+  path.setAttribute("d", shape.path);
+  path.setAttribute("tabindex", "0");
+  path.setAttribute("aria-label", district.name);
+
+  const label = svgEl("text");
+  label.setAttribute("class", "mapLabel districtLabel");
+  label.setAttribute("x", district.label.x);
+  label.setAttribute("y", district.label.y);
+  label.textContent = district.name;
+
+  const activate = () => pickSelection("district", district.id, { center: true, sound: "ok" });
+  path.addEventListener("click", (event) => {
+    event.stopPropagation();
+    activate();
+  });
+  path.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      activate();
+    }
+  });
+
+  group.append(path, label);
+  return group;
+}
+
+function routePathStrings(route) {
+  if (Array.isArray(route.points)) return [makePathD(route.points)];
+  if (Array.isArray(route.segments)) return route.segments.map((segment) => makePathD(segment.points));
+  return [];
+}
+
+function createRouteNode(route) {
+  const group = svgEl("g");
+  group.classList.add("routeGroup", route.kind === "rail" ? "rail" : "road");
+  group.dataset.mapKind = "route";
+  group.dataset.id = route.id;
+  const activate = () => pickSelection("route", route.id, { center: true, sound: "click" });
+
+  routePathStrings(route).forEach((pathString) => {
+    const base = svgEl("path");
+    base.setAttribute("class", "routeStroke routeBase");
+    base.setAttribute("d", pathString);
+
+    const main = svgEl("path");
+    main.setAttribute("class", "routeStroke routeMain");
+    main.setAttribute("d", pathString);
+
+    const hit = svgEl("path");
+    hit.setAttribute("class", "routeHit");
+    hit.setAttribute("d", pathString);
+    hit.addEventListener("click", (event) => {
+      event.stopPropagation();
+      activate();
+    });
+
+    group.append(base, main, hit);
+  });
+
+  const label = svgEl("text");
+  label.setAttribute("class", "mapLabel routeLabel");
+  label.setAttribute("x", route.label.x);
+  label.setAttribute("y", route.label.y);
+  label.textContent = route.name;
+  group.append(label);
+
+  return group;
+}
+
+function createPoiNode(location) {
+  const group = svgEl("g");
+  group.classList.add("poiGroup");
+  group.dataset.mapKind = "poi";
+  group.dataset.id = location.id;
+
+  const pulse = svgEl("circle");
+  pulse.setAttribute("class", "poiPulse");
+  pulse.setAttribute("cx", location.x);
+  pulse.setAttribute("cy", location.y);
+  pulse.setAttribute("r", "9");
+
+  const halo = svgEl("circle");
+  halo.setAttribute("class", "poiHalo");
+  halo.setAttribute("cx", location.x);
+  halo.setAttribute("cy", location.y);
+  halo.setAttribute("r", "10");
+
+  const dot = svgEl("circle");
+  dot.setAttribute("class", "poiDot");
+  dot.setAttribute("cx", location.x);
+  dot.setAttribute("cy", location.y);
+  dot.setAttribute("r", "4.8");
+
+  const hit = svgEl("circle");
+  hit.setAttribute("class", "poiHit");
+  hit.setAttribute("cx", location.x);
+  hit.setAttribute("cy", location.y);
+  hit.setAttribute("r", "17");
+
+  const label = svgEl("text");
+  label.setAttribute("class", "mapLabel poiLabel");
+  label.setAttribute("x", location.x + 12);
+  label.setAttribute("y", location.y - 14);
+  label.textContent = location.name;
+
+  const activate = () => pickSelection("poi", location.id, { center: true, sound: "click" });
+  hit.addEventListener("click", (event) => {
+    event.stopPropagation();
+    activate();
+  });
+
+  group.append(pulse, halo, dot, hit, label);
+  return group;
+}
+
+function renderMap() {
+  els.districtLayer.innerHTML = "";
+  els.routeLayer.innerHTML = "";
+  els.poiLayer.innerHTML = "";
+  els.labelLayer.innerHTML = "";
+
+  state.data.districtShapes.forEach((shape) => {
+    const district = getDistrictById(shape.id);
+    if (district) els.districtLayer.appendChild(createDistrictNode(shape, district));
+  });
+
+  state.data.routes.forEach((route) => {
+    els.routeLayer.appendChild(createRouteNode(route));
+  });
+
+  state.data.locations.forEach((location) => {
+    els.poiLayer.appendChild(createPoiNode(location));
+  });
+}
+
+function onMapPointerDown(event) {
+  if (event.button !== 0) return;
+  state.drag.on = true;
+  state.drag.x = event.clientX;
+  state.drag.y = event.clientY;
+  state.drag.panX = state.pan.x;
+  state.drag.panY = state.pan.y;
+  els.mapViewport.classList.add("is-dragging");
+}
+
+function onMapPointerMove(event) {
+  if (!state.drag.on) return;
+  const dx = event.clientX - state.drag.x;
+  const dy = event.clientY - state.drag.y;
+  state.pan = clampPan(state.drag.panX + dx, state.drag.panY + dy);
+  applyTransform();
+}
+
+function onMapPointerUp() {
+  state.drag.on = false;
+  els.mapViewport.classList.remove("is-dragging");
+}
+
+function zoomAtPoint(clientX, clientY, direction) {
+  const rect = els.mapViewport.getBoundingClientRect();
+  const localX = clientX - rect.left;
+  const localY = clientY - rect.top;
+  const pointX = (localX - state.pan.x) / state.zoom;
+  const pointY = (localY - state.pan.y) / state.zoom;
+  const nextZoom = direction > 0 ? state.zoom * 1.12 : state.zoom / 1.12;
+  const zoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, nextZoom));
+  const nextPan = {
+    x: localX - pointX * zoom,
+    y: localY - pointY * zoom
+  };
+  setView(zoom, nextPan);
+}
+
+function attachEvents() {
+  els.btnInit.addEventListener("click", () => {
+    unlockAudio();
+    els.boot.hidden = true;
+    safePlay(sounds.ok);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (state.data) {
+          resetView();
+          refreshLists();
+          renderDetailCard();
+        }
+      });
+    });
+    els.search.focus();
+  });
+
+  els.btnNoFx.addEventListener("click", () => {
+    state.reduceEffects = !state.reduceEffects;
+    applyReduceEffects();
+    savePrefs();
     safePlay(sounds.click);
-    return;
-  }
-}
-
-function bindResultClicks(){
-  els.resultList.addEventListener("click", (e) => {
-    const row = e.target.closest(".poiItem");
-    if(!row) return;
-    pickFromIndex(row.dataset.kind, row.dataset.id);
   });
-}
-
-// Pan/Zoom
-function bindPanZoom(){
-  els.mapSvg.addEventListener("pointerdown", (e) => {
-    els.mapSvg.setPointerCapture(e.pointerId);
-    state.drag.on = true;
-    state.drag.x0 = e.clientX;
-    state.drag.y0 = e.clientY;
-    state.drag.panX0 = state.pan.x;
-    state.drag.panY0 = state.pan.y;
-  });
-
-  els.mapSvg.addEventListener("pointermove", (e) => {
-    if(!state.drag.on) return;
-    const dx = e.clientX - state.drag.x0;
-    const dy = e.clientY - state.drag.y0;
-    state.pan.x = state.drag.panX0 + dx;
-    state.pan.y = state.drag.panY0 + dy;
-    applyWorldTransform();
-  });
-
-  const end = () => { state.drag.on = false; };
-  els.mapSvg.addEventListener("pointerup", end);
-  els.mapSvg.addEventListener("pointercancel", end);
-
-  els.mapViewport.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    const delta = Math.sign(e.deltaY);
-    const zoomFactor = (delta > 0) ? 0.92 : 1.08;
-
-    const prevZoom = state.zoom;
-    const nextZoom = Math.max(0.75, Math.min(2.35, prevZoom * zoomFactor));
-    const p = clientToSvg(e.clientX, e.clientY);
-
-    state.zoom = nextZoom;
-    state.pan.x = state.pan.x + (p.x * prevZoom - p.x * nextZoom);
-    state.pan.y = state.pan.y + (p.y * prevZoom - p.y * nextZoom);
-
-    applyWorldTransform();
-  }, { passive: false });
-}
-
-// UI
-function centerView(){
-  state.zoom = 1;
-  state.pan.x = 0;
-  state.pan.y = 0;
-  applyWorldTransform();
-  safePlay(sounds.click);
-}
-
-function bindUI(){
-  els.btnCenter.addEventListener("click", centerView);
 
   els.btnGlobal.addEventListener("click", () => {
     state.globalView = !state.globalView;
@@ -563,11 +860,16 @@ function bindUI(){
     safePlay(sounds.click);
   });
 
+  els.btnCenter.addEventListener("click", () => {
+    focusSelection();
+    safePlay(sounds.click);
+  });
+
   els.btnSound.addEventListener("click", () => {
     state.uiSound = !state.uiSound;
     applySoundSettings();
     savePrefs();
-    safePlay(sounds.click);
+    if (state.uiSound) safePlay(sounds.ok);
   });
 
   els.vol.addEventListener("input", () => {
@@ -577,104 +879,104 @@ function bindUI(){
   });
 
   els.search.addEventListener("input", () => {
-    const q = els.search.value;
-    const list = searchIndex(q);
-    renderResults(list, q);
-    safePlay(sounds.click);
+    state.search = els.search.value.trim();
+    refreshLists();
   });
 
-  window.addEventListener("keydown", (e) => {
-    if(e.key === "Escape"){
-      clearAllSelected();
-      setFocusHud("");
-      els.search.value = "";
-      renderResults([], "");
-      setCard("Accès lecture", `<span class="muted">Sélection via la colonne de droite (routes incluses). VUE GLOBALE = districts uniquement.</span>`);
-      safePlay(sounds.warn);
+  els.modeChips.querySelectorAll(".modeChip").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.mode = button.dataset.mode;
+      syncModeButtons();
+      refreshLists();
+      safePlay(sounds.click);
+    });
+  });
+
+  els.homeTab.addEventListener("click", () => {
+    const open = els.homeDock.classList.toggle("open");
+    els.homeTab.setAttribute("aria-expanded", String(open));
+    els.homePanel.setAttribute("aria-hidden", String(!open));
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!els.homeDock.contains(event.target)) {
+      els.homeDock.classList.remove("open");
+      els.homeTab.setAttribute("aria-expanded", "false");
+      els.homePanel.setAttribute("aria-hidden", "true");
     }
   });
-}
 
-function bindBoot(){
-  els.btnNoFx.addEventListener("click", () => {
-    state.reduceEffects = !state.reduceEffects;
-    applyReduceEffects();
-    savePrefs();
-    safePlay(sounds.click);
+  els.mapSvg.addEventListener("pointerdown", onMapPointerDown);
+  window.addEventListener("pointermove", onMapPointerMove);
+  window.addEventListener("pointerup", onMapPointerUp);
+  window.addEventListener("pointercancel", onMapPointerUp);
+
+  els.mapSvg.addEventListener("wheel", (event) => {
+    event.preventDefault();
+    zoomAtPoint(event.clientX, event.clientY, event.deltaY < 0 ? 1 : -1);
+  }, { passive: false });
+
+  els.mapSvg.addEventListener("click", (event) => {
+    if (event.target === els.mapSvg || event.target === els.world || event.target.id === "island") {
+      state.selected = null;
+      setFocusLabel(null);
+      renderDetailCard();
+      syncSelectedClasses();
+    }
   });
 
-  els.btnInit.addEventListener("click", () => {
-    unlockAudio();
-    els.boot.style.display = "none";
-    safePlay(sounds.ok);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      state.search = "";
+      els.search.value = "";
+      state.selected = null;
+      setFocusLabel(null);
+      renderDetailCard();
+      refreshLists();
+      resetView();
+    }
   });
 
-  window.addEventListener("pointerdown", () => unlockAudio(), { once: true });
-  window.addEventListener("keydown", () => unlockAudio(), { once: true });
+  window.addEventListener("resize", () => {
+    if (state.selected) focusSelection();
+    else resetView();
+  });
 }
 
-// Data
-async function loadData(){
-  const res = await fetch("./assets/data/lumia-map.json", { cache: "no-store" });
-  if(!res.ok) throw new Error("JSON not found");
-  return res.json();
+async function loadData() {
+  if (window.__LUMIA_MAP_DATA__) {
+    return window.__LUMIA_MAP_DATA__;
+  }
+  const response = await fetch("./assets/data/lumia-map.json", { cache: "no-store" });
+  if (!response.ok) throw new Error("Impossible de charger la cartographie.");
+  return response.json();
 }
 
-// Init
-async function init(){
+async function init() {
   loadPrefs();
   applyReduceEffects();
-  applySoundSettings();
   applyGlobalView();
-  applyWorldTransform();
-  setFocusHud("");
+  applySoundSettings();
+  attachEvents();
 
-  bindBoot();
-  bindUI();
-  bindPanZoom();
-  bindResultClicks();
-
-  state.data = await loadData();
-  SEARCH_INDEX = buildSearchIndex();
-
-  renderDistricts();
-  renderRoutes();
-  renderPOIs();
-  buildDistrictFolders();
-
-  renderResults([], "");
-  setCard("Accès lecture", `<span class="muted">Sélection via la colonne de droite (routes incluses). VUE GLOBALE = districts uniquement.</span>`);
+  try {
+    state.data = await loadData();
+    renderMap();
+    updateHudCounts();
+    renderDetailCard();
+    resetView();
+    syncModeButtons();
+    refreshLists();
+  } catch (error) {
+    els.resultMeta.textContent = "Erreur de chargement";
+    els.resultList.innerHTML = `<div class="muted">La cartographie ne répond pas. Vérifie le fichier de données et relance le terminal.</div>`;
+    els.card.innerHTML = `
+      <div class="detailKicker">Échec de liaison</div>
+      <div class="detailTitle">Worldmap indisponible</div>
+      <div class="detailBody">${escapeHtml(error.message || "Erreur inconnue.")}</div>
+    `;
+    console.error(error);
+  }
 }
 
-init().catch(err => console.error(err));
-
-// Floating Home Dock toggle
-(() => {
-  const dock = document.getElementById("homeDock");
-  const tab = document.getElementById("homeTab");
-  const panel = document.getElementById("homePanel");
-  if (!dock || !tab || !panel) return;
-
-  function setOpen(open){
-    dock.classList.toggle("open", open);
-    tab.setAttribute("aria-expanded", String(open));
-    panel.setAttribute("aria-hidden", String(!open));
-  }
-
-  tab.addEventListener("click", () => {
-    const open = !dock.classList.contains("open");
-    setOpen(open);
-  });
-
-  // Close if click outside
-  document.addEventListener("click", (e) => {
-    if (!dock.classList.contains("open")) return;
-    if (dock.contains(e.target)) return;
-    setOpen(false);
-  });
-
-  // Close with Escape
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setOpen(false);
-  });
-})();
+init();

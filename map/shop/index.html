@@ -3,37 +3,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Boutique RP de Lumia Island : navigation par besoins, filtres rapides et bon d'acquisition." />
   <title>Boutique // Lumia Island</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Oxanium:wght@300;400;600&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="./shop.css" />
 </head>
 
 <body>
-  <!-- AUDIO UNLOCK (pas d’autoplay) -->
+  <div class="home-dock" id="homeDock">
+    <button class="home-tab" id="homeTab" type="button" aria-expanded="false" title="Ouvrir le dock">
+      <span class="home-tab-g">G</span>
+    </button>
+
+    <div class="home-panel" id="homePanel" aria-hidden="true">
+      <a class="home-action" href="../../index.html" data-sfx="click">
+        <span class="home-action-title">TERMINAL PRINCIPAL</span>
+        <span class="home-action-sub">Retour à l'accueil</span>
+      </a>
+      <a class="home-action" href="../index.html" data-sfx="click">
+        <span class="home-action-title">CARTE</span>
+        <span class="home-action-sub">Revenir à Lumia Island</span>
+      </a>
+    </div>
+  </div>
+
   <div id="boot" class="boot" aria-modal="true" role="dialog">
     <div class="bootCard">
       <div class="bootTop">
         <div class="logoG" aria-hidden="true">G</div>
         <div class="bootTitle">
-          <div class="kicker">GRANDE TABLE // ÉCONOMIE</div>
-          <h1>OUVERTURE DE LA BOUTIQUE</h1>
+          <div class="kicker">GRANDE TABLE // ECONOMIE</div>
+          <h1>OUVERTURE DU REGISTRE MARCHAND</h1>
           <p>
-            Accès lecture/achat RP. Aucun son ne sera joué sans action utilisateur.
+            Navigation par besoins, résultats directs et bon d'acquisition centralisé.
+            Aucun son ne sera joué sans action utilisateur.
           </p>
         </div>
       </div>
 
       <div class="bootActions">
         <button id="btnInit" class="btn primary" type="button">INITIALISER</button>
-        <button id="btnNoFx" class="btn" type="button">RÉDUIRE LES EFFETS</button>
+        <button id="btnNoFx" class="btn" type="button">REDUIRE LES EFFETS</button>
       </div>
 
       <div class="bootFoot muted">
-        Recherche • Accordéons • Liste d’achats (local) • Export
+        Recherche instantanée - Filtres - Ajout rapide - Export local
       </div>
     </div>
   </div>
@@ -43,80 +56,152 @@
       <div class="brand">
         <div class="logoG small" aria-hidden="true">G</div>
         <div>
-          <div class="brandTitle">BOUTIQUE — LUMIA ISLAND</div>
-          <div class="brandSub muted">Registre marchand — Accès Grande Table</div>
+          <div class="brandTitle">BOUTIQUE // LUMIA ISLAND</div>
+          <div class="brandSub muted">Registre marchand - Grande Table - Accès lecture/achat RP</div>
         </div>
       </div>
 
       <div class="topbarRight">
-        <a class="btn" href="../index.html" title="Retour à la carte">↩ CARTE</a>
-
-        <button id="btnSound" class="btn" type="button" aria-pressed="true" title="UI Sound">🔊</button>
+        <a class="btn" href="../index.html" title="Retour a la carte">CARTE</a>
+        <button id="btnSound" class="btn" type="button" aria-pressed="true" title="Son interface">SOUND</button>
         <div class="volWrap" title="Volume UI">
-          <input id="vol" type="range" min="0" max="1" step="0.01" />
+          <input id="vol" type="range" min="0" max="1" step="0.01" aria-label="Volume interface" />
         </div>
       </div>
     </header>
 
-    <main class="layout">
-      <!-- LEFT -->
-      <section class="left">
-        <div class="panel">
+    <main class="shopShell">
+      <section class="mainColumn">
+        <div class="panel currencyPanel">
           <div class="panelHead">
             <div class="panelTitle">PROTOCOLE DE PAIEMENT</div>
-            <div class="panelSub muted">Synthèse monétaire • Conversions • Conditions d’accès</div>
+            <div class="panelSub muted">Conversion, dette, commissions et circulation sur Lumia Island</div>
           </div>
-
           <div class="panelBody" id="currencyBox">
-            <!-- rempli par JS -->
-            <div class="muted">Chargement…</div>
+            <div class="muted">Chargement du protocole...</div>
           </div>
         </div>
 
-        <div class="panel">
+        <div class="panel controlsPanel">
           <div class="panelHead">
-            <div class="panelTitle">CATALOGUE</div>
-            <div class="panelSub muted">Clique une boutique pour dérouler. Recherche = boutiques + items.</div>
+            <div class="panelTitle">RECHERCHE D'ACQUISITION</div>
+            <div class="panelSub muted">Cherche un besoin, filtre la zone, compare, ajoute.</div>
+          </div>
 
-            <div class="searchRow">
-              <input id="search" class="input" type="search"
-                placeholder="Requête : logement / transport / identités / implants / passes…"
-                autocomplete="off" />
+          <div class="panelBody controlsBody">
+            <div class="searchWrap">
+              <input id="search" class="input searchInput" type="search" placeholder="Ex : logement, identité, extraction, implants, badge..." autocomplete="off" />
+              <button id="btnResetFilters" class="btn ghostBtn" type="button">RESET</button>
+            </div>
+
+            <div class="quickFilters" id="quickFilters"></div>
+
+            <div class="filterGrid">
+              <label class="filterField">
+                <span class="filterLabel">DISTRICT</span>
+                <select id="districtFilter" class="select">
+                  <option value="">Tous</option>
+                </select>
+              </label>
+
+              <label class="filterField">
+                <span class="filterLabel">BOUTIQUE</span>
+                <select id="shopFilter" class="select">
+                  <option value="">Toutes</option>
+                </select>
+              </label>
+
+              <label class="filterField">
+                <span class="filterLabel">COUT</span>
+                <select id="priceFilter" class="select">
+                  <option value="">Tous</option>
+                  <option value="lmn">LMN</option>
+                  <option value="favor">FAVOR</option>
+                  <option value="percent">%</option>
+                  <option value="subscription">Abonnement</option>
+                </select>
+              </label>
+
+              <label class="filterField">
+                <span class="filterLabel">TRI</span>
+                <select id="sortFilter" class="select">
+                  <option value="relevance">Pertinence</option>
+                  <option value="price-asc">Prix croissant</option>
+                  <option value="price-desc">Prix decroissant</option>
+                  <option value="district">District</option>
+                  <option value="shop">Boutique</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel resultPanel">
+          <div class="panelHead resultHead">
+            <div>
+              <div class="panelTitle">RESULTATS MARCHANDS</div>
+              <div class="panelSub muted">Accès direct aux articles sans ouvrir cinquante vitrines.</div>
+            </div>
+            <div class="resultMeta">
+              <div class="resultCount" id="resultCount">0 entrées</div>
+              <div class="resultHint muted" id="resultHint">Affichage initial du registre.</div>
             </div>
           </div>
 
-          <div class="panelBody" id="shopList">
-            <div class="muted">Chargement…</div>
+          <div class="panelBody resultBody">
+            <div class="activeFilters" id="activeFilters"></div>
+            <div class="resultGrid" id="resultGrid">
+              <div class="muted">Chargement du registre marchand...</div>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- RIGHT -->
-      <aside class="right">
-        <div class="panel sticky">
+      <aside class="sideColumn">
+        <div class="panel detailPanel">
           <div class="panelHead">
-            <div class="panelTitle">BON D’ACQUISITION</div>
-            <div class="panelSub muted">Sélection courante • Registre local chiffré</div>
+            <div class="panelTitle">FICHE D'ARTICLE</div>
+            <div class="panelSub muted">Sélection rapide pour lire avant acquisition</div>
+          </div>
 
+          <div class="panelBody detailBody" id="detailPanel">
+            <div class="detailEmpty muted">
+              Sélectionne un article dans le registre pour afficher sa fiche détaillée ici.
+            </div>
+          </div>
+        </div>
+
+        <div class="panel stickyPanel">
+          <div class="panelHead">
+            <div class="panelTitle">BON D'ACQUISITION</div>
+            <div class="panelSub muted">Registre local de la sélection en cours</div>
             <div class="cartActions">
               <button id="btnExport" class="btn" type="button">EXPORT</button>
-              <button id="btnClear" class="btn" type="button">RESET</button>
+              <button id="btnClear" class="btn ghostBtn" type="button">VIDER</button>
             </div>
           </div>
 
-          <div class="panelBody">
-            <div id="cartList" class="cartList muted">Vide.</div>
+          <div class="panelBody cartBody">
+            <div class="cartSummary">
+              <div>
+                <div class="summaryLabel muted">ARTICLES</div>
+                <div class="summaryValue" id="cartCount">0</div>
+              </div>
+              <div>
+                <div class="summaryLabel muted">TOTAL LMN</div>
+                <div class="summaryValue" id="cartTotal">0</div>
+              </div>
+            </div>
 
             <div class="divider"></div>
 
-            <div class="totalRow">
-              <div class="muted">TOTAL (LMN)</div>
-              <div id="cartTotal" class="totalValue">0</div>
-            </div>
+            <div id="cartList" class="cartList muted">Aucune acquisition enregistrée.</div>
+
+            <div class="divider"></div>
 
             <div class="miniHint muted">
-              Tips : clique un item → ajoute à la liste.  
-              Supprime un item depuis la liste à droite.
+              Ajoute un article depuis le registre central.
+              Les coûts en LMN sont totalisés, les dettes et pourcentages restent notés à part.
             </div>
           </div>
         </div>
@@ -124,13 +209,14 @@
     </main>
 
     <footer class="footer muted">
-      Lumia Island // Boutique RP — offline-ready — GitHub Pages compatible
+      Lumia Island // Registre marchand RP - consultation locale - export d'acquisition
     </footer>
   </div>
 
-  <script src="./shop.js"></script>
+  <noscript>
+    <div class="noscriptBanner">Initialisation incomplète. Le registre marchand ne répond pas sans les protocoles actifs.</div>
+  </noscript>
+
+  <script src="./shop.js" defer></script>
 </body>
 </html>
-
-
-
