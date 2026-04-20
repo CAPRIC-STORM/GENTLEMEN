@@ -54,7 +54,8 @@ const state = {
     sort: "relevance"
   },
   cart: [],
-  selectedItemId: ""
+  selectedItemId: "",
+  entryContext: null
 };
 
 const els = {
@@ -65,6 +66,7 @@ const els = {
   vol: document.getElementById("vol"),
   currencyBox: document.getElementById("currencyBox"),
   quickFilters: document.getElementById("quickFilters"),
+  contextBox: document.getElementById("contextBox"),
   search: document.getElementById("search"),
   districtFilter: document.getElementById("districtFilter"),
   shopFilter: document.getElementById("shopFilter"),
@@ -180,6 +182,22 @@ function getKindLabel(kind) {
   return KIND_LABELS[kind] || "Autres";
 }
 
+function getUrlContext() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const context = {
+      shopId: params.get("shop") || "",
+      district: params.get("district") || "",
+      query: params.get("q") || "",
+      source: params.get("source") || "",
+      poiId: params.get("poi") || ""
+    };
+    return context;
+  } catch {
+    return { shopId: "", district: "", query: "", source: "", poiId: "" };
+  }
+}
+
 function getPriceMode(unit) {
   const normalized = String(unit || "").toLowerCase();
   if (normalized.includes("favor")) return "favor";
@@ -293,6 +311,27 @@ function populateFilters() {
   populateSelect(els.shopFilter, shops, "Toutes");
 }
 
+function renderContextBox() {
+  if (!els.contextBox) return;
+  const context = state.entryContext;
+
+  if (!context?.active) {
+    els.contextBox.classList.add("hidden");
+    els.contextBox.innerHTML = "";
+    return;
+  }
+
+  els.contextBox.classList.remove("hidden");
+  els.contextBox.innerHTML = `
+    <div class="contextKicker">Arrivee depuis la worldmap</div>
+    <div class="contextText">
+      <strong>${escapeHtml(context.title)}</strong><br />
+      ${escapeHtml(context.text)}
+    </div>
+    ${context.mapHref ? `<div class="contextActions"><a class="btn ghostBtn contextMapBtn" href="${escapeHtml(context.mapHref)}">RETOUR AU LIEU</a></div>` : ""}
+  `;
+}
+
 function findItemById(id) {
   return state.items.find((item) => item.id === id);
 }
@@ -382,7 +421,10 @@ function renderDetailPanel() {
     <div class="detailText">${escapeHtml(item.note || item.shopDesc || item.shopTagline)}</div>
     <div class="detailText">${escapeHtml(item.shopTagline)}</div>
 
-    <button class="btn detailAction" type="button" id="detailAddBtn">AJOUTER AU BON</button>
+    <div class="detailButtons">
+      <button class="btn detailAction" type="button" id="detailAddBtn">AJOUTER AU BON</button>
+      <a class="btn ghostBtn detailMapLink" href="../index.html?poi=${encodeURIComponent(item.shopId)}&panel=1&source=shop">VOIR SUR LA MAP</a>
+    </div>
   `;
 
   document.getElementById("detailAddBtn")?.addEventListener("click", () => {
@@ -440,6 +482,58 @@ function getFilteredItems() {
   }
 
   return items;
+}
+
+function applyEntryContext() {
+  const urlContext = getUrlContext();
+  let selectedShop = null;
+
+  if (urlContext.shopId) {
+    selectedShop = (state.data.shops || []).find((shop) => shop.id === urlContext.shopId) || null;
+    if (selectedShop) {
+      state.filters.shop = selectedShop.name;
+      state.filters.district = selectedShop.district;
+      els.shopFilter.value = selectedShop.name;
+      els.districtFilter.value = selectedShop.district;
+      state.entryContext = {
+        active: true,
+        title: selectedShop.name,
+        text: `Registre recentre sur ${selectedShop.district}. Les acquisitions de ce lieu sont deja isolees.`,
+        mapHref: `../index.html?poi=${encodeURIComponent(selectedShop.id)}&panel=1&source=shop`
+      };
+    }
+  }
+
+  if (!selectedShop && urlContext.district) {
+    state.filters.district = urlContext.district;
+    els.districtFilter.value = urlContext.district;
+    state.entryContext = {
+      active: true,
+      title: urlContext.district,
+      text: "Registre recentre sur ce district depuis la worldmap.",
+      mapHref: urlContext.poiId ? `../index.html?poi=${encodeURIComponent(urlContext.poiId)}&panel=1&source=shop` : ""
+    };
+  }
+
+  if (urlContext.query) {
+    state.filters.search = urlContext.query;
+    els.search.value = urlContext.query;
+    if (!state.entryContext) {
+      state.entryContext = {
+        active: true,
+        title: "Recherche ciblee",
+        text: `Le registre a ete ouvert avec la requete : ${urlContext.query}`,
+        mapHref: urlContext.poiId ? `../index.html?poi=${encodeURIComponent(urlContext.poiId)}&panel=1&source=shop` : ""
+      };
+    }
+  }
+
+  renderContextBox();
+
+  const filteredItems = getFilteredItems();
+  if (filteredItems.length) {
+    state.selectedItemId = filteredItems[0].id;
+  }
 }
 
 function renderResults() {
@@ -633,6 +727,8 @@ function resetFilters() {
   els.shopFilter.value = "";
   els.priceFilter.value = "";
   els.sortFilter.value = "relevance";
+  state.entryContext = null;
+  renderContextBox();
 
   renderQuickFilters();
   renderResults();
@@ -750,8 +846,9 @@ async function init() {
   buildItems();
   renderCurrency();
   populateFilters();
+  applyEntryContext();
   renderQuickFilters();
-  state.selectedItemId = state.items[0]?.id || "";
+  state.selectedItemId = state.selectedItemId || state.items[0]?.id || "";
   renderResults();
   renderDetailPanel();
   renderCart();
