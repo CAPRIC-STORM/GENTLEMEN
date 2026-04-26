@@ -2,14 +2,14 @@
   const PASSWORD = "burnwood";
   const SESSION_KEY = "gentlemen_archives_unlocked";
   const FILES = [
-    { kicker: "DOSSIER I", name: "L'IMPACT", href: "../I — L’IMPACT.pdf" },
-    { kicker: "DOSSIER II", name: "LE TYPE 0", href: "../II — LE TYPE 0.pdf" },
-    { kicker: "DOSSIER III", name: "LA NAISSANCE DE LUMIA ISLAND", href: "../III — LA NAISSANCE DE LUMIA ISLAND.pdf" },
-    { kicker: "DOSSIER IV", name: "EXPEDITION HERITAGE (SPATIALE)", href: "../IV — EXPEDITION HÉRITAGE (SPATIALE).pdf" },
-    { kicker: "DOSSIER V", name: "LES NOYAUX NEXUS", href: "../V — LES NOYAUX NEXUS.pdf" },
-    { kicker: "DOSSIER VI", name: "LE CINQUIEME COEUR", href: "../VI — LE CINQUIÈME CŒUR.pdf" },
-    { kicker: "DOSSIER VII", name: "PROJET HERITAGE", href: "../VII — PROJET HÉRITAGE.pdf" },
-    { kicker: "DOSSIER VIII", name: "CONCLUSION NON AUTORISEE", href: "../VIII — CONCLUSION NON AUTORISEE.pdf" }
+    { kicker: "DOSSIER I", name: "L'IMPACT", href: "assets/pdf/01-impact.pdf" },
+    { kicker: "DOSSIER II", name: "LE TYPE 0", href: "assets/pdf/02-type-0.pdf" },
+    { kicker: "DOSSIER III", name: "LA NAISSANCE DE LUMIA ISLAND", href: "assets/pdf/03-naissance-lumia-island.pdf" },
+    { kicker: "DOSSIER IV", name: "EXPEDITION HERITAGE (SPATIALE)", href: "assets/pdf/04-expedition-heritage-spatiale.pdf" },
+    { kicker: "DOSSIER V", name: "LES NOYAUX NEXUS", href: "assets/pdf/05-noyaux-nexus.pdf" },
+    { kicker: "DOSSIER VI", name: "LE CINQUIEME COEUR", href: "assets/pdf/06-cinquieme-coeur.pdf" },
+    { kicker: "DOSSIER VII", name: "PROJET HERITAGE", href: "assets/pdf/07-projet-heritage.pdf" },
+    { kicker: "DOSSIER VIII", name: "CONCLUSION NON AUTORISEE", href: "assets/pdf/08-conclusion-non-autorisee.pdf" },
   ];
 
   const dock = document.getElementById("homeDock");
