@@ -51,19 +51,27 @@
 
 
 *{ box-sizing:border-box; }
-html,body{ height:100%; }
+html,body{ min-height:100%; }
+html{
+  background:
+    linear-gradient(180deg, #07080b 0%, #0a0b0e 42%, #0d0f13 100%);
+  background-color:#07080b;
+}
 body{
   margin:0;
+  min-height:100vh;
   color:var(--text);
   font-family:var(--sans);
   overflow-x:hidden;
 
-  /* Fond noir splendide "vivant" : 3 couches + glow lent */
+  /* Fond harmonise : meme famille du haut en bas, sans cassure claire */
   background:
-    radial-gradient(900px 700px at 18% 22%, rgba(120,240,220,.08), transparent 60%),
-    radial-gradient(700px 520px at 78% 18%, rgba(255,70,90,.06), transparent 58%),
-    radial-gradient(900px 680px at 62% 72%, rgba(255,255,255,.03), transparent 55%),
-    linear-gradient(180deg, var(--bg0), var(--bg2));
+    radial-gradient(760px 560px at 18% 18%, rgba(120,240,220,.05), transparent 58%),
+    radial-gradient(620px 460px at 82% 16%, rgba(255,70,90,.04), transparent 56%),
+    linear-gradient(180deg, #07080b 0%, #0a0b0e 42%, #0d0f13 100%);
+  background-color:#07080b;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
 }
 
 .btn:focus-visible,
@@ -87,11 +95,10 @@ body::before{
   z-index:0;
   pointer-events:none;
   background:
-    radial-gradient(800px 600px at 30% 30%, rgba(120,240,220,.10), transparent 65%),
-    radial-gradient(780px 580px at 70% 25%, rgba(255,70,90,.08), transparent 62%),
-    radial-gradient(900px 700px at 55% 75%, rgba(120,240,220,.05), transparent 68%);
-  filter: blur(18px);
-  opacity:.55;
+    radial-gradient(760px 540px at 28% 26%, rgba(120,240,220,.07), transparent 62%),
+    radial-gradient(720px 520px at 72% 22%, rgba(255,70,90,.05), transparent 60%);
+  filter: blur(22px);
+  opacity:.38;
   animation: ambientFloat 18s ease-in-out infinite alternate;
 }
 
