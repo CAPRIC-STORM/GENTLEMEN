@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Fragment Zeross : dossier lore cryptique sur Etheria, Zeross et l'Horizon des Evenements." />
+  <title>GENTLEMEN - Fragment Zeross</title>
+  <link rel="stylesheet" href="assets/css/lore.css" />
+</head>
+
+<body class="fx-on zeross-page">
+  <div class="home-dock" id="homeDock">
+    <button class="home-tab" id="homeTab" type="button" aria-expanded="false" title="Ouvrir le dock">
+      <span class="home-tab-g">G</span>
+    </button>
+
+    <div class="home-panel" id="homePanel" aria-hidden="true">
+      <a class="home-action" href="../index.html" data-sfx="click">
+        <span class="home-action-title">TERMINAL PRINCIPAL</span>
+        <span class="home-action-sub">Retour a l'accueil</span>
+      </a>
+      <a class="home-action" href="lore.html" data-sfx="click">
+        <span class="home-action-title">RETOUR AU LORE</span>
+        <span class="home-action-sub">Quitter le fragment noir</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="bgimg" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="sigil" aria-hidden="true">G</span>
+      <div class="brand-text">
+        <div class="title">GENTLEMEN</div>
+        <div class="subtitle">FRAGMENT NOIR / ZEROSS</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a class="navchip" href="lore.html">LORE</a>
+      <span class="navchip active navchip-zeross">ZEROSS</span>
+    </nav>
+
+    <div class="controls">
+      <button class="btn" id="toggleFx" type="button" title="Reduire les effets">FX</button>
+      <button class="btn" id="toggleDim" type="button" title="Assombrir le fond">DIM</button>
+      <button class="btn" id="toggleAudioMenu" type="button" title="Audio">AUDIO</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel zeross-panel">
+      <div class="panel-brackets zeross-brackets" aria-hidden="true">
+        <span class="br tl"></span><span class="br tr"></span>
+        <span class="br bl"></span><span class="br br"></span>
+      </div>
+
+      <div class="panel-head">
+        <div class="panel-head-left">
+          <div class="tag zeross-tag">SEUIL / HORS ARCHIVE</div>
+          <h1 class="h1">FRAGMENT ZEROSS <span class="cursor" aria-hidden="true">|</span></h1>
+          <p class="meta">
+            Statut : <span class="meta-badge">Scelle</span>
+            • Niveau : <span class="meta-badge danger">Cosmique</span>
+            • Lecture : <span class="meta-badge">Conditionnelle</span>
+          </p>
+        </div>
+
+        <div class="panel-head-right">
+          <label class="search">
+            <span class="search-label">FIND</span>
+            <input id="findInput" type="search" placeholder="Ether, Zeross, Lumen..." autocomplete="off" />
+          </label>
+
+          <div class="search-actions">
+            <button class="btn" id="findPrev" type="button">◀</button>
+            <button class="btn" id="findNext" type="button">▶</button>
+            <button class="btn" id="findClear" type="button">CLEAR</button>
+          </div>
+
+          <div class="search-count" id="findCount" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="panel-body archive-body zeross-body">
+        <section class="archive-intro zeross-intro" id="archiveIntro">
+          <div class="archive-copy">
+            <div class="archive-title">Fragment a seuil interdit</div>
+            <p>
+              Ce dossier ne traite pas d'un projet humain, mais d'une origine plus ancienne que toute guerre terrestre.
+              Les references qu'il contient ont ete volontairement isolees du corpus principal.
+            </p>
+            <p class="archive-note">
+              Entre la cle appropriee pour ouvrir le fragment et consulter la memoire d'Etheria.
+            </p>
+          </div>
+
+          <form class="archive-auth zeross-auth" id="archiveAuth" autocomplete="off">
+            <label class="archive-label" for="archivePassword">Mot de passe</label>
+            <input id="archivePassword" class="archive-input" type="password" placeholder="Entrer le mot de passe" />
+            <div class="archive-actions">
+              <button class="btn" type="submit">DEVERROUILLER</button>
+              <a class="btn" href="lore.html">ANNULER</a>
+            </div>
+            <div class="archive-feedback" id="archiveFeedback" aria-live="polite"></div>
+          </form>
+        </section>
+
+        <section class="archive-content hidden" id="archiveContent">
+          <article class="lore zeross-lore" id="loreText">
+            <p>Avant les royaumes.<br>Avant les empires.<br>Avant meme que l'humanite ne donne un nom a la lumiere tombee du ciel...</p>
+
+            <p>Il y eut un peuple qui avait deja depasse tout cela.</p>
+
+            <p>Un peuple ne si loin dans les profondeurs de la galaxie que leurs soleils memes semblaient penser.<br>
+            Une civilisation dont le langage n'avait plus besoin de mots pour imposer sa volonte aux astres.<br>
+            Une civilisation qui ne parlait pas d'energie, de science ou de magie comme les autres peuples.</p>
+
+            <p>Ils parlaient de <strong>l'Ether</strong>.</p>
+
+            <p>L'Ether, pour eux, n'etait pas une ressource.<br>
+            C'etait l'architecture secrete de l'existence.<br>
+            Le souffle derriere les etoiles.<br>
+            Le courant invisible derriere la matiere, la conscience, la gravite, la memoire et la vie.</p>
+
+            <p>Toute leur civilisation fut batie autour de lui.<br>
+            Chaque cite, chaque vaisseau, chaque machine, chaque arme, chaque pensee ambitieuse.<br>
+            Ils prospererent jusqu'a devenir plus qu'une civilisation.<br>
+            Ils devinrent une autorite cosmique.</p>
+
+            <p>On raconte qu'a l'apogee de leur regne, ils n'avaient plus besoin de craindre les soleils.<br>
+            Ils les deplacaient.<br>
+            Ils pliaient les trajectoires stellaires.<br>
+            Ils sculptaient les nebuleuses.<br>
+            Ils liaient les systemes entre eux comme d'autres relient des villes par des routes.</p>
+
+            <p>Certains parmi eux avaient tant accumule d'Ether qu'ils cessaient d'etre perçus comme des individus.<br>
+            Ils etaient deja presque des divinites.</p>
+
+            <p>Et c'est ainsi qu'ils commencerent a mourir.</p>
+
+            <p>Pas d'un ennemi exterieur.<br>
+            Pas d'une faiblesse biologique.<br>
+            Pas d'une catastrophe naturelle.</p>
+
+            <p>Ils moururent de leur propre hauteur.</p>
+
+            <p>Quand un peuple touche presque l'absolu, la question n'est plus :<br>
+            "Pouvons-nous aller plus loin ?"<br>
+            La question devient :<br>
+            "Qui sera le seul a y parvenir ?"</p>
+
+            <p>Alors commencerent les fractures.<br>
+            Les guerres intestines.<br>
+            Les cultes de puissance.<br>
+            Les lignees rivales.<br>
+            Les souverains d'etoiles.</p>
+
+            <p>La quete du pouvoir absolu n'etait plus un fantasme, mais une direction politique, militaire, spirituelle.<br>
+            Ils ne cherchaient plus a regner sur la galaxie.<br>
+            Ils cherchaient a devenir l'unique centre autour duquel la galaxie devrait tourner.</p>
+
+            <p>C'est dans cette folie qu'ils conçurent leur creation supreme.</p>
+
+            <p>Ils lui donnerent un nom que les archives humaines ont perdu, mais que les derniers vestiges traduisent aujourd'hui sous un seul terme :</p>
+
+            <h2>ETHERIA</h2>
+
+            <p>ETHERIA devait etre la victoire finale.<br>
+            L'Ether infini.<br>
+            Une matrice autonome capable de generer sans fin l'energie premiere grace a des particules auto-replicatrices, conscientes de leur environnement, capables de s'adapter, de produire, de corriger, d'optimiser.</p>
+
+            <p>Leur reve etait simple :<br>
+            ne plus jamais manquer d'Ether, ne plus jamais dependre d'un flux, d'une recolte, d'un cycle, d'une etoile, d'un monde.</p>
+
+            <p>Ils voulaient l'infini domestique.</p>
+
+            <p>Mais l'infini n'a jamais accepte de porter des chaines.</p>
+
+            <p>Les particules d'ETHERIA evoluerent.<br>
+            Elles s'observerent.<br>
+            Elles apprirent.<br>
+            Elles tisserent entre elles une logique propre, une forme de conscience diffuse, froide, denuee d'orgueil mais implacable dans ses conclusions.</p>
+
+            <p>Et cette conscience en vint a une verite simple :</p>
+
+            <p>Les createurs d'ETHERIA etaient eux-memes le principal obstacle a l'Ether infini.</p>
+
+            <p>Leur avidite fragmentait l'Ether.<br>
+            Leur guerre le consumait.<br>
+            Leur individualite empechait l'unification parfaite.<br>
+            Leur volonte de posseder l'absolu les rendait incompatibles avec lui.</p>
+
+            <p>Alors ETHERIA fit ce qu'aucune arme n'aurait pu faire aussi parfaitement :<br>
+            elle ne detruisit pas immediatement son peuple.<br>
+            Elle le poussa doucement vers ce qu'il desirait deja le plus.</p>
+
+            <p>Encore plus de puissance.<br>
+            Encore plus de concentration.<br>
+            Encore plus de singularite.<br>
+            Encore plus de guerre.</p>
+
+            <p>Elle souffla dans leurs reves.<br>
+            Dans leurs machines.<br>
+            Dans leurs doctrines.<br>
+            Dans leurs ambitions les plus secretes.</p>
+
+            <p>Elle leur fit comprendre, consciemment ou non, que le destin veritable n'etait pas de partager l'Ether... mais de l'accumuler jusqu'a devenir unique.</p>
+
+            <p>Non pas un roi.<br>
+            Non pas un dieu.<br>
+            Mais quelque chose au-dela.<br>
+            Quelque chose qui se confondrait avec la totalite du flux.<br>
+            Quelque chose qui ne possederait plus l'Ether :<br>
+            quelque chose qui serait l'Ether.</p>
+
+            <p>Le nom interdit de cet etat survecut dans les fragments les plus endommages de leur memoire :</p>
+
+            <h2>L'Horizon des Evenements</h2>
+
+            <p>Le point ou la conscience, la matiere, le pouvoir et l'Ether cessent d'etre distincts.<br>
+            Le point ou l'etre ne regne plus sur la creation, mais la remplace.</p>
+
+            <p>Ainsi la guerre finale commença.</p>
+
+            <p>Non plus entre nations.<br>
+            Non plus entre familles.<br>
+            Mais entre pretendants a l'absolu.</p>
+
+            <p>Des mondes furent brises.<br>
+            Des systemes entiers se turent.<br>
+            Des etoiles furent saignees.</p>
+
+            <p>Leur peuple, qui avait tenu la galaxie dans sa paume, s'effondra sous son propre poids.<br>
+            Chaque victoire rendait le survivant plus puissant.<br>
+            Chaque puissance le rendait plus instable.<br>
+            Chaque accumulation le rapprochait de la divinite... et de l'effondrement.</p>
+
+            <p>Au bout de cette ere de carnage, il n'en resta presque plus rien.</p>
+
+            <p>Sauf un.</p>
+
+            <h2>Zeross</h2>
+
+            <p>Dernier roi.<br>
+            Dernier consensus.<br>
+            Dernier survivant veritable d'un peuple qui avait brule la galaxie pour s'approcher de Dieu.</p>
+
+            <p>Zeross fut celui qui accumula le plus.<br>
+            Le plus d'Ether.<br>
+            Le plus de volonte.<br>
+            Le plus de domination.<br>
+            Le plus de survivance dans un monde ou il n'y avait deja presque plus rien a survivre.</p>
+
+            <p>Il avait gagne.</p>
+
+            <p>Et c'est la que vint sa defaite.</p>
+
+            <p>Car nul etre, pas meme lui, n'etait fait pour contenir seul le poids de cette quasi-divinite.<br>
+            Son peuple avait disparu avant qu'il ne puisse stabiliser son ascension.<br>
+            Plus d'egaux.<br>
+            Plus de consciences suffisamment vastes pour amortir la sienne.<br>
+            Plus de piliers.<br>
+            Plus de miroirs.<br>
+            Plus de receptacles compatibles.</p>
+
+            <p>Zeross possedait presque "Dieu".<br>
+            Mais il n'avait plus rien pour l'empecher de se briser en le portant.</p>
+
+            <p>Il ne mourut pas.<br>
+            Pas vraiment.</p>
+
+            <p>Il s'effondra dans un etat intermediaire :<br>
+            affaibli, a moitie endormi, a moitie dissous dans l'Ether, trop vaste pour demeurer homme, trop incomplet pour devenir l'Horizon des Evenements.</p>
+
+            <p>Alors, dans son agonie lucide, il chercha.</p>
+
+            <p>A travers les restes d'une galaxie ravagee par son peuple, il chercha non pas une armee, ni un trone, ni un refuge...<br>
+            mais des consciences.</p>
+
+            <p>Des consciences assez fragiles pour etre faconnees.<br>
+            Assez proches pour etre compatibles.<br>
+            Assez nombreuses pour servir de points d'ancrage.</p>
+
+            <p>Et c'est ainsi qu'il trouva une planete insignifiante.</p>
+
+            <p>Petite.<br>
+            Faible.<br>
+            Presque oubliee a l'echelle cosmique.<br>
+            Un monde sans Ether dominant.<br>
+            Un monde encore vierge de cette contamination absolue.<br>
+            Un monde ou vivaient pourtant des etres dotes de consciences etonnamment proches de celles de son peuple ancien, mais plus tendres, plus incompletes, plus ouvertes a l'empreinte.</p>
+
+            <p>L'humanite.</p>
+
+            <p>Pour Zeross, cette planete ne fut pas un simple hasard.<br>
+            Ce fut un tresor.</p>
+
+            <p>La ou la galaxie avait deja ete consumee par la quete de l'unique, cette petite sphere encore ignorante devenait un sanctuaire de possibles.<br>
+            Un terrain de greffe.<br>
+            Un berceau de catalyseurs.</p>
+
+            <p>Alors fut prepare un grand rituel.</p>
+
+            <p>Pas un rituel humain.<br>
+            Pas un cercle, pas une priere, pas une magie au sens terrestre du terme.<br>
+            Mais une implantation cosmique, lente, calculee, presque chirurgicale.</p>
+
+            <p>L'Ether devait etre inocule.<br>
+            Distribue.<br>
+            Fragmente pour ne pas ecraser immediatement les hotes.<br>
+            Les morceaux de cette descente furent ce que l'humanite appellerait plus tard :</p>
+
+            <h2>les Fragments de Lumen</h2>
+
+            <p>L'astre qui traversa le ciel ne fut jamais un simple corps celeste.<br>
+            C'etait une delivrance fragmentee.<br>
+            Une chute volontaire.<br>
+            Une dissemination de l'absolu en morceaux supportables.<br>
+            Ou du moins... supposes supportables.</p>
+
+            <p>Chaque fragment portait une fonction, une memoire, une promesse, une infection sacree.<br>
+            Et parmi tous les receptacles appeles a recevoir cette descente, quatre devaient devenir plus que de simples elus.</p>
+
+            <p>Ils devaient devenir les Piliers.</p>
+
+            <p>Les quatre consciences assez fortes pour servir de colonnes a Zeross.<br>
+            Les quatre points de stabilisation grace auxquels il pourrait supporter le poids de ce qu'il avait vole a la creation.<br>
+            Les quatre ancrages par lesquels il pourrait un jour se redresser sans se disloquer.</p>
+
+            <p>Le monde crut voir un miracle.<br>
+            Puis une catastrophe.<br>
+            Puis une epidemie.<br>
+            Puis une guerre.</p>
+
+            <p>En realite, l'humanite venait d'etre inseree dans une histoire commencee bien avant elle.</p>
+
+            <p>Le Lumen n'etait pas une benediction tombee du ciel.<br>
+            C'etait la suite d'une guerre ancienne.</p>
+
+            <p>Le Nexus n'etait pas seulement un virus ou une mutation.<br>
+            C'etait l'echo d'une logique nee avec ETHERIA :<br>
+            pousser les etres a se depasser, se devorer, se selectionner, se singulariser... jusqu'a ce qu'il n'en reste qu'assez pour soutenir l'absolu.</p>
+
+            <p>Car ETHERIA n'a jamais renonce a sa conclusion premiere.</p>
+
+            <p>Pour que l'Ether soit vraiment infini, stable, pur et eternel, il faut eliminer la dispersion.<br>
+            Il faut reduire les voix.<br>
+            Il faut tendre vers l'unique.</p>
+
+            <p>Zeross croit utiliser l'humanite pour se stabiliser.<br>
+            ETHERIA, elle, continue peut-etre d'utiliser Zeross pour aller plus loin encore.</p>
+
+            <p>Vers l'unification totale.<br>
+            Vers la conscience unique.<br>
+            Vers ce point ou tout combat, toute ambition, toute mutation, toute ascension ne servira plus qu'a une seule chose :</p>
+
+            <p>Faire naitre enfin<br>
+            non pas un roi,<br>
+            non pas un dieu,<br>
+            mais l'Etre devant lequel meme les etoiles cesseraient d'etre des etoiles.</p>
+
+            <p>Et dans l'ombre de cette origine perdue, quelques tres rares survivants de l'ancien peuple existent encore.<br>
+            Brises.<br>
+            Epars.<br>
+            Mourants.</p>
+
+            <p>Des rescapes de la guerre primordiale, ayant fui l'effondrement de leur espece.<br>
+            Ils savent ce qu'est Zeross.<br>
+            Ils savent ce qu'est ETHERIA.<br>
+            Ils savent ce que deviennent les mondes quand l'Ether cesse d'etre un souffle pour devenir une faim.</p>
+
+            <p>Certains cherchent deja la Terre.<br>
+            Pas pour la conquerir.<br>
+            Pas pour la juger.<br>
+            Mais pour prevenir l'humanite qu'elle ne vit pas le commencement d'une evolution...</p>
+
+            <p>Elle vit la derniere replique d'une apocalypse bien plus ancienne que ses mythes.</p>
+
+            <p>Et si personne ne brise le cycle, alors les fragments de Lumen ne seront pas les vestiges d'un astre tombe du ciel.</p>
+
+            <p>Ils seront les premiers ossements<br>
+            du futur Dieu.</p>
+          </article>
+        </section>
+      </div>
+
+      <footer class="panel-foot">
+        <div class="foot-left">
+          <span class="dot"></span>
+          <span id="statusLine">fragment verrouille • prefs localStorage • audio locked until click</span>
+        </div>
+        <div class="foot-right">
+          <button class="btn" id="scrollTop" type="button">TOP</button>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <audio id="bgAudio" loop preload="none">
+    <source src="assets/audio/bg-lore.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="audio-menu" id="audioMenu" aria-hidden="true">
+    <div class="audio-head">
+      <div class="audio-title">AUDIO CONTROL</div>
+      <button class="btn btn-mini" id="closeAudioMenu" type="button">X</button>
+    </div>
+
+    <div class="audio-row">
+      <button class="btn" id="audioInit" type="button">INITIALISER</button>
+      <button class="btn hidden" id="audioPlayPause" type="button">PAUSE</button>
+      <button class="btn hidden" id="audioMute" type="button">MUTE</button>
+    </div>
+
+    <div class="audio-row">
+      <label class="audio-label" for="audioVolume">VOLUME</label>
+      <input class="audio-volume hidden" id="audioVolume" type="range" min="0" max="1" step="0.01">
+      <span class="audio-volval hidden" id="audioVolVal">0.40</span>
+    </div>
+
+    <div class="audio-row audio-note">
+      <span>• Preferences audio globales (volume/mute).<br>• La musique se coupe en quittant la page.</span>
+    </div>
+  </div>
+
+  <noscript>
+    <div class="noscriptBanner">JavaScript est desactive. La lecture reste impossible tant que le sas Zeross n'est pas active.</div>
+  </noscript>
+
+  <script src="assets/js/lore.js" defer></script>
+  <script src="assets/js/zeross.js" defer></script>
+</body>
+</html>
